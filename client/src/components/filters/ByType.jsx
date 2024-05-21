@@ -1,18 +1,18 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { filterType } from '../../redux/actions/actions';
-import { getTypes } from '../../redux/actions/actions';
+import { getBrands } from '../../redux/actions/actions';
 import  { useEffect, } from 'react';
 
 const ByType = () => {
   const dispatch = useDispatch()
-  const allTypes = useSelector((state) => state.types);
+  const allBrands = useSelector((state) => state.types);
 
   useEffect(() => {
-    dispatch(getTypes());
+    dispatch(getBrands());
   }, []);
   
-  const handlerTypes = (event) => {
+  const handlerBrands = (event) => {
     event.preventDefault();
     if (event.target.value !== 'tipos') {
       dispatch(filterType(event.target.value));
@@ -23,12 +23,12 @@ const ByType = () => {
   return (
     <div>
       <label htmlFor="">Filtrar por tipo: </label>
-      <select onChange={(event) => handlerTypes(event)}>
+      <select onChange={(event) => handlerBrands(event)}>
           <option value={'tipos'}>Tipos</option>
           <option value="all">todos</option>
-          {allTypes?.map((e, index) => (
-            <option key={index} value={e.nombre}>
-              {e.nombre}
+          {allBrands?.map((e, index) => (
+            <option key={index} value={e.name}>
+              {e.name}
             </option>
           ))}
         </select>

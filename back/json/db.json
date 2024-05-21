@@ -1,0 +1,127 @@
+{
+	"products": [
+		{
+			"name": "Teclado Mecánico RGB Logitech",
+			"description": "Un teclado mecánico con iluminación RGB y teclas programables.",
+			"price": 79.99,
+			"image": ["https://http2.mlstatic.com/D_NQ_NP_783100-MLA52349939114_112022-O.webp","https://http2.mlstatic.com/D_NQ_NP_888939-MLA74781179393_022024-O.webp","https://http2.mlstatic.com/D_NQ_NP_845340-MLU74117536262_012024-O.webp"],
+			"stock": 120,
+			"brand": "Logitech",
+			"category": "Teclados"
+		},
+		{
+			"name": "Teclado Ergonómico Razer",
+			"description": "Teclado ergonómico con teclas silenciosas y soporte para muñecas.",
+			"price": 69.99,
+			"image": ["https://http2.mlstatic.com/D_NQ_NP_684210-MLU75209996436_032024-O.webp","https://http2.mlstatic.com/D_NQ_NP_825169-MLU75009235739_032024-O.webp","https://http2.mlstatic.com/D_NQ_NP_677994-MLA47205944587_082021-O.webp"],
+			"stock": 100,
+			"brand": "Razer",
+			"category": "Teclados"
+		},
+		{
+			"name": "Ratón Inalámbrico Logitech",
+			"description": "Ratón ergonómico con conectividad inalámbrica y batería de larga duración.",
+			"price": 39.99,
+			"image": ["https://http2.mlstatic.com/D_NQ_NP_797858-MLU72566391256_112023-O.webp","https://http2.mlstatic.com/D_NQ_NP_852566-MLU75359036937_032024-O.webp","https://http2.mlstatic.com/D_NQ_NP_768030-MLU72774577799_112023-O.webp"],
+			"stock": 200,
+			"brand": "Logitech",
+			"category": "Ratones"
+		},
+		{
+			"name": "Ratón Gaming Razer",
+			"description": "Ratón con alta precisión y múltiples botones programables, ideal para juegos.",
+			"price": 49.99,
+			"image": ["https://http2.mlstatic.com/D_NQ_NP_757052-MLU72836354263_112023-O.webp","https://http2.mlstatic.com/D_NQ_NP_960303-MLU72836484755_112023-O.webp","https://http2.mlstatic.com/D_NQ_NP_707107-MLU72836354295_112023-O.webp"],
+			"stock": 150,
+			"brand": "Razer",
+			"category": "Ratones"
+		},
+		{
+			"name": "Auriculares Gaming Logitech",
+			"description": "Auriculares con sonido envolvente 7.1 y micrófono con cancelación de ruido.",
+			"price": 59.99,
+			"image": ["https://http2.mlstatic.com/D_NQ_NP_760857-MLA44771394445_022021-O.webp","https://http2.mlstatic.com/D_NQ_NP_989014-MLA44771026985_022021-O.webp","https://http2.mlstatic.com/D_NQ_NP_975010-MLA44771394363_022021-O.webp"],
+			"stock": 80,
+			"brand": "Logitech",
+			"category": "Auriculares"
+		},
+		{
+			"name": "Auriculares Bluetooth Razer",
+			"description": "Auriculares inalámbricos con batería de larga duración y sonido de alta calidad.",
+			"price": 79.99,
+			"image": ["https://http2.mlstatic.com/D_NQ_NP_906989-MLU75478757044_042024-O.webp","https://http2.mlstatic.com/D_NQ_NP_874508-MLU72633598237_112023-O.webp","https://http2.mlstatic.com/D_NQ_NP_630152-MLA52221291777_102022-O.webp"],
+			"stock": 90,
+			"brand": "Razer",
+			"category": "Auriculares"
+		},
+		{
+			"name": "Monitor 4K Logitech",
+			"description": "Monitor UHD 4K de 27 pulgadas con alta tasa de refresco.",
+			"price": 349.99,
+			"image": ["https://static.bhphoto.com/images/multiple_images/images500x500/1699525963_IMG_2119001.jpg","https://static.bhphoto.com/images/multiple_images/images500x500/1699525963_IMG_2118999.jpg","https://www.bhphotovideo.com/images/images2500x2500/asus_pg49wcd_49_curved_qd_oled_144hz_1795304.jpg"],
+			"stock": 50,
+			"brand": "Logitech",
+			"category": "Monitores"
+		},
+		{
+			"name": "Monitor Curvo Razer",
+			"description": "Monitor curvo de 32 pulgadas con resolución QHD y alta tasa de refresco.",
+			"price": 399.99,
+			"image":["https://static.bhphoto.com/images/multiple_images/images500x500/1709116494_IMG_2197627.jpg","https://static.bhphoto.com/images/multiple_images/images500x500/1709116494_IMG_2197628.jpg","https://www.bhphotovideo.com/cdn-cgi/image/format=auto,fit=scale-down,width=500,quality=95/https://www.bhphotovideo.com/images/images500x500/asus_pg34wcdm_34_curved_oled_ultrawide_1709025632_1813528.jpg"],
+			"stock": 40,
+			"brand": "Razer",
+			"category": "Monitores"
+		},
+		{
+			"name": "Cámara Web HD Logitech",
+			"description": "Cámara web de alta definición con micrófono integrado.",
+			"price": 49.99,
+			"image": ["https://http2.mlstatic.com/D_NQ_NP_823877-MLA52224246704_102022-O.webp","https://http2.mlstatic.com/D_NQ_NP_795555-MLA74651718652_022024-O.webp","https://http2.mlstatic.com/D_NQ_NP_724922-MLA52224249632_102022-O.webp"],
+			"stock": 150,
+			"brand": "Logitech",
+			"category": "Cámaras Web"
+		},
+		{
+			"name": "Cámara Web 4K Razer",
+			"description": "Cámara web con resolución 4K y enfoque automático.",
+			"price": 99.99,
+			"image": ["https://http2.mlstatic.com/D_NQ_NP_989901-MLU70014309610_062023-O.webp","https://http2.mlstatic.com/D_NQ_NP_885906-MLA50418240270_062022-O.webp","https://http2.mlstatic.com/D_NQ_NP_996740-MLA50418217284_062022-O.webp"],
+			"stock": 70,
+			"brand": "Razer",
+			"category": "Cámaras Web"
+		}
+	],
+	"brands": [
+		{ "name": "Logitech" },
+		{ "name": "Razer" }
+	],
+	"categories": [
+		{ "name": "Teclados" },
+		{ "name": "Ratones" },
+		{ "name": "Auriculares" },
+		{ "name": "Monitores" },
+		{ "name": "Cámaras Web" }
+	],
+	"reviews": [
+		{
+			"ranking": 5,
+			"comment": "Excelente teclado, la iluminación RGB es impresionante."
+		},
+		{
+			"ranking": 4,
+			"comment": "El ratón es muy cómodo, aunque podría mejorar la duración de la batería."
+		},
+		{
+			"ranking": 5,
+			"comment": "Auriculares con sonido envolvente espectacular, ideal para juegos."
+		},
+		{
+			"ranking": 3,
+			"comment": "El monitor tiene buena resolución, pero el precio es un poco alto."
+		},
+		{
+			"ranking": 4,
+			"comment": "La cámara web tiene buena calidad de imagen, aunque el micrófono podría ser mejor."
+		}
+	]
+}
