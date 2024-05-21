@@ -87,7 +87,7 @@ export default function ProductForm() {
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-center mb-8">Añade un producto</h1>
+      <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Añade un producto</h1>
         <form onSubmit={handleSave}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nombre</label>
