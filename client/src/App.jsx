@@ -8,6 +8,7 @@ import Home from './views/home/Home'
 import Detail from './views/detail/Detail'
 import Create from './views/create/Create'
 import Landing from "./views/landing/Landing"
+import Footer from './components/footer/Footer'
 
 function App() {
 
@@ -20,8 +21,7 @@ function App() {
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path={`/detail/:id`} element={<Detail />}></Route>
       </Routes>
-
-
+      <Footer />
     </>
   )
 }
