@@ -1,5 +1,5 @@
 
-export default function () {
+export default function Footer() {
   return (
     <footer className="bg-white dark:bg-gray-900">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -72,7 +72,7 @@ export default function () {
               </h2>
               <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 <li className="mb-4">
-                  <a href="/ui/about" className="hover:underline">
+                  <a href="/about" className="hover:underline">
                   About Us
                   </a>
                 </li>

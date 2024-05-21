@@ -2,11 +2,7 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import styles from './create.module.css'
-import BgVideo from '../../assets/scorbunny.mp4'
-import { getTypes } from '../../redux/actions/actions';
-import { postPokemon } from '../../controller/controller';
-import validate from './validate';
+
 const Create = () => {
   const dispatch = useDispatch();
   const types = useSelector((state) => state.types);
