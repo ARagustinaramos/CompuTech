@@ -18,7 +18,6 @@ import AboutComponent from './components/aboutComponent/aboutComponent'
 
 function App() {
 
-
   return (
     <>
     
@@ -41,4 +40,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

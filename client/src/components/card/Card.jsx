@@ -5,7 +5,7 @@ import styles from './card.module.css'
 
 
 const Card = ({ id, nombre, imagen, Types }) => {
-  //const { id, nombre, imagen, tipos } = pokemon
+/*   //const { id, nombre, imagen, tipos } = pokemon
   //console.log(Types)
 
   return (
@@ -74,7 +74,7 @@ const Card = ({ id, nombre, imagen, Types }) => {
     //             </div>
     //         </div>
     //     </div>
-  )
+  ) */
 }
 
 export default Card
@@ -107,4 +107,4 @@ export default Card
 //   );
 // };
 
-// export default Card;
+//export default Card;

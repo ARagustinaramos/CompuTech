@@ -7,13 +7,14 @@ import { GET_ALL_PRODUCTS,
     CLEAN_DETAIL,
     FILTER_BY_BRAND,
     FILTER_BY_CATEGORY,
-    SEARCH_PRODUCTS,
     CREATE_PRODUCT,
-    ORDER_PRODUCTS
+    GET_BY_NAME,
+    ORDER_PRODUCTS,
+    ORDER_PRICE
              } from "../actions/types";
 
     //ACTIONS A LA DB
-    export function getAllProducts(){
+    export function getProducts(){
         return async (dispatch) => {
             try {
                 const infoAPI = await axios.get(`http://localhost:3001/products`);
@@ -48,7 +49,7 @@ import { GET_ALL_PRODUCTS,
                 const infoAPI = await axios.get(`http://localhost:3001/products/?name=${name}`);
                 return dispatch(
                     { 
-                        type: SEARCH_PRODUCTS,  
+                        type: GET_BY_NAME,  
                         payload: infoAPI.data
                     });
             } catch (error) {
@@ -118,3 +119,11 @@ import { GET_ALL_PRODUCTS,
             payload: order
         }
     }
+
+    export const orderPrice = (order) => {
+        return{
+            type: ORDER_PRICE,
+            payload: order
+        }
+    }
+
