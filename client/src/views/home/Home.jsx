@@ -36,7 +36,6 @@ const Home = () => {
 
   return (
     <>
-      <Navbar handleChange={handleChange} handleSubmit={handleSubmit}></Navbar>
       <Pagination
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
