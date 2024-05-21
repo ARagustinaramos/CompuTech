@@ -1,8 +1,8 @@
 // src/components/Navbar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import CartIcon from '../carticon/CartIcon';
-// import Formulario from '../form/Form';
+import CartIcon from '../carticon/CartIcon';
+import Form from '../../components/form/Form';
 // import LoginLogout from '../loginLogout/LoginLogout';
 
 export default function Navbar() {
@@ -10,7 +10,7 @@ export default function Navbar() {
     <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="/Recurso3.png" className="h-8" alt="Computech Logo" />
+          <img src="/assets/Recurso3.png" className="h-8" alt="Computech Logo" />
         </Link>
         <button
           data-collapse-toggle="navbar-dropdown"
@@ -48,9 +48,12 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="content-center">
-              <div>
-                {/* <Formulario /> */}
-              </div>
+              <Link
+                to="/form"
+                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >
+                Añadir
+              </Link>
             </li>
             <li className="content-center">
               <Link
@@ -61,7 +64,7 @@ export default function Navbar() {
               </Link>
             </li>
             {/* <LoginLogout /> */}
-            {/* <CartIcon /> */}
+            <CartIcon />
           </ul>
         </div>
       </div>
