@@ -7,6 +7,7 @@ import Cards from '../../components/cards/Cards'
 import Navbar from '../../components/navbar/Navbar'
 import { getByName } from '../../redux/actions/actions'
 import Pagination from '../../components/pagination/Pagination'
+import CarouselComponent from '../../components/carousel/carousel'
 
 const Home = () => {
 
@@ -36,6 +37,7 @@ const Home = () => {
 
   return (
     <>
+      <CarouselComponent/>
       <Pagination
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
