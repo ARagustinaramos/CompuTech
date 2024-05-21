@@ -1,0 +1,15 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0px;
+
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  background-image: url('./assets/body_gray_bg.png');
+  background-size: cover;
+  background-position: center;
+  
+}
