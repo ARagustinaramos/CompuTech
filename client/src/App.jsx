@@ -3,9 +3,14 @@ import { Route, Routes } from "react-router-dom"
 
 
 import './App.css'
-
+import SearchBar from './components/searchBar/SearchBar'
 import Home from './views/home/Home'
 import Detail from './views/detail/Detail'
+<<<<<<< HEAD
+//import Create from './views/create/Create'
+//import Landing from "./views/landing/Landing"
+=======
+>>>>>>> d3f127ba640bf6e34a3dac4b5bc6b157bab64375
 import Footer from './components/footer/Footer'
 import Navbar from './components/navbar/Navbar'
 import Form from './components/form/Form'
@@ -17,6 +22,7 @@ function App() {
 
   return (
     <>
+    <SearchBar />
     <Navbar/>
       <Routes>
           {/*
