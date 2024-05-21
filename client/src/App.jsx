@@ -11,7 +11,8 @@ import Detail from './views/detail/Detail'
 import Footer from './components/footer/Footer'
 import Navbar from './components/navbar/Navbar'
 import Form from './components/form/Form'
-import AboutComponent from './components/aboutComponent/AboutComponent'
+import AboutComponent from './components/aboutComponent/aboutComponent'
+
 
 function App() {
 
