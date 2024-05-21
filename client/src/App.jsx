@@ -16,14 +16,14 @@ import Navbar from './components/navbar/Navbar'
 import Form from './components/form/Form'
 import AboutComponent from './components/aboutComponent/aboutComponent'
 
-
 function App() {
 
 
   return (
     <>
-    <SearchBar />
+    
     <Navbar/>
+    <SearchBar />
       <Routes>
           {/*
         <Route path="/" element={<Landing></Landing>}></Route>
