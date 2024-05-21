@@ -2,8 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CartIcon from '../carticon/CartIcon';
-import Form from '../../components/form/Form';
-// import LoginLogout from '../loginLogout/LoginLogout';
+// import Login from '../login/Login'
+import LoginLogout from '../loginLogout/LoginLogout';
 
 export default function Navbar() {
   return (
@@ -63,7 +63,7 @@ export default function Navbar() {
                 Sobre nosotros
               </Link>
             </li>
-            {/* <LoginLogout /> */}
+              <LoginLogout /> 
             <CartIcon />
           </ul>
         </div>
