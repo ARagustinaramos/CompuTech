@@ -6,8 +6,8 @@ import './App.css'
 import SearchBar from './components/searchBar/SearchBar'
 import Home from './views/home/Home'
 import Detail from './views/detail/Detail'
-import Create from './views/create/Create'
-import Landing from "./views/landing/Landing"
+//import Create from './views/create/Create'
+//import Landing from "./views/landing/Landing"
 import Footer from './components/footer/Footer'
 import About from './views/about/About'
 
