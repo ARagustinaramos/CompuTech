@@ -1,3 +1,34 @@
+import React from 'react'
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+
+const Create = () => {
+  const dispatch = useDispatch();
+  const types = useSelector((state) => state.types);
+  const navigate = useNavigate()
+  const initialPokemon = {
+    nombre: "",
+    types: [],
+    imagen: "",
+    vida: 0,
+    ataque: 0,
+    defensa: 0,
+    velocidad: 0
+  }
+  const [newPokemon, setNewPokemon] = useState({ ...initialPokemon });
+  const initialerrors = {
+    nombre: "Nombre de tu pokemon",
+    types: null,
+    imagen: "foto de tu pokemon",
+    vida: "indica la vida de tu pokemon",
+    ataque: "indica el ataque de tu pokemon",
+    defensa: "indica la defensa de tu pokemon",
+    velocidad: "indica la velocidad de tu pokemon"
+  }
+  
+  const [errors, setErrors] = useState({...initialerrors})
+
 import React, { useState } from 'react';
 
 export default function ProductForm() {
