@@ -11,13 +11,8 @@ export default function Navbar() {
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-<<<<<<< HEAD
         <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="./assets/Recurso3.png" className="h-8" alt="Computech Logo" />
-=======
-        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse" aria-current="page">
-          <img src="/assets/Recurso3.png" className="h-8" alt="Computech Logo" />
->>>>>>> 70c6879f5047c2bb7dbf0cfa7b32966a29f72b1d
         </Link>
         <SearchBar />
         <button
