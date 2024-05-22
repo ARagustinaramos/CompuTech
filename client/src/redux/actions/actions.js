@@ -4,7 +4,7 @@ import { GET_DETAIL, GET_POKEMONS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYP
 export const getPokemons = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get("http://localhost:3001/pokemons");
+            const { data } = await axios.get("http://localhost:3001/products");
 
 
             return dispatch({
