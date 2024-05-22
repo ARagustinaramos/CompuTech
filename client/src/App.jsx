@@ -26,7 +26,7 @@ function App() {
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path={`/detail/:id`} element={<Detail />}></Route>        
       */}
-        <Route path="/home" element={<Home/>}></Route>
+        <Route path="/" element={<Home/>}></Route>
         <Route path="/form" element={<Form/>}></Route>
         <Route path={`/detail/:id`} element={<Detail />}></Route>
         <Route path="/about" element={<AboutComponent/>}></Route>
