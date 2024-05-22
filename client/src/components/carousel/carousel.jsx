@@ -7,8 +7,8 @@ const CarouselComponent = () => {
     "/assets/carousel1.jpg",
     "/assets/carousel2.jpg",
     "/assets/carousel3.jpg",
-    "/assets/carousel4.jpg",
-    "/assets/carousel5.jpg",
+    "/assets/carousel1.jpg",
+    "/assets/carousel3.jpg",
   ];
 
   const handlePrev = () => {

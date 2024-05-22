@@ -1,10 +1,8 @@
 import React from 'react'
-//import styles from './searchBar.module.css'
-
 
 const SearchBar = () => {
     return (
-        <div className="form relative flex justify-center mt-4 ">
+        <div className="form relative flex justify-center bg-white antialiased dark:bg-gray-900">
             <form className="form relative ">
                 <button className="absolute left-2 -translate-y-1/2 top-1/2 p-1">
                     <svg
