@@ -2,7 +2,7 @@ import {
     CREATE_POKEMON,
     GET_BY_NAME,
     GET_DETAIL,
-    GET_POKEMONS,
+    GET_PRODUCTS,
     GET_TYPES,
     FILTERDBAPI,
     FILTER_TYPE,
@@ -13,27 +13,27 @@ import {
 
 
 let initialState = {
-    allPokemons: [],
-    copyPokemons: [],
-    pokemon: [],
-    pokemonDetail: {},
+    allProducts: [],
+    copyProducts: [],
+    producto: [],
+    productDetail: {},
     types: []
 
 }
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-        case GET_POKEMONS:
-            return {
-                ...state,
-                allPokemons: action.payload,
-                copyPokemons: [...action.payload]
-            }
-        case GET_DETAIL:
-            return {
-                ...state,
-                pokemonDetail: action.payload
-            }
+        case GET_PRODUCTS:
+      return {
+        ...state,
+        allProducts: action.payload,
+        copyProducts: [...action.payload]
+      };
+      case GET_DETAIL:
+        return {
+          ...state,
+          productDetail: action.payload
+        };
         case CLEAN_DETAIL:
             return {
                 ...state,
@@ -52,13 +52,13 @@ function rootReducer(state = initialState, action) {
         case FILTERDBAPI:
             console.log("Enter")
             if (action.payload === "db") {
-                const result = state.allPokemons.filter((e) => e.created)
+                const result = state.allProducts.filter((e) => e.created)
                 return {
                     ...state,
                     copyPokemons: result
                 }
             } if (action.payload === "api") {
-                const result = state.allPokemons.filter((e) => e.created === false)
+                const result = state.allProducts.filter((e) => e.created === false)
                 return {
                     ...state,
                     copyPokemons: result
@@ -66,7 +66,7 @@ function rootReducer(state = initialState, action) {
             } else {
                 return {
                     ...state,
-                    copyPokemons: state.allPokemons
+                    copyPokemons: state.allProducts
                 }
             }
         case FILTER_TYPE:

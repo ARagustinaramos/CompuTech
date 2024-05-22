@@ -1,14 +1,15 @@
 import axios from "axios";
-import { GET_DETAIL, GET_POKEMONS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK,CLEAN_DETAIL } from "./types";
+import { GET_DETAIL, GET_PRODUCTS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK,CLEAN_DETAIL, } from "./types";
 
-export const getPokemons = () => {
+export const getProducts = () => {
     return async (dispatch) => {
+        
         try {
             const { data } = await axios.get("http://localhost:3001/products");
 
 
             return dispatch({
-                type: GET_POKEMONS,
+                type: GET_PRODUCTS,
                 payload: data
             })
         } catch (error) {
@@ -20,7 +21,7 @@ export const getPokemons = () => {
 export const getDetail = (id) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`http://localhost:3001/pokemons/${id}` );
+            const { data } = await axios.get(`http://localhost:3001/products/${id}`);
 
             return dispatch({
                 type: GET_DETAIL,
@@ -113,3 +114,4 @@ export const cleanDetail = () =>{
 //         }
 //     }
 // }
+

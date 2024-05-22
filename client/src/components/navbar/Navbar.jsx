@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CartIcon from '../carticon/CartIcon';
@@ -9,8 +10,8 @@ export default function Navbar() {
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse" aria-current="page">
-          <img src="/assets/Recurso3.png" className="h-8" alt="Computech Logo" />
+        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+          <img src="./assets/Recurso3.png" className="h-8" alt="Computech Logo" />
         </Link>
         <SearchBar />
         <button
