@@ -1,14 +1,14 @@
-export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
-export const GET_DETAIL_PRODUCT = "GET_DETAIL_PRODUCT";
-export const GET_ALL_BRANDS = "GET_ALL_BRANDS";
-export const CLEAN_DETAIL = "CLEAN_DETAIL";
-export const SEARCH_PRODUCTS = "SEARCH_PRODUCTS";
-export const FILTER_BY_BRAND ="FILTER_BY_BRAND";
-export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY";
-export const CREATE_PRODUCT = "CREATE_PRODUCT";
+export const GET_POKEMONS = "GET_POKEMONS";
+export const SEARCH_POKEMONS = "SEARCH_POKEMONS";
+export const CREATE_POKEMON = "CREATE_POKEMON";
+export const GET_TYPES = "GET_TYPES";
+export const GET_DETAIL = "GET_DETAIL";
 export const GET_BY_NAME = "GET_BY_NAME";
-export const ORDER_PRODUCTS = "ORDER_NAME";
-export const ORDER_PRICE = "ORDER_PRICE";
+export const FILTERDBAPI = "FILTERDBAPI";
+export const FILTER_TYPE ="FILTER_TYPE";
+export const ORDER_NAME = "ORDER_NAME";
+export const ORDER_ATTACK = "ORDER_ATTACK";
+export const CLEAN_DETAIL = "CLEAN_DETAIL";
 
 /* 
 GET_ALL_PRODUCTS,

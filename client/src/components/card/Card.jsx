@@ -82,7 +82,7 @@ const Card = ({ id, name, image, price }) => {
     //             </div>
     //         </div>
     //     </div>
-  ) */
+  ) 
 }
 
 export default Card
