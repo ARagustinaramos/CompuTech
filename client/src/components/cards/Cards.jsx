@@ -3,13 +3,12 @@ import Card from "../card/Card"
 import styles from './cards.module.css'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts } from '../../redux/actions/actions'
+import { getPokemons } from '../../redux/actions/actions'
 import Spinner from '../spinner/Spinner'
 
 
 const Cards = ({nData}) => {
-
-/*   const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const allPokemons = useSelector((state) => state.copyPokemons)
   const pokemonList = nData
 
@@ -18,7 +17,7 @@ const Cards = ({nData}) => {
     () => {
       const traer = async () => {
         try {
-          dispatch(getProducts())
+          dispatch(getPokemons())
         } catch (error) {
           console.log(error.message)
         }
@@ -42,10 +41,11 @@ const Cards = ({nData}) => {
               <Spinner></Spinner>
             )
         }
-      </div> 
-
+      </div>
+    </div>
+      
     </>
-  )*/
+  )
 }
 
 export default Cards

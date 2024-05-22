@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+"use client";
 import React from 'react'
 import { DarkThemeToggle, Flowbite } from "flowbite-react";
 =======
@@ -16,9 +16,10 @@ import ByBrand from '../../components/filters/ByBrand'
 import ByCategory from '../../components/filters/ByCategory'
 
 
-"use client";
+
 
 import { Pagination } from "flowbite-react";
+import ByName from '../../components/filters/ByName';
 //import { useState } from "react";
 
 const Home = () => {
@@ -59,7 +60,6 @@ const Home = () => {
       <Flowbite>
         <div className="bg-white antialiased dark:bg-gray-900 md:py-5">
 
-         
           <CarouselComponent />
           {/* <Pagination
             setCurrentPage={setCurrentPage}
@@ -67,6 +67,7 @@ const Home = () => {
             nPages={nPages}
           /> */}
           <div className="flex overflow-x-auto sm:justify-center mb-2">
+          <ByName></ByName>
             <Pagination
               layout="navigation"
               currentPage={currentPage}
