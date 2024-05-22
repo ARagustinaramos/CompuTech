@@ -8,7 +8,8 @@ import {
     FILTER_TYPE,
     ORDER_NAME,
     ORDER_ATTACK,
-    CLEAN_DETAIL
+    CLEAN_DETAIL,
+    SET_FILTER,
 } from "../actions/types"
 
 
@@ -17,8 +18,8 @@ let initialState = {
     copyProducts: [],
     producto: [],
     productDetail: {},
-    types: []
-
+    types: [],
+    BrandIdBrand: '',
 }
 
 function rootReducer(state = initialState, action) {
@@ -34,6 +35,11 @@ function rootReducer(state = initialState, action) {
           ...state,
           productDetail: action.payload
         };
+        case SET_FILTER:
+            return {
+              ...state,
+              filter: action.payload,
+            };
         case CLEAN_DETAIL:
             return {
                 ...state,
@@ -106,6 +112,7 @@ function rootReducer(state = initialState, action) {
         default:
             return { ...state }
     }
+    
 }
 
 export default rootReducer

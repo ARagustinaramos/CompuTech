@@ -7,6 +7,7 @@ import Cards from '../../components/cards/Cards';
 import { getProducts } from '../../redux/actions/actions';
 import CarouselComponent from '../../components/carousel/carousel';
 import ByName from '../../components/filters/ByName';
+import ByBrand from '../../components/filters/ByBrand'; 
 import Spinner from '../../components/spinner/Spinner.jsx';
 
 const Home = () => {
@@ -39,6 +40,7 @@ const Home = () => {
           <CarouselComponent />
           <div className="flex overflow-x-auto sm:justify-center mb-2">
             <ByName />
+            <ByBrand /> 
             <Pagination
               layout="navigation"
               currentPage={currentPage}
