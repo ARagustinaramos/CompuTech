@@ -1,9 +1,9 @@
+// src/components/Navbar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CartIcon from '../carticon/CartIcon';
-// import Login from '../login/Login'
-import LoginLogout from '../loginLogout/LoginLogout';
-import { DarkThemeToggle, Flowbite } from "flowbite-react";
+import LoginLogout from '../loginLogout/LoginLogout'; // Importa el componente LoginLogout
+import { DarkThemeToggle } from "flowbite-react";
 import SearchBar from '../searchBar/SearchBar';
 
 export default function Navbar() {
@@ -65,11 +65,11 @@ export default function Navbar() {
                 Sobre nosotros
               </Link>
             </li>
-              <LoginLogout /> 
+            <LoginLogout /> {/* Utiliza el componente LoginLogout */}
             <CartIcon />
           </ul>
         </div>
-      <DarkThemeToggle />
+        <DarkThemeToggle />
       </div>
     </nav>
   );
