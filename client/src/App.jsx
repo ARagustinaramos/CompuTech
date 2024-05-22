@@ -26,7 +26,7 @@ function App() {
       <Routes>
           {/*
         <Route path="/" element={<Landing></Landing>}></Route>
-
+        
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path={`/detail/:id`} element={<Detail />}></Route>        
       */}
