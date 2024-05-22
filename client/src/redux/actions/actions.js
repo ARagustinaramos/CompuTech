@@ -1,129 +1,117 @@
-import axios from 'axios';
+import axios from "axios";
+import { GET_DETAIL, GET_PRODUCTS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK,CLEAN_DETAIL, } from "./types";
 
-//ACTION TYPES
-import { GET_ALL_PRODUCTS,
-    GET_DETAIL_PRODUCT,
-    GET_ALL_BRANDS,
-    CLEAN_DETAIL,
-    FILTER_BY_BRAND,
-    FILTER_BY_CATEGORY,
-    CREATE_PRODUCT,
-    GET_BY_NAME,
-    ORDER_PRODUCTS,
-    ORDER_PRICE
-             } from "../actions/types";
+export const getProducts = () => {
+    return async (dispatch) => {
+        
+        try {
+            const { data } = await axios.get("http://localhost:3001/products");
 
-    //ACTIONS A LA DB
-    export function getProducts(){
-        return async (dispatch) => {
-            try {
-                const infoAPI = await axios.get(`http://localhost:3001/products`);
-                return dispatch(
-                    { 
-                        type: GET_ALL_PRODUCTS, 
-                        payload: infoAPI.data
-                    });
-            } catch (error) {
-                console.log(error.response.data.error);
-            }
+
+            return dispatch({
+                type: GET_PRODUCTS,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+}
+
+export const getDetail = (id) => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get(`http://localhost:3001/products/${id}`);
+
+            return dispatch({
+                type: GET_DETAIL,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+}
+
+export const getByName = (nombre) => {
+    return async (dispatch) => {
+        try {
+
+            const { data } = await axios.get(`http://localhost:3001/pokemons?nombre=${nombre}`);
+
+            return dispatch({
+                type: GET_BY_NAME,
+                payload: data
+            });
+        } catch (error) {
+            console.log(error.message)
         }
     }
 
-    export function getProductsById(id){
-        return async (dispatch) => {
-            try {
-                const infoAPI = (await axios.get(`http://localhost:3001/products/${id}`)).data;
-                return dispatch(
-                    { type: GET_DETAIL_PRODUCT, 
-                        payload: infoAPI
-                    });
-            } catch (error) {
-                console.log(error.response.data.error);
-            }
+}
+
+export const getTypes = () => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get('http://localhost:3001/types/', {});
+            return dispatch({
+                type: GET_TYPES,
+                payload: data
+            });
+        } catch (error) {
+            console.log(error.message)
         }
     }
-
-    export function getByName(name){
-        return async (dispatch) => {
-            try {
-                const infoAPI = await axios.get(`http://localhost:3001/products/?name=${name}`);
-                return dispatch(
-                    { 
-                        type: GET_BY_NAME,  
-                        payload: infoAPI.data
-                    });
-            } catch (error) {
-                console.log(error.response.data.error);
-            }
-        }
-    }
-
-    export function postProduct(product){
-        return async (dispatch) => {
-            try {
-                const infoAPI = (await axios.post(`http://localhost:3001/products`, product)).data;
-                alert('Producto creado!')
-                return dispatch(
-                    { 
-                        type: CREATE_PRODUCT,  
-                        payload: infoAPI
-                    });
-            } catch (error) {
-                alert('Faltan datos?')
-                console.log(error.response.data.error);
-            }
-        }
-    }
-
-    export function getAllBrands(brand){
-        return async (dispatch) => {
-            try {
-                const infoAPI = (await axios.get(`http://localhost:3001/?brand=${brand}`)).data;
-                return dispatch(
-                    { 
-                        type: GET_ALL_BRANDS,  
-                        payload: infoAPI
-                    });
-            } catch (error) {
-                console.log(error.response.data.error);
-            }
-        }
-    }
-
-    //ACTIONS DE FILTRADO
-
-    export const cleanDetail = () =>{
-        return {
-            type: CLEAN_DETAIL
-        };
-    }
-
-    export const filterByBrand = (brand) => {
-        return{
-            type: FILTER_BY_BRAND,
-            payload: brand
-        }
-    }
-
-    export const filterByCategory = (source) => {
-        return{
-            type: FILTER_BY_CATEGORY,
-            payload: source
-        }
-    }
+}
+export const filterDbApi = (value) => {
     
-
-    export const orderProducts = (order) => {
-        return{
-            type: ORDER_PRODUCTS,
-            payload: order
-        }
+    return {
+        type: FILTERDBAPI,
+        payload : value
     }
+}
 
-    export const orderPrice = (order) => {
-        return{
-            type: ORDER_PRICE,
-            payload: order
-        }
+export const filterType = (payload) => {
+    return {
+        type: FILTER_TYPE,
+        payload
+    };
+};
+
+export const orderName = (order) =>{
+    return {
+        type:ORDER_NAME,
+        payload: order
     }
+}
+
+export const orderAttack = (payload) => {
+    return {
+        type: ORDER_ATTACK,
+        payload
+    };
+};
+
+export const cleanDetail = () =>{
+    return {
+        type: CLEAN_DETAIL,
+       
+    }
+}
+
+// export const createPokemon = (info) => {
+//     return async (dispatch) => {
+//         try {
+//             const response = await axios.post('http://localhost:3001/pokemons/', info)
+//             dispatch({
+//                 type: CREATE_POKEMON,
+//                 payload: response.data
+//             });
+//             alert("Pokemon creado con exito");
+//             return response;
+//         } catch (error) {
+//             console.log(error.message)
+//         }
+//     }
+// }
 
