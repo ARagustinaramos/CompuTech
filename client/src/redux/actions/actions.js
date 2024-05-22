@@ -20,7 +20,7 @@ export const getPokemons = () => {
 export const getDetail = (id) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`http://localhost:3001/pokemons/` + id);
+            const { data } = await axios.get(`http://localhost:3001/pokemons/${id}` );
 
             return dispatch({
                 type: GET_DETAIL,
