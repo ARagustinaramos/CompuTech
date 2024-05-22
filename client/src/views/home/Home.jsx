@@ -1,9 +1,6 @@
 "use client";
 import React from 'react'
 import { DarkThemeToggle, Flowbite } from "flowbite-react";
-=======
-
->>>>>>> ab47055dd57db6749eaa8b53369d22ad403e56b7
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -26,11 +23,7 @@ const Home = () => {
 
 
   const dispatch = useDispatch()
-<<<<<<< HEAD
-  const allPokemons = useSelector((state) => state.copyPokemons)
-=======
   const allProducts = useSelector((state)=>state.copyProducts)
->>>>>>> ab47055dd57db6749eaa8b53369d22ad403e56b7
 
   const [dataQt, setDataQt] = useState(12);
   //const [currentPage, setCurrentPage] = useState(1)

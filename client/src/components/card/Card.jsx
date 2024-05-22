@@ -4,18 +4,18 @@ import styles from './card.module.css'
 
 
 
-const Card = ({ id, nombre, imagen, Types }) => {
-/*   //const { id, nombre, imagen, tipos } = pokemon
+const Card = ({ id, name, image, price }) => {
+  //const { id, nombre, imagen, tipos } = pokemon
   //console.log(Types)
 
   return (
     <div key={id} className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <Link to={`/detail/${id}`} key={id}>
-        <img className="p-8 rounded-t-lg" src={imagen}></img>
+        <img className="p-8 rounded-t-lg" src={image}></img>
       </Link>
       <div className="px-5 pb-5">
         <Link to={`/detail/${id}`}>
-          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{nombre}</h5>
+          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{name}</h5>
         </Link>
         <div className="flex items-center mt-2.5 mb-5">
 

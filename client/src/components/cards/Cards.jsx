@@ -1,6 +1,6 @@
 import React from 'react'
 import Card from "../card/Card"
-import styles from './cards.module.css'
+//import styles from './cards.module.css'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPokemons } from '../../redux/actions/actions'
