@@ -1,15 +1,15 @@
 import axios from "axios";
 
-export async function postPokemon(create){
+export async function postProduct(create){
     //event.preventDefault()
     try {
         console.log("previus")
         const response = await axios.post("http://localhost:3001/pokemons", create);
         console.log(response)
         if (response) {
-          alert("Pokemon creado con éxito");
+          alert("Producto creado con éxito");
         } else {
-          alert("Error al crear el driver");
+          alert("Error al crear el producto");
         }
     } catch (error) {
         console.log(error.message)

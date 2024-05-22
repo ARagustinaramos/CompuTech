@@ -1,20 +1,20 @@
 import {
-    CREATE_POKEMON,
+    GET_ALL_PRODUCTS,
+    GET_DETAIL_PRODUCT,
+    GET_ALL_BRANDS,
+    CLEAN_DETAIL,
+    FILTER_BY_BRAND,
+    FILTER_BY_CATEGORY,
+    CREATE_PRODUCT,
     GET_BY_NAME,
-    GET_DETAIL,
-    GET_POKEMONS,
-    GET_TYPES,
-    FILTERDBAPI,
-    FILTER_TYPE,
-    ORDER_NAME,
-    ORDER_ATTACK,
-    CLEAN_DETAIL
+    ORDER_PRODUCTS,
+    ORDER_PRICE
 } from "../actions/types"
 
 
 let initialState = {
-    allPokemons: [],
-    copyPokemons: [],
+    allProducts: [],
+    copyProducts: [],
     pokemon: [],
     pokemonDetail: {},
     types: []
@@ -23,13 +23,13 @@ let initialState = {
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-        case GET_POKEMONS:
+        case GET_ALL_PRODUCTS:
             return {
                 ...state,
-                allPokemons: action.payload,
-                copyPokemons: [...action.payload]
+                allProducts: action.payload,
+                copyProducts: [...action.payload]
             }
-        case GET_DETAIL:
+        case GET_DETAIL_PRODUCT:
             return {
                 ...state,
                 pokemonDetail: action.payload
@@ -42,64 +42,42 @@ function rootReducer(state = initialState, action) {
         case GET_BY_NAME:
             return {
                 ...state,
-                copyPokemons: action.payload
+                copyProducts: action.payload
             }
-        case GET_TYPES:
+        case GET_ALL_BRANDS:
             return {
                 ...state,
                 types: action.payload
             }
-        case FILTERDBAPI:
-            console.log("Enter")
-            if (action.payload === "db") {
-                const result = state.allPokemons.filter((e) => e.created)
-                return {
-                    ...state,
-                    copyPokemons: result
-                }
-            } if (action.payload === "api") {
-                const result = state.allPokemons.filter((e) => e.created === false)
-                return {
-                    ...state,
-                    copyPokemons: result
-                }
-            } else {
-                return {
-                    ...state,
-                    copyPokemons: state.allPokemons
-                }
-            }
-        case FILTER_TYPE:
-            const filterTypes = action.payload === "all"
-                ? state.copyPokemons
-                : state.copyPokemons.filter((p) => p.Types.includes(action.payload))
+        case FILTER_BY_BRAND:
+            const filterBrands = action.payload === "all" ? state.copyProducts : state.copyProducts.filter((p) => p.brands.includes(action.payload))
             return {
                 ...state,
-                copyPokemons: filterTypes
+                copyProducts: filterBrands
             }
-        case ORDER_NAME:
+        case ORDER_PRODUCTS:
             if (action.payload === "a-z") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => a.nombre.localeCompare(b.nombre))
+                const orderByName = [...state.copyProducts].sort((a, b) => a.name.localeCompare(b.name))
                 return {
                     ...state,
-                    copyPokemons: orderByName
+                    copyProducts: orderByName
                 }
             } else if (action.payload === "z-a") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => b.nombre.localeCompare(a.nombre))
+                const orderByName = [...state.copyProducts].sort((a, b) => b.name.localeCompare(a.name))
                 return {
                     ...state,
-                    copyPokemons: orderByName
+                    copyProducts: orderByName
                 }
             }
-        case ORDER_ATTACK:
-            const sortAttack = action.payload === "min"
-                ? [...state.copyPokemons].sort((a, b) => a.ataque - b.ataque)
-                : [...state.copyPokemons].sort((a, b) => b.ataque - a.ataque)
+        case ORDER_PRICE:
+            const sortPrice = action.payload === "min"
+                ? [...state.copyProducts].sort((a, b) => a.price - b.price)
+                : [...state.copyProducts].sort((a, b) => b.price - a.price)
             return {
                 ...state,
-                copyPokemons: sortAttack
+                copyProducts: sortPrice
             }
-        case CREATE_POKEMON:
+        case CREATE_PRODUCT:
             return {
                 ...state,
             }

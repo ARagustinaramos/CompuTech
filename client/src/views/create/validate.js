@@ -2,16 +2,16 @@ const validate = (input) => {
     let errors = {};
     let regexImage = /^(http|https):\/\/[^\s]+\.png$/
     
-    if (!input.nombre) {
-        errors.nombre = "Campo obligatorio";
+    if (!input.name) {
+        errors.name = "Campo obligatorio";
     };
 
-    if (input.nombre.length > 10) {
-        errors.nombre = "Debe ser menor a 10 caracteres";
+    if (input.name.length > 10) {
+        errors.name = "Debe ser menor a 10 caracteres";
     };
 
-    if (!/^[a-zA-Z]+$/.test(input.nombre)) {
-        errors.nombre = "El nombre solo puede contener letras";
+    if (!/^[a-zA-Z]+$/.test(input.name)) {
+        errors.name = "El name solo puede contener letras";
     };
 
     if (!input.imagen) {
@@ -30,12 +30,12 @@ const validate = (input) => {
         errors.vida = "vida no puede ser mayor a 250"
     };
 
-    if (input.ataque <= 0) {
-        errors.ataque = "El ataque deber ser mayor a 0";
+    if (input.price <= 0) {
+        errors.price = "El price deber ser mayor a 0";
     };
 
-    if (input.ataque >= 251) {
-        errors.ataque = "El ataque no puede ser mayor a 250"
+    if (input.price >= 251) {
+        errors.price = "El price no puede ser mayor a 250"
     };
 
     if (input.defensa <= 0) {
