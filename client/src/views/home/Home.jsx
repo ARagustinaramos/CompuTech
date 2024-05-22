@@ -1,56 +1,66 @@
+"use client";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Flowbite, Pagination } from 'flowbite-react';
 
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import Cards from '../../components/cards/Cards'
-import Navbar from '../../components/navbar/Navbar'
-import { getByName } from '../../redux/actions/actions'
-import Pagination from '../../components/pagination/Pagination'
-import CarouselComponent from '../../components/carousel/carousel'
+import Cards from '../../components/cards/Cards';
+import { getProducts } from '../../redux/actions/actions';
+import CarouselComponent from '../../components/carousel/Carousel.jsx';
+import ByName from '../../components/filters/ByName';
+import Spinner from '../../components/spinner/Spinner.jsx';
 
 const Home = () => {
-
-
-  const dispatch = useDispatch()
-  const allProducts = useSelector((state)=>state.copyProducts)
+  const dispatch = useDispatch();
+  const allProducts = useSelector((state) => state.copyProducts);
 
   const [dataQt, setDataQt] = useState(12);
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
 
-  function handleChange(e) {
-    e.preventDefault()
-    setSearchString(e.target.value)
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
+
+  const onPageChange = (page) => setCurrentPage(page);
+
+  // Verifica si allProducts está definido y es un array
+  if (!Array.isArray(allProducts) || allProducts.length === 0) {
+    return <Spinner />;
   }
-
-  function handleSubmit() {
-    e.preventDefault()
-    dispatch(getByName(searchString))
-  }
-
-
 
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
-  const nData = allProducts.slice(indexInicial, indexFinal)
+  const nData = allProducts.slice(indexInicial, indexFinal);
   const nPages = Math.ceil(allProducts.length / dataQt);
 
   return (
     <>
-      <CarouselComponent/>
-      <Pagination
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        nPages={nPages}
-      />
-      <Cards nData={nData}/>
-
-      <Pagination
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        nPages={nPages}
-      />
+      <Flowbite>
+        <div className="bg-white antialiased dark:bg-gray-900 md:py-5">
+          <CarouselComponent />
+          <div className="flex overflow-x-auto sm:justify-center mb-2">
+            <ByName />
+            <Pagination
+              layout="navigation"
+              currentPage={currentPage}
+              totalPages={nPages}
+              onPageChange={onPageChange}
+              showIcons
+            />
+          </div>
+          <Cards nData={nData} />
+          <div className="flex overflow-x-auto sm:justify-center">
+            <Pagination
+              layout="navigation"
+              currentPage={currentPage}
+              totalPages={nPages}
+              onPageChange={onPageChange}
+              showIcons
+            />
+          </div>
+        </div>
+      </Flowbite>
     </>
-  )
-}
+  );
+};
 
 export default Home;

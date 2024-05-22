@@ -1,39 +1,53 @@
 import {
-    GET_ALL_PRODUCTS,
-    GET_DETAIL_PRODUCT,
-    GET_ALL_BRANDS,
-    CLEAN_DETAIL,
-    FILTER_BY_BRAND,
-    FILTER_BY_CATEGORY,
-    CREATE_PRODUCT,
+    ADD_TO_CART,
+    CREATE_POKEMON,
     GET_BY_NAME,
-    ORDER_PRODUCTS,
-    ORDER_PRICE
+    GET_DETAIL,
+    GET_PRODUCTS,
+    GET_TYPES,
+    FILTERDBAPI,
+    FILTER_TYPE,
+    ORDER_NAME,
+    ORDER_ATTACK,
+    CLEAN_DETAIL,
+    REMOVE_FROM_CART,
 } from "../actions/types"
 
 
 let initialState = {
     allProducts: [],
     copyProducts: [],
-    pokemon: [],
-    pokemonDetail: {},
-    types: []
+    producto: [],
+    productDetail: {},
+    types: [],
+    items: []
+
 
 }
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-        case GET_ALL_PRODUCTS:
+        case GET_PRODUCTS:
+      return {
+        ...state,
+        allProducts: action.payload,
+        copyProducts: [...action.payload]
+      };
+      case GET_DETAIL:
+        return {
+          ...state,
+          productDetail: action.payload
+        };
+        case ADD_TO_CART:
             return {
                 ...state,
-                allProducts: action.payload,
-                copyProducts: [...action.payload]
-            }
-        case GET_DETAIL_PRODUCT:
+                items: [...state.items, action.payload]
+            };
+        case REMOVE_FROM_CART:
             return {
                 ...state,
-                pokemonDetail: action.payload
-            }
+                items: state.items.filter(item => item.id_Product !== action.payload)
+            };
         case CLEAN_DETAIL:
             return {
                 ...state,
@@ -42,42 +56,64 @@ function rootReducer(state = initialState, action) {
         case GET_BY_NAME:
             return {
                 ...state,
-                copyProducts: action.payload
+                copyPokemons: action.payload
             }
-        case GET_ALL_BRANDS:
+        case GET_TYPES:
             return {
                 ...state,
                 types: action.payload
             }
-        case FILTER_BY_BRAND:
-            const filterBrands = action.payload === "all" ? state.copyProducts : state.copyProducts.filter((p) => p.brands.includes(action.payload))
-            return {
-                ...state,
-                copyProducts: filterBrands
-            }
-        case ORDER_PRODUCTS:
-            if (action.payload === "a-z") {
-                const orderByName = [...state.copyProducts].sort((a, b) => a.name.localeCompare(b.name))
+        case FILTERDBAPI:
+            console.log("Enter")
+            if (action.payload === "db") {
+                const result = state.allProducts.filter((e) => e.created)
                 return {
                     ...state,
-                    copyProducts: orderByName
+                    copyPokemons: result
+                }
+            } if (action.payload === "api") {
+                const result = state.allProducts.filter((e) => e.created === false)
+                return {
+                    ...state,
+                    copyPokemons: result
+                }
+            } else {
+                return {
+                    ...state,
+                    copyPokemons: state.allProducts
+                }
+            }
+        case FILTER_TYPE:
+            const filterTypes = action.payload === "all"
+                ? state.copyPokemons
+                : state.copyPokemons.filter((p) => p.Types.includes(action.payload))
+            return {
+                ...state,
+                copyPokemons: filterTypes
+            }
+        case ORDER_NAME:
+            if (action.payload === "a-z") {
+                const orderByName = [...state.copyPokemons].sort((a, b) => a.nombre.localeCompare(b.nombre))
+                return {
+                    ...state,
+                    copyPokemons: orderByName
                 }
             } else if (action.payload === "z-a") {
-                const orderByName = [...state.copyProducts].sort((a, b) => b.name.localeCompare(a.name))
+                const orderByName = [...state.copyPokemons].sort((a, b) => b.nombre.localeCompare(a.nombre))
                 return {
                     ...state,
-                    copyProducts: orderByName
+                    copyPokemons: orderByName
                 }
             }
-        case ORDER_PRICE:
-            const sortPrice = action.payload === "min"
-                ? [...state.copyProducts].sort((a, b) => a.price - b.price)
-                : [...state.copyProducts].sort((a, b) => b.price - a.price)
+        case ORDER_ATTACK:
+            const sortAttack = action.payload === "min"
+                ? [...state.copyPokemons].sort((a, b) => a.ataque - b.ataque)
+                : [...state.copyPokemons].sort((a, b) => b.ataque - a.ataque)
             return {
                 ...state,
-                copyProducts: sortPrice
+                copyPokemons: sortAttack
             }
-        case CREATE_PRODUCT:
+        case CREATE_POKEMON:
             return {
                 ...state,
             }
