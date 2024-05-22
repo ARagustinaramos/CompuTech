@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import React from 'react'
 import { DarkThemeToggle, Flowbite } from "flowbite-react";
+=======
+
+>>>>>>> ab47055dd57db6749eaa8b53369d22ad403e56b7
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -21,7 +25,11 @@ const Home = () => {
 
 
   const dispatch = useDispatch()
+<<<<<<< HEAD
   const allPokemons = useSelector((state) => state.copyPokemons)
+=======
+  const allProducts = useSelector((state)=>state.copyProducts)
+>>>>>>> ab47055dd57db6749eaa8b53369d22ad403e56b7
 
   const [dataQt, setDataQt] = useState(12);
   //const [currentPage, setCurrentPage] = useState(1)
@@ -43,8 +51,8 @@ const Home = () => {
 
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
-  const nData = allPokemons.slice(indexInicial, indexFinal)
-  const nPages = Math.ceil(allPokemons.length / dataQt);
+  const nData = allProducts.slice(indexInicial, indexFinal)
+  const nPages = Math.ceil(allProducts.length / dataQt);
 
   return (
     <>
@@ -91,4 +99,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

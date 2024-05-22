@@ -6,24 +6,6 @@ import { getDetail } from '../../redux/actions/actions';
 import { cleanDetail } from '../../redux/actions/actions';
 
 const Detail = () => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const pokemon = useSelector((state) => state.pokemonDetail);
-
-  useEffect(() => {
-    const pokeRender = async () => {
-      try {
-        dispatch(getDetail(id));
-      } catch (error) {
-        console.log(error.message)
-      }
-    }
-    pokeRender()
-    return () => dispatch(cleanDetail());
-  }, [dispatch])
-  console.log(pokemon.Types)
-
-  const hasObjectWithName = pokemon.Types && pokemon.Types.some((item) => typeof item === 'object' && item.hasOwnProperty('nombre'));
 
   return (
     // <div className={styles.detail}>
