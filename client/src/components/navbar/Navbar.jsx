@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import CartIcon from '../carticon/CartIcon';
 // import Login from '../login/Login'
 import LoginLogout from '../loginLogout/LoginLogout';
+import { DarkThemeToggle, Flowbite } from "flowbite-react";
+import SearchBar from '../searchBar/SearchBar';
 
 export default function Navbar() {
   return (
@@ -11,6 +13,7 @@ export default function Navbar() {
         <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="/assets/Recurso3.png" className="h-8" alt="Computech Logo" />
         </Link>
+        <SearchBar />
         <button
           data-collapse-toggle="navbar-dropdown"
           type="button"
@@ -66,6 +69,7 @@ export default function Navbar() {
             <CartIcon />
           </ul>
         </div>
+      <DarkThemeToggle />
       </div>
     </nav>
   );
