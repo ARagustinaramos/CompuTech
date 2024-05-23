@@ -11,6 +11,7 @@ import {
     ORDER_ATTACK,
     CLEAN_DETAIL,
     REMOVE_FROM_CART,
+    SET_FILTER,
 } from "../actions/types"
 
 
@@ -20,9 +21,8 @@ let initialState = {
     producto: [],
     productDetail: {},
     types: [],
-    items: []
-
-
+    items: [],
+    BrandIdBrand: '',
 }
 
 function rootReducer(state = initialState, action) {
@@ -47,6 +47,11 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 items: state.items.filter(item => item.id_Product !== action.payload)
+            };
+        case SET_FILTER:
+            return {
+              ...state,
+              filter: action.payload,
             };
         case CLEAN_DETAIL:
             return {
@@ -120,6 +125,7 @@ function rootReducer(state = initialState, action) {
         default:
             return { ...state }
     }
+    
 }
 
 export default rootReducer

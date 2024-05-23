@@ -9,5 +9,7 @@ export const FILTER_TYPE ="FILTER_TYPE";
 export const ORDER_NAME = "ORDER_NAME";
 export const ORDER_ATTACK = "ORDER_ATTACK";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const SET_FILTER = 'SET_FILTER';
+
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
