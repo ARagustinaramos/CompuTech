@@ -1,12 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeFromCart, updateCartItemQuantity } from '../../redux/actions/actions';
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import axios from 'axios';
+
+
+
 
 const Cart = () => {
+    const [preferenceId, setPrefereceId] = useState(null)
+
+    initMercadoPago('TEST-057aa2fa-27a8-4181-9ebd-28a08f1a19bc', {
+        locale: "es-AR",
+    });
+
     const cartItems = useSelector(getMemoizedCartItems);
     const dispatch = useDispatch();
+
+
+    const createPreference = async () => {
+        try {
+            const items = cartItems.map(item => ({
+                id_Product: item.id_Product,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity
+            }));
+    
+            console.log("Items being sent:", items);
+    
+            const response = await axios.post('http://localhost:3001/create_preference', {
+                items
+            });
+    
+            const { id } = response.data;
+            return id;
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const handleRemoveItemClick = (itemId) => {
         dispatch(removeFromCart(itemId));
@@ -27,6 +61,13 @@ const Cart = () => {
     const handleDecrement = (itemId, currentQuantity) => {
         const newQuantity = Math.max(1, parseInt(currentQuantity, 10) - 1);
         handleQuantityChange(itemId, newQuantity);
+    };
+
+    const handleBuy = async () => {
+        const id = await createPreference();
+        if (id) {
+            setPrefereceId(id)
+        }
     };
 
     const total = cartItems
@@ -144,9 +185,13 @@ const Cart = () => {
                             </dl>
                         </div>
 
-                        <a href="#" className="flex w-full items-center justify-center rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <button onClick={handleBuy}
+                            type="button"
+                            className="w-full flex items-center justify-center rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        >
                             Proceder con el Pago
-                        </a>
+                        </button>
+                        {preferenceId && <Wallet initialization={{ preferenceId: preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />}
 
                         <div className="flex items-center justify-center gap-2">
                             <span className="text-sm font-normal text-gray-500 dark:text-gray-400">or</span>

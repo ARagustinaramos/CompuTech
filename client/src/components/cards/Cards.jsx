@@ -14,7 +14,7 @@ const Cards = ({ brandFilter, nameFilter = '' }) => {
       try {
         let url = 'http://localhost:3001/products';
         if (brandFilter) {
-          url += `?brand=${brandFilter}`;
+          url += `?brands=${brandFilter}`;
         }
         const response = await fetch(url);
         const data = await response.json();
@@ -52,3 +52,7 @@ const Cards = ({ brandFilter, nameFilter = '' }) => {
 };
 
 export default Cards;
+
+
+
+
