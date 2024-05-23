@@ -1,74 +1,80 @@
 import axios from "axios";
-import { GET_DETAIL, GET_PRODUCTS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK,CLEAN_DETAIL, ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_ITEM_QUANTITY, } from "./types";
+import { 
+    GET_DETAIL, 
+    GET_PRODUCTS, 
+    GET_BY_NAME, 
+    GET_TYPES, 
+    FILTERDBAPI, 
+    FILTER_TYPE, 
+    ORDER_NAME, 
+    ORDER_ATTACK, 
+    CLEAN_DETAIL, 
+    ADD_TO_CART, 
+    REMOVE_FROM_CART, 
+    UPDATE_CART_ITEM_QUANTITY 
+} from "./types";
 
 export const getProducts = () => {
     return async (dispatch) => {
-        
         try {
             const { data } = await axios.get("http://localhost:3001/products");
-
-
             return dispatch({
                 type: GET_PRODUCTS,
                 payload: data
-            })
+            });
         } catch (error) {
-            console.log(error.message)
+            console.log(error.message);
         }
-    }
-}
+    };
+};
+
 export const addToCart = (product) => {
     return {
-        type: 'ADD_TO_CART',
+        type: ADD_TO_CART,
         payload: {
             ...product,
             cartItemId: Math.random().toString(36).substr(2, 9) // Genera un ID único para el cartItemId
         }
     };
 };
+
 export const updateCartItemQuantity = (itemId, quantity) => ({
     type: UPDATE_CART_ITEM_QUANTITY,
     payload: { itemId, quantity },
 });
 
-  export const removeFromCart = (cartitemId) => ({
+export const removeFromCart = (cartitemId) => ({
     type: REMOVE_FROM_CART,
     payload: cartitemId
 });
-
-
 
 export const getDetail = (id) => {
     return async (dispatch) => {
         try {
             const { data } = await axios.get(`http://localhost:3001/products/${id}`);
-
             return dispatch({
                 type: GET_DETAIL,
                 payload: data
-            })
+            });
         } catch (error) {
-            console.log(error.message)
+            console.log(error.message);
         }
-    }
-}
+    };
+};
 
 export const getByName = (nombre) => {
     return async (dispatch) => {
         try {
-
             const { data } = await axios.get(`http://localhost:3001/pokemons?nombre=${nombre}`);
-
             return dispatch({
                 type: GET_BY_NAME,
                 payload: data
             });
         } catch (error) {
-            console.log(error.message)
+            console.log(error.message);
         }
-    }
-
-}
+    };
+};
 
 export const getTypes = () => {
     return async (dispatch) => {
@@ -79,17 +85,17 @@ export const getTypes = () => {
                 payload: data
             });
         } catch (error) {
-            console.log(error.message)
+            console.log(error.message);
         }
-    }
-}
+    };
+};
+
 export const filterDbApi = (value) => {
-    
     return {
         type: FILTERDBAPI,
-        payload : value
-    }
-}
+        payload: value
+    };
+};
 
 export const filterType = (payload) => {
     return {
@@ -98,12 +104,12 @@ export const filterType = (payload) => {
     };
 };
 
-export const orderName = (order) =>{
+export const orderName = (order) => {
     return {
-        type:ORDER_NAME,
+        type: ORDER_NAME,
         payload: order
-    }
-}
+    };
+};
 
 export const orderAttack = (payload) => {
     return {
@@ -112,26 +118,8 @@ export const orderAttack = (payload) => {
     };
 };
 
-export const cleanDetail = () =>{
+export const cleanDetail = () => {
     return {
         type: CLEAN_DETAIL,
-       
-    }
-}
-
-// export const createPokemon = (info) => {
-//     return async (dispatch) => {
-//         try {
-//             const response = await axios.post('http://localhost:3001/pokemons/', info)
-//             dispatch({
-//                 type: CREATE_POKEMON,
-//                 payload: response.data
-//             });
-//             alert("Pokemon creado con exito");
-//             return response;
-//         } catch (error) {
-//             console.log(error.message)
-//         }
-//     }
-// }
-
+    };
+};

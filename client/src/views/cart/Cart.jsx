@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { removeFromCart, updateCartItemQuantity } from '../../redux/actions/actions';
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
 
@@ -51,9 +52,9 @@ const Cart = () => {
                                     {cartItems.map((item, index) => (
                                         <li key={index} className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                                             <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                                                <a href="#" className="shrink-0 md:order-1">
+                                                <Link to={`/detail/${item.id_Product}`} className="shrink-0 md:order-1">
                                                     <img className="h-20 w-20 dark:hidden" src={item.image} alt={item.name} />
-                                                </a>
+                                                </Link>
 
                                                 <div className="flex items-center justify-between md:order-3 md:justify-end">
                                                     <div className="flex items-center">
@@ -96,7 +97,7 @@ const Cart = () => {
                                                 </div>
 
                                                 <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                                                    <a href="#" className="text-base font-medium text-gray-900 hover:underline dark:text-white">{item.name}</a>
+                                                    <Link to={`/detail/${item.id_Product}`} className="text-base font-medium text-gray-900 hover:underline dark:text-white">{item.name}</Link>
 
                                                     <div className="flex items-center gap-4">
                                                         <button type="button" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white">
