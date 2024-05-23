@@ -10,7 +10,8 @@ import {
     FILTERDBAPI, 
     FILTER_TYPE, 
     ORDER_NAME, 
-    ORDER_ATTACK 
+    ORDER_ATTACK, 
+    SET_FILTER,
 } from "../actions/types";
 
 import { loadCartFromLocalStorage, saveCartToLocalStorage } from '../reducer/localStorageHelpers';
@@ -22,7 +23,10 @@ const initialState = {
     productDetail: {},
     types: [],
     items: loadCartFromLocalStorage(),
-};
+    BrandIdBrand: '',
+
+
+}
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
@@ -72,6 +76,12 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 items: updatedItemsAfterQuantityChange
             };
+        case SET_FILTER:
+            return {
+              ...state,
+              filter: action.payload,
+            };
+
         case CLEAN_DETAIL:
             return {
                 ...state,
@@ -139,6 +149,7 @@ function rootReducer(state = initialState, action) {
         default:
             return { ...state };
     }
+    
 }
 
 export default rootReducer;

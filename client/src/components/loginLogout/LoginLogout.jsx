@@ -5,17 +5,17 @@ const LoginLogout = () => {
   const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
   if (error) {
-    return <div>Error</div>;
+    return <div>Error: {error.message}</div>;
   }
 
   if (isLoading) {
     return <div>Cargando...</div>;
   }
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
 
   return (
     <li className="relative content-center">
@@ -67,3 +67,4 @@ const LoginLogout = () => {
 };
 
 export default LoginLogout;
+

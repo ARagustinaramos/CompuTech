@@ -8,7 +8,8 @@ import {
     FILTER_TYPE, 
     ORDER_NAME, 
     ORDER_ATTACK, 
-    CLEAN_DETAIL, 
+    CLEAN_DETAIL,
+    SET_FILTER, 
     ADD_TO_CART, 
     REMOVE_FROM_CART, 
     UPDATE_CART_ITEM_QUANTITY 
@@ -121,5 +122,27 @@ export const orderAttack = (payload) => {
 export const cleanDetail = () => {
     return {
         type: CLEAN_DETAIL,
-    };
-};
+       
+    }
+}
+export const setFilter = (filter) => ({
+    type: SET_FILTER,
+    payload: filter,
+  });
+
+// export const createPokemon = (info) => {
+//     return async (dispatch) => {
+//         try {
+//             const response = await axios.post('http://localhost:3001/pokemons/', info)
+//             dispatch({
+//                 type: CREATE_POKEMON,
+//                 payload: response.data
+//             });
+//             alert("Pokemon creado con exito");
+//             return response;
+//         } catch (error) {
+//             console.log(error.message)
+//         }
+//     }
+// }
+
