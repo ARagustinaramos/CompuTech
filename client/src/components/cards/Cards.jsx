@@ -30,8 +30,8 @@ const Cards = ({nData}) => {
   
   return (
     <>
-      <div className={styles.cards}>
-        
+    <div className="flex justify-center items-center">
+      <div className="grid grid-cols-4 gap-4 ">
         {
           pokemonList.length > 0 ? (
             pokemonList.map((pokemon, index) => (
@@ -42,8 +42,9 @@ const Cards = ({nData}) => {
               <Spinner></Spinner>
             )
         }
-      </div> 
-
+      </div>
+    </div>
+      
     </>
   )*/
 }

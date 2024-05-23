@@ -14,7 +14,8 @@ import Detail from './views/detail/Detail'
 import Footer from './components/footer/Footer'
 import Navbar from './components/navbar/Navbar'
 import Form from './components/form/Form'
-import AboutComponent from './components/aboutComponent/AboutComponent'
+import AboutComponent from './components/aboutComponent/aboutComponent'
+import Cart from './views/cart/Cart'
 
 function App() {
 
@@ -22,15 +23,16 @@ function App() {
     <>
     
     <Navbar/>
-    <SearchBar />
+    
       <Routes>
           {/*
         <Route path="/" element={<Landing></Landing>}></Route>
-
+        
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path={`/detail/:id`} element={<Detail />}></Route>        
       */}
         <Route path="/home" element={<Home/>}></Route>
+        <Route path="/cart" element={<Cart/>}></Route>
         <Route path="/form" element={<Form/>}></Route>
         <Route path={`/detail/:id`} element={<Detail />}></Route>
         <Route path="/about" element={<AboutComponent/>}></Route>

@@ -1,33 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
+import { GET_DETAIL, GET_POKEMONS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK,CLEAN_DETAIL } from "./types";
 
-//ACTION TYPES
-import { GET_ALL_PRODUCTS,
-    GET_DETAIL_PRODUCT,
-    GET_ALL_BRANDS,
-    CLEAN_DETAIL,
-    FILTER_BY_BRAND,
-    FILTER_BY_CATEGORY,
-    CREATE_PRODUCT,
-    GET_BY_NAME,
-    ORDER_PRODUCTS,
-    ORDER_PRICE
-             } from "../actions/types";
+export const getPokemons = () => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get("http://localhost:3001/products");
 
-    //ACTIONS A LA DB
-    export function getProducts(){
-        return async (dispatch) => {
-            try {
-                const infoAPI = await axios.get(`http://localhost:3001/products`);
-                return dispatch(
-                    { 
-                        type: GET_ALL_PRODUCTS, 
-                        payload: infoAPI.data
-                    });
-            } catch (error) {
-                console.log(error.response.data.error);
-            }
+
+            return dispatch({
+                type: GET_POKEMONS,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error.message)
         }
     }
+}
 
     export function getProductsById(id){
         return async (dispatch) => {
