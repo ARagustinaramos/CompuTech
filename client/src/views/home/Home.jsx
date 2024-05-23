@@ -5,7 +5,7 @@ import { Flowbite, Pagination } from 'flowbite-react';
 
 import Cards from '../../components/cards/Cards';
 import { getProducts } from '../../redux/actions/actions';
-import CarouselComponent from '../../components/carousel/Carousel';
+import CarouselComponent from '../../components/carousel/carousel.jsx'
 import ByName from '../../components/filters/ByName';
 import ByBrand from '../../components/filters/ByBrand'; 
 import Spinner from '../../components/spinner/Spinner.jsx';
@@ -50,7 +50,7 @@ const Home = () => {
               showIcons
             />
           </div>
-          <Cards brandFilter={brandFilter} />
+          <Cards nData={nData} brandFilter={brandFilter} />
           <div className="flex overflow-x-auto sm:justify-center">
             <Pagination
               layout="navigation"
