@@ -10,7 +10,7 @@ import Detail from './views/detail/Detail'
 import Footer from './components/footer/Footer'
 import Navbar from './components/navbar/Navbar'
 import Form from './components/form/Form'
-import AboutComponent from './components/aboutComponent/AboutComponent'
+import About from './views/about/About'
 import Cart from './views/cart/Cart'
 import { saveCartToLocalStorage } from '../src/redux/reducer/localStorageHelpers';
 
@@ -39,7 +39,7 @@ function App() {
         <Route path="/cart" element={<Cart/>}></Route>
         <Route path="/form" element={<Form/>}></Route>
         <Route path={`/detail/:id`} element={<Detail />}></Route>
-        <Route path="/about" element={<AboutComponent/>}></Route>
+        <Route path="/about" element={<About/>}></Route>
       </Routes>
       <Footer />
     </>
