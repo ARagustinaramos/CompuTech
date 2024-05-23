@@ -58,10 +58,10 @@ const Cart = () => {
 
                                                 <div className="flex items-center justify-between md:order-3 md:justify-end">
                                                     <div className="flex items-center">
-                                                        <button 
-                                                            type="button" 
-                                                            id="decrement-button" 
-                                                            data-input-counter-decrement="counter-input" 
+                                                        <button
+                                                            type="button"
+                                                            id="decrement-button"
+                                                            data-input-counter-decrement="counter-input"
                                                             className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
                                                             onClick={() => handleDecrement(item.cartItemId, item.quantity)}
                                                         >
@@ -79,10 +79,10 @@ const Cart = () => {
                                                             onChange={(e) => handleQuantityChange(item.cartItemId, e.target.value)} // Controlador onChange
                                                             required
                                                         />
-                                                        <button 
-                                                            type="button" 
-                                                            id="increment-button" 
-                                                            data-input-counter-increment="counter-input" 
+                                                        <button
+                                                            type="button"
+                                                            id="increment-button"
+                                                            data-input-counter-increment="counter-input"
                                                             className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
                                                             onClick={() => handleIncrement(item.cartItemId, item.quantity)}
                                                         >
@@ -144,11 +144,13 @@ const Cart = () => {
                             </dl>
                         </div>
 
-                        <a href="#" className="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Proceed to Checkout</a>
+                        <a href="#" className="flex w-full items-center justify-center rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Proceder con el Pago
+                        </a>
 
                         <div className="flex items-center justify-center gap-2">
                             <span className="text-sm font-normal text-gray-500 dark:text-gray-400">or</span>
-                            <a href="#" className="text-sm font-normal text-primary-700 hover:underline dark:text-primary-500">Continue Shopping</a>
+                            <a href="/" className="text-sm font-normal text-primary-700 hover:underline dark:text-primary-500">Continua comprando</a>
                         </div>
                     </div>
                 </div>
