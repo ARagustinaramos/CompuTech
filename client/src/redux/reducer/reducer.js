@@ -1,4 +1,5 @@
 import {
+    ADD_TO_CART,
     CREATE_POKEMON,
     GET_BY_NAME,
     GET_DETAIL,
@@ -9,6 +10,7 @@ import {
     ORDER_NAME,
     ORDER_ATTACK,
     CLEAN_DETAIL,
+    REMOVE_FROM_CART,
     SET_FILTER,
 } from "../actions/types"
 
@@ -19,6 +21,7 @@ let initialState = {
     producto: [],
     productDetail: {},
     types: [],
+    items: [],
     BrandIdBrand: '',
 }
 
@@ -35,6 +38,16 @@ function rootReducer(state = initialState, action) {
           ...state,
           productDetail: action.payload
         };
+        case ADD_TO_CART:
+            return {
+                ...state,
+                items: [...state.items, action.payload]
+            };
+        case REMOVE_FROM_CART:
+            return {
+                ...state,
+                items: state.items.filter(item => item.id_Product !== action.payload)
+            };
         case SET_FILTER:
             return {
               ...state,

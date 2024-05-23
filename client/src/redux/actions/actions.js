@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DETAIL, GET_PRODUCTS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK,CLEAN_DETAIL,SET_FILTER } from "./types";
+import { GET_DETAIL, GET_PRODUCTS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK,CLEAN_DETAIL,SET_FILTER ADD_TO_CART, REMOVE_FROM_CART,} from "./types";
 
 export const getProducts = () => {
     return async (dispatch) => {
@@ -17,6 +17,19 @@ export const getProducts = () => {
         }
     }
 }
+export const addToCart = (product) => {
+    return {
+      type: ADD_TO_CART,
+      payload: product
+    };
+  };
+
+  export const removeFromCart = (itemId) => ({
+    type: REMOVE_FROM_CART,
+    payload: itemId
+});
+
+
 
 export const getDetail = (id) => {
     return async (dispatch) => {
