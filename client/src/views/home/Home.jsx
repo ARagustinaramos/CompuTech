@@ -13,6 +13,7 @@ import Spinner from '../../components/spinner/Spinner.jsx';
 const Home = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.copyProducts);
+  const [brandFilter, setBrandFilter] = useState('');
 
   const [dataQt, setDataQt] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +41,7 @@ const Home = () => {
           <CarouselComponent />
           <div className="flex overflow-x-auto sm:justify-center mb-2">
             <ByName />
-            <ByBrand /> 
+            <ByBrand setBrandFilter={setBrandFilter} />
             <Pagination
               layout="navigation"
               currentPage={currentPage}
@@ -49,7 +50,7 @@ const Home = () => {
               showIcons
             />
           </div>
-          <Cards nData={nData} />
+          <Cards brandFilter={brandFilter} />
           <div className="flex overflow-x-auto sm:justify-center">
             <Pagination
               layout="navigation"
