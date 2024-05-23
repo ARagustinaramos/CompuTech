@@ -5,17 +5,17 @@ const LoginLogout = () => {
   const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
   if (error) {
-    return <div>Error</div>;
+    return <div>Error: {error.message}</div>;
   }
 
   if (isLoading) {
     return <div>Cargando...</div>;
   }
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
 
   return (
     <li className="relative content-center">
@@ -43,7 +43,7 @@ const LoginLogout = () => {
           </div>
 
           {dropdownOpen && (
-            <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
               <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Dashboard</a>
                 <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Perfil</a>
@@ -67,3 +67,4 @@ const LoginLogout = () => {
 };
 
 export default LoginLogout;
+

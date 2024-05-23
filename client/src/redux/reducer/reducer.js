@@ -1,111 +1,155 @@
-import {
-    CREATE_POKEMON,
-    GET_BY_NAME,
-    GET_DETAIL,
-    GET_POKEMONS,
-    GET_TYPES,
-    FILTERDBAPI,
-    FILTER_TYPE,
-    ORDER_NAME,
-    ORDER_ATTACK,
-    CLEAN_DETAIL
-} from "../actions/types"
+import { 
+    ADD_TO_CART, 
+    GET_PRODUCTS, 
+    GET_DETAIL, 
+    REMOVE_FROM_CART, 
+    UPDATE_CART_ITEM_QUANTITY, 
+    CLEAN_DETAIL, 
+    GET_BY_NAME, 
+    GET_TYPES, 
+    FILTERDBAPI, 
+    FILTER_TYPE, 
+    ORDER_NAME, 
+    ORDER_ATTACK, 
+    SET_FILTER,
+} from "../actions/types";
 
+import { loadCartFromLocalStorage, saveCartToLocalStorage } from '../reducer/localStorageHelpers';
 
-let initialState = {
-    allPokemons: [],
-    copyPokemons: [],
-    pokemon: [],
-    pokemonDetail: {},
-    types: []
+const initialState = {
+    allProducts: [],
+    copyProducts: [],
+    producto: [],
+    productDetail: {},
+    types: [],
+    items: loadCartFromLocalStorage(),
+    BrandIdBrand: '',
+
 
 }
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-        case GET_POKEMONS:
+        case GET_PRODUCTS:
             return {
                 ...state,
-                allPokemons: action.payload,
-                copyPokemons: [...action.payload]
-            }
+                allProducts: action.payload,
+                copyProducts: [...action.payload]
+            };
         case GET_DETAIL:
             return {
                 ...state,
-                pokemonDetail: action.payload
+                productDetail: action.payload
+            };
+        case ADD_TO_CART:
+            const existingItemIndex = state.items.findIndex(item => item.id_Product === action.payload.id_Product);
+            let updatedItems;
+            if (existingItemIndex >= 0) {
+                updatedItems = state.items.map((item, index) =>
+                    index === existingItemIndex
+                        ? { ...item, quantity: item.quantity + 1 }
+                        : item
+                );
+            } else {
+                updatedItems = [...state.items, { ...action.payload, quantity: 1 }];
             }
+            saveCartToLocalStorage(updatedItems);
+            return {
+                ...state,
+                items: updatedItems
+            };
+        case REMOVE_FROM_CART:
+            const updatedItemsAfterRemoval = state.items.filter(item => item.cartItemId !== action.payload);
+            saveCartToLocalStorage(updatedItemsAfterRemoval);
+            return {
+                ...state,
+                items: updatedItemsAfterRemoval
+            };
+        case UPDATE_CART_ITEM_QUANTITY:
+            const updatedItemsAfterQuantityChange = state.items.map(item =>
+                item.cartItemId === action.payload.itemId
+                    ? { ...item, quantity: action.payload.quantity }
+                    : item
+            );
+            saveCartToLocalStorage(updatedItemsAfterQuantityChange);
+            return {
+                ...state,
+                items: updatedItemsAfterQuantityChange
+            };
+        case SET_FILTER:
+            return {
+              ...state,
+              filter: action.payload,
+            };
+
         case CLEAN_DETAIL:
             return {
                 ...state,
-                pokemonDetail: {}
-            }
+                productDetail: {}
+            };
         case GET_BY_NAME:
             return {
                 ...state,
-                copyPokemons: action.payload
-            }
+                copyProducts: action.payload
+            };
         case GET_TYPES:
             return {
                 ...state,
                 types: action.payload
-            }
+            };
         case FILTERDBAPI:
-            console.log("Enter")
             if (action.payload === "db") {
-                const result = state.allPokemons.filter((e) => e.created)
+                const result = state.allProducts.filter((e) => e.created);
                 return {
                     ...state,
-                    copyPokemons: result
-                }
-            } if (action.payload === "api") {
-                const result = state.allPokemons.filter((e) => e.created === false)
+                    copyProducts: result
+                };
+            } else if (action.payload === "api") {
+                const result = state.allProducts.filter((e) => !e.created);
                 return {
                     ...state,
-                    copyPokemons: result
-                }
+                    copyProducts: result
+                };
             } else {
                 return {
                     ...state,
-                    copyPokemons: state.allPokemons
-                }
+                    copyProducts: state.allProducts
+                };
             }
         case FILTER_TYPE:
             const filterTypes = action.payload === "all"
-                ? state.copyPokemons
-                : state.copyPokemons.filter((p) => p.Types.includes(action.payload))
+                ? state.copyProducts
+                : state.copyProducts.filter((p) => p.Types.includes(action.payload));
             return {
                 ...state,
-                copyPokemons: filterTypes
-            }
+                copyProducts: filterTypes
+            };
         case ORDER_NAME:
             if (action.payload === "a-z") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => a.nombre.localeCompare(b.nombre))
+                const orderByName = [...state.copyProducts].sort((a, b) => a.nombre.localeCompare(b.nombre));
                 return {
                     ...state,
-                    copyPokemons: orderByName
-                }
+                    copyProducts: orderByName
+                };
             } else if (action.payload === "z-a") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => b.nombre.localeCompare(a.nombre))
+                const orderByName = [...state.copyProducts].sort((a, b) => b.nombre.localeCompare(a.nombre));
                 return {
                     ...state,
-                    copyPokemons: orderByName
-                }
+                    copyProducts: orderByName
+                };
             }
         case ORDER_ATTACK:
             const sortAttack = action.payload === "min"
-                ? [...state.copyPokemons].sort((a, b) => a.ataque - b.ataque)
-                : [...state.copyPokemons].sort((a, b) => b.ataque - a.ataque)
+                ? [...state.copyProducts].sort((a, b) => a.ataque - b.ataque)
+                : [...state.copyProducts].sort((a, b) => b.ataque - a.ataque);
             return {
                 ...state,
-                copyPokemons: sortAttack
-            }
-        case CREATE_POKEMON:
-            return {
-                ...state,
-            }
+                copyProducts: sortAttack
+            };
         default:
-            return { ...state }
+            return { ...state };
     }
+    
 }
 
-export default rootReducer
+export default rootReducer;

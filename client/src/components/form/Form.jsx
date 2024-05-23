@@ -144,7 +144,7 @@ export default function ProductForm() {
               name="description"
               value={product.description}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue500 h-32 resize-none overflow-y-auto focus:outline-none focus:ring focus:border-blue-500"
+              className="mt-1 p-2 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 h-32 resize-none overflow-y-auto focus:outline-none focus:ring"
             ></textarea>
           </div>
           <div className="mb-4">

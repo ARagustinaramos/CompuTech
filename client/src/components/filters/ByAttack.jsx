@@ -1,21 +1,21 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { orderPrice } from '../../redux/actions/actions'
-const ByPrice = () => {
+import { orderAttack } from '../../redux/actions/actions'
+const ByAttack = () => {
     const dispatch = useDispatch()
 
-    const handlerOrderPrice = (event) => {
+    const handlerOrderAttack = (event) => {
         event.preventDefault();
-        if (event.target.value !== 'price') {
-            dispatch(orderPrice(event.target.value));
+        if (event.target.value !== 'ataque') {
+            dispatch(orderAttack(event.target.value));
 
         }
     };
 
     return (
         <div>
-            <select onChange={(event) => handlerOrderPrice(event)}>
-                <option value={'price'}>Ataque</option>
+            <select onChange={(event) => handlerOrderAttack(event)}>
+                <option value={'ataque'}>Ataque</option>
                 <option value={'min'}>min</option>
                 <option value={'max'}>max</option>
             </select>
@@ -23,4 +23,4 @@ const ByPrice = () => {
     )
 }
 
-export default ByPrice
+export default ByAttack
