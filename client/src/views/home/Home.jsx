@@ -5,7 +5,7 @@ import { Flowbite, Pagination } from 'flowbite-react';
 
 import Cards from '../../components/cards/Cards';
 import { getProducts } from '../../redux/actions/actions';
-import CarouselComponent from '../../components/carousel/carousel';
+import CarouselComponent from '../../components/carousel/Carousel';
 import ByName from '../../components/filters/ByName';
 import ByBrand from '../../components/filters/ByBrand'; 
 import Spinner from '../../components/spinner/Spinner.jsx';
