@@ -45,8 +45,8 @@ const Home = () => {
 
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
-  const nData = allProducts.slice(indexInicial, indexFinal)
-  const nPages = Math.ceil(allProducts.length / dataQt);
+  const nData = allPokemons.slice(indexInicial, indexFinal)
+  const nPages = Math.ceil(allPokemons.length / dataQt);
 
   return (
     <>
@@ -93,4 +93,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default Home
