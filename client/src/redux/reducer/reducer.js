@@ -42,7 +42,7 @@ function rootReducer(state = initialState, action) {
         case GET_BY_NAME:
             return {
                 ...state,
-                copyPokemons: action.payload
+                copyProducts: action.payload
             }
         case GET_TYPES:
             return {
@@ -55,40 +55,40 @@ function rootReducer(state = initialState, action) {
                 const result = state.allProducts.filter((e) => e.created)
                 return {
                     ...state,
-                    copyPokemons: result
+                    copyProducts: result
                 }
             } if (action.payload === "api") {
                 const result = state.allProducts.filter((e) => e.created === false)
                 return {
                     ...state,
-                    copyPokemons: result
+                    copyProducts: result
                 }
             } else {
                 return {
                     ...state,
-                    copyPokemons: state.allProducts
+                    copyProducts: state.allProducts
                 }
             }
         case FILTER_TYPE:
             const filterTypes = action.payload === "all"
-                ? state.copyPokemons
-                : state.copyPokemons.filter((p) => p.Types.includes(action.payload))
+                ? state.copyProducts
+                : state.copyProducts.filter((p) => p.Types.includes(action.payload))
             return {
                 ...state,
-                copyPokemons: filterTypes
+                copyProducts: filterTypes
             }
         case ORDER_NAME:
             if (action.payload === "a-z") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => a.nombre.localeCompare(b.nombre))
+                const orderByName = [...state.copyProducts].sort((a, b) => a.name.localeCompare(b.name))
                 return {
                     ...state,
-                    copyPokemons: orderByName
+                    copyProducts: orderByName
                 }
             } else if (action.payload === "z-a") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => b.nombre.localeCompare(a.nombre))
+                const orderByName = [...state.copyProducts].sort((a, b) => b.name.localeCompare(a.name))
                 return {
                     ...state,
-                    copyPokemons: orderByName
+                    copyProducts: orderByName
                 }
             }
         case ORDER_ATTACK:

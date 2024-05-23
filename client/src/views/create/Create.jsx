@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Swal from 'sweetalert2'
 export default function ProductForm() {
   const [product, setProduct] = useState({
     name: "",
@@ -63,7 +63,13 @@ export default function ProductForm() {
         });
 
         if (response.ok) {
-          alert('Producto guardado correctamente');
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Producto agregado al carrito",
+            showConfirmButton: false,
+            timer: 1500
+          });
           setProduct({
             name: "",
             description: "",
@@ -75,7 +81,12 @@ export default function ProductForm() {
           });
         } else {
           const errorData = await response.json();
-          alert(`Error al guardar el producto: ${errorData.message}`);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="#">Why do I have this issue?</a>'
+          });
         }
       } catch (error) {
         console.error('Error:', error);

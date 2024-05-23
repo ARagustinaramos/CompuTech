@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Swal from 'sweetalert2'
 export default function ProductForm() {
   const [product, setProduct] = useState({
     name: "",
@@ -25,20 +25,36 @@ export default function ProductForm() {
 
     if (!product.name || !product.description || !product.price || !product.image || !product.stock || !product.brand || !product.category) {
       isValid = false;
-      errorMessage += "Todos los campos son obligatorios\n";
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Todos los campos son obligatorios",
+        footer: '<a href="#">Existen campos vacios</a>'
+      });
     }
     if (isNaN(product.price)) {
       isValid = false;
-      errorMessage += "El precio debe ser un número\n";
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "El precio debe ser un número válido",
+        footer: '<a href="#"></a>'
+      });
     }
     if (isNaN(product.stock)) {
       isValid = false;
-      errorMessage += "El stock debe ser un número\n";
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "El stock debe ser un número",
+        footer: '<a href="#"></a>'
+      });
+      
     }
 
-    if (!isValid) {
-      alert(errorMessage);
-    }
+    // if (!isValid) {
+    //   alert(errorMessage);
+    // }
 
     return isValid;
   };
@@ -63,7 +79,13 @@ export default function ProductForm() {
         });
 
         if (response.ok) {
-          alert('Producto guardado correctamente');
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Producto guardado correctamente",
+            showConfirmButton: false,
+            timer: 1500
+          });
           setProduct({
             name: "",
             description: "",
@@ -75,7 +97,12 @@ export default function ProductForm() {
           });
         } else {
           const errorData = await response.json();
-          alert(`Error al guardar el producto: ${errorData.message}`);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error al guardar el producto",
+            footer: '<a href="#"></a>'
+          });
         }
       } catch (error) {
         console.error('Error:', error);
