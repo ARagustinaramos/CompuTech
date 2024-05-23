@@ -1,57 +1,57 @@
-import {
-    ADD_TO_CART,
-    CREATE_POKEMON,
-    GET_BY_NAME,
-    GET_DETAIL,
-    GET_PRODUCTS,
-    GET_TYPES,
-    FILTERDBAPI,
-    FILTER_TYPE,
-    ORDER_NAME,
-    ORDER_ATTACK,
-    CLEAN_DETAIL,
-    REMOVE_FROM_CART,
-    UPDATE_CART_ITEM_QUANTITY
-} from "../actions/types"
+import { 
+    ADD_TO_CART, 
+    GET_PRODUCTS, 
+    GET_DETAIL, 
+    REMOVE_FROM_CART, 
+    UPDATE_CART_ITEM_QUANTITY, 
+    CLEAN_DETAIL, 
+    GET_BY_NAME, 
+    GET_TYPES, 
+    FILTERDBAPI, 
+    FILTER_TYPE, 
+    ORDER_NAME, 
+    ORDER_ATTACK 
+} from "../actions/types";
 
 import { loadCartFromLocalStorage, saveCartToLocalStorage } from '../reducer/localStorageHelpers';
 
-
-let initialState = {
+const initialState = {
     allProducts: [],
     copyProducts: [],
     producto: [],
     productDetail: {},
     types: [],
     items: loadCartFromLocalStorage(),
-
-
-}
+};
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
         case GET_PRODUCTS:
-      return {
-        ...state,
-        allProducts: action.payload,
-        copyProducts: [...action.payload]
-      };
-      case GET_DETAIL:
-        return {
-          ...state,
-          productDetail: action.payload
-        };
-        case ADD_TO_CART:
             return {
                 ...state,
-                items: [...state.items, action.payload]
+                allProducts: action.payload,
+                copyProducts: [...action.payload]
             };
-            case 'REMOVE_FROM_CART':
-                return {
-                    ...state,
-                    items: state.items.filter(item => item.cartItemId !== action.payload)
-                };
-                case UPDATE_CART_ITEM_QUANTITY:
+        case GET_DETAIL:
+            return {
+                ...state,
+                productDetail: action.payload
+            };
+        case ADD_TO_CART:
+            const updatedItemsAfterAdd = [...state.items, { ...action.payload, quantity: action.payload.quantity || 1 }];
+            saveCartToLocalStorage(updatedItemsAfterAdd);
+            return {
+                ...state,
+                items: updatedItemsAfterAdd
+            };
+        case REMOVE_FROM_CART:
+            const updatedItemsAfterRemoval = state.items.filter(item => item.cartItemId !== action.payload);
+            saveCartToLocalStorage(updatedItemsAfterRemoval);
+            return {
+                ...state,
+                items: updatedItemsAfterRemoval
+            };
+        case UPDATE_CART_ITEM_QUANTITY:
             const updatedItemsAfterQuantityChange = state.items.map(item =>
                 item.cartItemId === action.payload.itemId
                     ? { ...item, quantity: action.payload.quantity }
@@ -60,80 +60,76 @@ function rootReducer(state = initialState, action) {
             saveCartToLocalStorage(updatedItemsAfterQuantityChange);
             return {
                 ...state,
-                items: updatedItemsAfterQuantityChange,
+                items: updatedItemsAfterQuantityChange
             };
         case CLEAN_DETAIL:
             return {
                 ...state,
-                pokemonDetail: {}
-            }
+                productDetail: {}
+            };
         case GET_BY_NAME:
             return {
                 ...state,
-                copyPokemons: action.payload
-            }
+                copyProducts: action.payload
+            };
         case GET_TYPES:
             return {
                 ...state,
                 types: action.payload
-            }
+            };
         case FILTERDBAPI:
-            console.log("Enter")
+            console.log("Enter");
             if (action.payload === "db") {
-                const result = state.allProducts.filter((e) => e.created)
+                const result = state.allProducts.filter((e) => e.created);
                 return {
                     ...state,
-                    copyPokemons: result
-                }
-            } if (action.payload === "api") {
-                const result = state.allProducts.filter((e) => e.created === false)
+                    copyProducts: result
+                };
+            } else if (action.payload === "api") {
+                const result = state.allProducts.filter((e) => !e.created);
                 return {
                     ...state,
-                    copyPokemons: result
-                }
+                    copyProducts: result
+                };
             } else {
                 return {
                     ...state,
-                    copyPokemons: state.allProducts
-                }
+                    copyProducts: state.allProducts
+                };
             }
         case FILTER_TYPE:
             const filterTypes = action.payload === "all"
-                ? state.copyPokemons
-                : state.copyPokemons.filter((p) => p.Types.includes(action.payload))
+                ? state.copyProducts
+                : state.copyProducts.filter((p) => p.Types.includes(action.payload));
             return {
                 ...state,
-                copyPokemons: filterTypes
-            }
+                copyProducts: filterTypes
+            };
         case ORDER_NAME:
             if (action.payload === "a-z") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => a.nombre.localeCompare(b.nombre))
+                const orderByName = [...state.copyProducts].sort((a, b) => a.nombre.localeCompare(b.nombre));
                 return {
                     ...state,
-                    copyPokemons: orderByName
-                }
+                    copyProducts: orderByName
+                };
             } else if (action.payload === "z-a") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => b.nombre.localeCompare(a.nombre))
+                const orderByName = [...state.copyProducts].sort((a, b) => b.nombre.localeCompare(a.nombre));
                 return {
                     ...state,
-                    copyPokemons: orderByName
-                }
+                    copyProducts: orderByName
+                };
             }
         case ORDER_ATTACK:
             const sortAttack = action.payload === "min"
-                ? [...state.copyPokemons].sort((a, b) => a.ataque - b.ataque)
-                : [...state.copyPokemons].sort((a, b) => b.ataque - a.ataque)
+                ? [...state.copyProducts].sort((a, b) => a.ataque - b.ataque)
+                : [...state.copyProducts].sort((a, b) => b.ataque - a.ataque);
             return {
                 ...state,
-                copyPokemons: sortAttack
-            }
-        case CREATE_POKEMON:
-            return {
-                ...state,
-            }
+                copyProducts: sortAttack
+            };
         default:
-            return { ...state }
+            return { ...state };
     }
 }
 
-export default rootReducer
+export default rootReducer;

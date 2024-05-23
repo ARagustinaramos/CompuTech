@@ -1,12 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, updateCartItemQuantity } from '../../redux/actions/actions';
+import { getMemoizedCartItems } from '../../redux/selectors/selectors'; // Ajusta la ruta según la ubicación de tu archivo de selectores
 
 const Cart = () => {
-    const cartItems = useSelector((state) => state.items.map(item => ({
-        ...item,
-        quantity: item.quantity || 1 // Ensure each item has a default quantity of 1
-    })));
+    const cartItems = useSelector(getMemoizedCartItems);
     const dispatch = useDispatch();
 
     const handleRemoveItemClick = (itemId) => {
@@ -28,7 +26,6 @@ const Cart = () => {
         handleQuantityChange(itemId, newQuantity);
     };
 
-    // Calcular el total del precio de los ítems en el carrito
     const total = cartItems
         .map(item => {
             const itemPrice = parseFloat(item.price);
@@ -70,12 +67,12 @@ const Cart = () => {
                                                             </svg>
                                                         </button>
                                                         <input
-                                                            type="text"
+                                                            type="number" // Asegúrate de que el tipo sea number
                                                             id="counter-input"
                                                             data-input-counter
                                                             className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
                                                             placeholder=""
-                                                            value={item.quantity} // Valor del campo
+                                                            value={item.quantity || 1} // Valor del campo
                                                             onChange={(e) => handleQuantityChange(item.cartItemId, e.target.value)} // Controlador onChange
                                                             required
                                                         />

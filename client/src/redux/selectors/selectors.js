@@ -4,5 +4,5 @@ const selectCartItems = (state) => state.items;
 
 export const getMemoizedCartItems = createSelector(
     [selectCartItems],
-    (items) => items
+    (items) => items.map(item => ({ ...item }))
 );
