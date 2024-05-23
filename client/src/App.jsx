@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import {  useSelector } from 'react-redux'
+import { useEffect } from 'react';
 import { Route, Routes } from "react-router-dom"
 
 
@@ -11,11 +12,18 @@ import Navbar from './components/navbar/Navbar'
 import Form from './components/form/Form'
 import AboutComponent from './components/aboutComponent/AboutComponent'
 import Cart from './views/cart/Cart'
+import { saveCartToLocalStorage } from '../src/redux/reducer/localStorageHelpers';
 
 function App() {
+  const cartItems = useSelector((state) => state.items);
+
+    useEffect(() => {
+        saveCartToLocalStorage(cartItems);
+    }, [cartItems])
 
 
   return (
+    
     <>
     
     <Navbar/>

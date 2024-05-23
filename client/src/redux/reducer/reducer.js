@@ -11,7 +11,10 @@ import {
     ORDER_ATTACK,
     CLEAN_DETAIL,
     REMOVE_FROM_CART,
+    UPDATE_CART_ITEM_QUANTITY
 } from "../actions/types"
+
+import { loadCartFromLocalStorage, saveCartToLocalStorage } from '../reducer/localStorageHelpers';
 
 
 let initialState = {
@@ -20,7 +23,7 @@ let initialState = {
     producto: [],
     productDetail: {},
     types: [],
-    items: []
+    items: loadCartFromLocalStorage(),
 
 
 }
@@ -43,10 +46,21 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 items: [...state.items, action.payload]
             };
-        case REMOVE_FROM_CART:
+            case 'REMOVE_FROM_CART':
+                return {
+                    ...state,
+                    items: state.items.filter(item => item.cartItemId !== action.payload)
+                };
+                case UPDATE_CART_ITEM_QUANTITY:
+            const updatedItemsAfterQuantityChange = state.items.map(item =>
+                item.cartItemId === action.payload.itemId
+                    ? { ...item, quantity: action.payload.quantity }
+                    : item
+            );
+            saveCartToLocalStorage(updatedItemsAfterQuantityChange);
             return {
                 ...state,
-                items: state.items.filter(item => item.id_Product !== action.payload)
+                items: updatedItemsAfterQuantityChange,
             };
         case CLEAN_DETAIL:
             return {

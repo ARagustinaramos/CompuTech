@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_DETAIL, GET_PRODUCTS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK,CLEAN_DETAIL, ADD_TO_CART, REMOVE_FROM_CART,} from "./types";
+import { GET_DETAIL, GET_PRODUCTS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK,CLEAN_DETAIL, ADD_TO_CART, REMOVE_FROM_CART, UPDATE_CART_ITEM_QUANTITY, } from "./types";
 
 export const getProducts = () => {
     return async (dispatch) => {
@@ -19,14 +19,21 @@ export const getProducts = () => {
 }
 export const addToCart = (product) => {
     return {
-      type: ADD_TO_CART,
-      payload: product
+        type: 'ADD_TO_CART',
+        payload: {
+            ...product,
+            cartItemId: Math.random().toString(36).substr(2, 9) // Genera un ID único para el cartItemId
+        }
     };
-  };
+};
+export const updateCartItemQuantity = (itemId, quantity) => ({
+    type: UPDATE_CART_ITEM_QUANTITY,
+    payload: { itemId, quantity },
+});
 
-  export const removeFromCart = (itemId) => ({
+  export const removeFromCart = (cartitemId) => ({
     type: REMOVE_FROM_CART,
-    payload: itemId
+    payload: cartitemId
 });
 
 
