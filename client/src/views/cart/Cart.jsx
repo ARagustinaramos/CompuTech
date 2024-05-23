@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, updateCartItemQuantity } from '../../redux/actions/actions';
-import { getMemoizedCartItems } from '../../redux/selectors/selectors'; // Ajusta la ruta según la ubicación de tu archivo de selectores
+import { getMemoizedCartItems } from '../../redux/selectors/selectors';
 
 const Cart = () => {
     const cartItems = useSelector(getMemoizedCartItems);
@@ -13,7 +13,9 @@ const Cart = () => {
 
     const handleQuantityChange = (itemId, newQuantity) => {
         const quantity = Math.max(1, parseInt(newQuantity, 10) || 1);
-        dispatch(updateCartItemQuantity(itemId, quantity));
+        if (!isNaN(quantity)) {
+            dispatch(updateCartItemQuantity(itemId, quantity));
+        }
     };
 
     const handleIncrement = (itemId, currentQuantity) => {
@@ -22,7 +24,7 @@ const Cart = () => {
     };
 
     const handleDecrement = (itemId, currentQuantity) => {
-        const newQuantity = Math.max(1, parseInt(currentQuantity, 10) - 1); // Ensure quantity doesn't go below 1
+        const newQuantity = Math.max(1, parseInt(currentQuantity, 10) - 1);
         handleQuantityChange(itemId, newQuantity);
     };
 
@@ -67,7 +69,7 @@ const Cart = () => {
                                                             </svg>
                                                         </button>
                                                         <input
-                                                            type="number" // Asegúrate de que el tipo sea number
+                                                            type="text" // Cambiado a tipo text
                                                             id="counter-input"
                                                             data-input-counter
                                                             className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"

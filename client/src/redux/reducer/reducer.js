@@ -37,13 +37,23 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 productDetail: action.payload
             };
-        case ADD_TO_CART:
-            const updatedItemsAfterAdd = [...state.items, { ...action.payload, quantity: action.payload.quantity || 1 }];
-            saveCartToLocalStorage(updatedItemsAfterAdd);
-            return {
-                ...state,
-                items: updatedItemsAfterAdd
-            };
+            case ADD_TO_CART:
+                const existingItemIndex = state.items.findIndex(item => item.id === action.payload.id);
+                let updatedItems;
+                if (existingItemIndex >= 0) {
+                    updatedItems = state.items.map((item, index) =>
+                        index === existingItemIndex
+                            ? { ...item, quantity: item.quantity + 1 }
+                            : item
+                    );
+                } else {
+                    updatedItems = [...state.items, { ...action.payload, quantity: 1 }];
+                }
+                saveCartToLocalStorage(updatedItems);
+                return {
+                    ...state,
+                    items: updatedItems
+                };
         case REMOVE_FROM_CART:
             const updatedItemsAfterRemoval = state.items.filter(item => item.cartItemId !== action.payload);
             saveCartToLocalStorage(updatedItemsAfterRemoval);
