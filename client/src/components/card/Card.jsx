@@ -52,3 +52,4 @@ const Card = ({ id_Product, name, image, price }) => {
 };
 
 export default Card;
+

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2'
+
 export default function ProductForm() {
   const [product, setProduct] = useState({
     name: "",
@@ -30,8 +31,9 @@ export default function ProductForm() {
         title: "Oops...",
         text: "Todos los campos son obligatorios",
         footer: '<a href="#">Existen campos vacios</a>'
-      });
+      });;
     }
+    
     if (isNaN(product.price)) {
       isValid = false;
       Swal.fire({
@@ -105,8 +107,12 @@ export default function ProductForm() {
           });
         }
       } catch (error) {
-        console.error('Error:', error);
-        alert('Error al guardar el producto');
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error al guardar el producto",
+          footer: '<a href="#"></a>'
+        });;
       }
     }
   };
