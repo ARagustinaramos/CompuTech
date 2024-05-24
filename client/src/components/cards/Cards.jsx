@@ -55,5 +55,3 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter }) => {
 };
 
 export default Cards;
-
-

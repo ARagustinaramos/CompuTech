@@ -44,5 +44,3 @@ const ByBrand = ({ setBrandFilter }) => {
 };
 
 export default ByBrand;
-
-

@@ -46,4 +46,3 @@ const ByCategory = ({ setCategoryFilter }) => {
 };
 
 export default ByCategory;
-
