@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flowbite, Pagination } from 'flowbite-react';
-
-import Cards from '../../components/cards/Cards';
+import { useAuth0 } from '@auth0/auth0-react';
 import { getProducts } from '../../redux/actions/actions';
 import CarouselComponent from '../../components/carousel/carousel.jsx';
+import Cards from '../../components/cards/Cards.jsx'
 import ByName from '../../components/filters/ByName';
 import ByBrand from '../../components/filters/ByBrand'; 
+import ByCategory from '../../components/filters/ByCategory.jsx'
 import Spinner from '../../components/spinner/Spinner.jsx';
 import Swal from 'sweetalert2'
 
@@ -16,9 +17,10 @@ const Home = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.copyProducts);
   const [brandFilter, setBrandFilter] = useState('');
-
+  const [categoryFilter, setCategoryFilter] = useState('');
   const [dataQt, setDataQt] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
+ 
 
   useEffect(() => {
     dispatch(getProducts());
@@ -42,8 +44,8 @@ const Home = () => {
         <div className="bg-white antialiased dark:bg-gray-900 md:py-5">
           <CarouselComponent />
           <div className="flex overflow-x-auto sm:justify-center mb-2">
-            <ByName />
             <ByBrand setBrandFilter={setBrandFilter} />
+            <ByCategory setCategoryFilter={setCategoryFilter} />
             <Pagination
               layout="navigation"
               currentPage={currentPage}
@@ -52,7 +54,7 @@ const Home = () => {
               showIcons
             />
           </div>
-          <Cards brandFilter={brandFilter} />
+          <Cards nData={nData} brandFilter={brandFilter} categoryFilter={categoryFilter}/>
           <div className="flex overflow-x-auto sm:justify-center">
             <Pagination
               layout="navigation"

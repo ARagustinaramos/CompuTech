@@ -1,7 +1,41 @@
 import React, { useState } from 'react';
+import axios from 'axios'
 import Swal from 'sweetalert2'
 
 export default function ProductForm() {
+
+  // Cloudinary settings
+  const preset = 'presetComputech'; 
+  const cloudName = 'damfsltm2';
+  const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+  const [url_img, setUrl_img] = useState('');
+
+  console.log('url de la imagen cloudinary', url_img);
+
+  const changeUploadImage = async (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', preset);
+
+    try {
+      const response = await axios.post(url, data);
+      console.log(response.data);
+      setUrl_img(response.data.secure_url);
+    } catch (error) {
+      alert('Error al subir la imagen');
+      console.error(error);
+    }
+  };
+
+  // Reset image
+  const deleteImage = () => {
+    setUrl_img('');
+  };
+
   const [product, setProduct] = useState({
     name: "",
     description: "",
@@ -24,7 +58,7 @@ export default function ProductForm() {
     let isValid = true;
     let errorMessage = '';
 
-    if (!product.name || !product.description || !product.price || !product.image || !product.stock || !product.brand || !product.category) {
+    if (!product.name || !product.description || !product.price || !url_img || !product.stock || !product.brand || !product.category) {
       isValid = false;
       Swal.fire({
         icon: "error",
@@ -64,13 +98,14 @@ export default function ProductForm() {
   const handleSave = async (event) => {
     event.preventDefault();
     if (validateForm()) {
+
       const parsedProduct = {
         ...product,
         price: parseFloat(product.price),
         stock: parseInt(product.stock, 10),
-        image: product.image.split(',').map(img => img.trim())  // Convertir imagen a array de strings
+        image: url_img.split(',').map(img => img.trim())
       };
-
+  
       try {
         const response = await fetch('http://localhost:3001/products', {
           method: 'POST',
@@ -79,7 +114,7 @@ export default function ProductForm() {
           },
           body: JSON.stringify(parsedProduct),
         });
-
+  
         if (response.ok) {
           Swal.fire({
             position: "top-end",
@@ -97,6 +132,7 @@ export default function ProductForm() {
             brand: "",
             category: ""
           });
+          setUrl_img('')
         } else {
           const errorData = await response.json();
           Swal.fire({
@@ -116,11 +152,12 @@ export default function ProductForm() {
       }
     }
   };
+  
 
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Añade un producto</h1>
+        <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Añade un producto</h1>
         <form onSubmit={handleSave}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nombre</label>
@@ -157,14 +194,25 @@ export default function ProductForm() {
           <div className="mb-4">
             <label htmlFor="image" className="block text-sm font-medium text-gray-700">Imagen</label>
             <input
-              type="text"
+              type="file"
+              accept="image/*"
               id="image"
               name="image"
-              value={product.image}
-              onChange={handleChange}
+              onChange={changeUploadImage}
               className="mt-1 p-2 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              placeholder="URLs de las imágenes, separadas por comas"
             />
+            {url_img && (
+              <div>
+                <img src={url_img} alt="Uploaded" className="mt-2" />
+                <button
+                  type="button"
+                  className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded mt-2"
+                  onClick={deleteImage}
+                >
+                  Eliminar imagen
+                </button>
+              </div>
+            )}
           </div>
           <div className="mb-4">
             <label htmlFor="stock" className="block text-sm font-medium text-gray-700">Stock</label>
