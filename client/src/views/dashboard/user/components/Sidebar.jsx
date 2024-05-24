@@ -9,8 +9,9 @@ import { BsPersonSquare } from "react-icons/bs";
 
 
 
-const Sidebar = (name, picture, email) => {
+const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const { user , isLoading} = useAuth0();
 
   
   return (
@@ -24,12 +25,12 @@ const Sidebar = (name, picture, email) => {
         {/* Perfil de ususario */}
         <div className="flex flex-col items-center justify-center p-8 gap-2 h-[30vh]">
           <img
-            src={picture}
+            src=''
             className="w-20 h-20 object-cover rounded-full ring-2 ring-gray-300"
           />
-          <h1 className="text-xl text-white font-bold">{name}</h1>
+          <h1 className="text-xl text-white font-bold">Maria Florencia Gala</h1>
           <p className="bg-primary-100 py-2 px-4 rounded-full text-white">
-            {email}
+            florycordoba35@gmail.com
           </p>
         </div>
         {/* Nav */}

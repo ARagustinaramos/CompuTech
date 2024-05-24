@@ -11,6 +11,9 @@ import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
 import {  RiHashtag } from "react-icons/ri";
 
+import { useAuth0 } from '@auth0/auth0-react';
+
+
 
 
 const DashboardUser = () => {
@@ -18,18 +21,15 @@ const DashboardUser = () => {
 
   console.log('user', user)
 
-  if(user){
+ /*  if(user){
     const name = user.name
     const email = user.email
-    const picture = user.picture
-    if(isLoading){
-
-    }
-  
+    const picture = user.picture */
+   
 
   return(
     <div className="grid lg:grid-cols-4 xl:grid-cols-6 min-h-screen  dark:bg-gray-900 md:py-5">
-      <Sidebar name={name} email={email} picture={picture}/>
+      <Sidebar />
       <main className="lg:col-span-3 xl:col-span-5 bg-gray-100 p-8 h-[100vh] overflow-y-scroll">
         <Header/>
         {/* Section 1 */}
@@ -151,7 +151,6 @@ const DashboardUser = () => {
       </main>
     </div>
   );
-}
 }
 
 export default DashboardUser;
