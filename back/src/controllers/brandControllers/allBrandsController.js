@@ -1,29 +1,17 @@
-const fs = require('fs');
-const path = require('path');
 const { Brand } = require('../../config/db');
-
-const getBrandsFilePath = path.join(__dirname, '..', '..', '..', 'json/db.json');
+const { Op } = require('sequelize');
 
 const getAllBrands = async () => {
     try {
-        const data = fs.readFileSync(getBrandsFilePath, 'utf8');
-        const jsonData = JSON.parse(data);                                  
-        const brandsData = jsonData.brands;
+        // Busca todas las marcas en la base de datos de manera insensible a mayúsculas y minúsculas
+        const brands = await Brand.findAll({
+            attributes: ['name'],
+            order: [['name', 'ASC']],
+        });
 
-        const brands = await Promise.all(brandsData.map(async (brandData) => {
-            const existingBrand = await Brand.findOne({
-                where: { name: brandData.name },
-            });
-            if(!existingBrand){
-                const brand = await Brand.create({
-                    name: brandData.name,                                                                                           
-                });
-            return brand;
-            } else {
-                return existingBrand;
-            }
-        }));
+        // Extrae los nombres de las marcas
         const brandNames = brands.map(brand => brand.name);
+
         return brandNames;
     } catch (error) {
         console.error('Hubo un error al obtener las marcas:', error);
@@ -32,4 +20,3 @@ const getAllBrands = async () => {
 };
 
 module.exports = { getAllBrands };
-
