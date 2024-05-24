@@ -1,19 +1,5 @@
 import axios from "axios";
-import { 
-    GET_DETAIL, 
-    GET_PRODUCTS, 
-    GET_BY_NAME, 
-    GET_TYPES, 
-    FILTERDBAPI, 
-    FILTER_TYPE, 
-    ORDER_NAME, 
-    ORDER_ATTACK, 
-    CLEAN_DETAIL,
-    SET_FILTER, 
-    ADD_TO_CART, 
-    REMOVE_FROM_CART, 
-    UPDATE_CART_ITEM_QUANTITY 
-} from "./types";
+import { GET_DETAIL, GET_PRODUCTS, GET_BY_NAME, GET_TYPES,FILTERDBAPI,FILTER_TYPE,ORDER_NAME,ORDER_ATTACK,CLEAN_DETAIL,SET_FILTER, ADD_TO_CART, REMOVE_FROM_CART,} from "./types";
 
 export const getProducts = () => {
     return async (dispatch) => {

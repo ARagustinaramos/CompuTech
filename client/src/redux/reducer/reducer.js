@@ -126,13 +126,13 @@ function rootReducer(state = initialState, action) {
             };
         case ORDER_NAME:
             if (action.payload === "a-z") {
-                const orderByName = [...state.copyProducts].sort((a, b) => a.nombre.localeCompare(b.nombre));
+                const orderByName = [...state.copyPokemons].sort((a, b) => a.name.localeCompare(b.name))
                 return {
                     ...state,
                     copyProducts: orderByName
                 };
             } else if (action.payload === "z-a") {
-                const orderByName = [...state.copyProducts].sort((a, b) => b.nombre.localeCompare(a.nombre));
+                const orderByName = [...state.copyPokemons].sort((a, b) => b.nombre.localeCompare(a.nombre))
                 return {
                     ...state,
                     copyProducts: orderByName
