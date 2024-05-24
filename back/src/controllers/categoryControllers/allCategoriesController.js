@@ -1,24 +1,18 @@
-const fs = require('fs');
-const path = require('path');
-const { Categories } = require('../../config/db');  // Asegúrate de que la importación es correcta
-
-const getCategoriesFilePath = path.join(__dirname, '..', '..', '..', 'json/db.json');
+const { Categories } = require('../../config/db');
+const { Op } = require('sequelize');
 
 const getAllCategories = async () => {
     try {
-        const data = fs.readFileSync(getCategoriesFilePath, 'utf8');
-        const jsonData = JSON.parse(data);
-        const categoriesData = jsonData.categories;
+        // Busca todas las categorías en la base de datos
+        const categories = await Categories.findAll({
+            attributes: ['name'],
+            order: [['name', 'ASC']],
+        });
 
-        const categories = await Promise.all(categoriesData.map(async (categoryData) => {
-            const [category, created] = await Categories.findOrCreate({
-                where: { name: categoryData.name }
-            });
-            return category;
-        }));
+        // Extrae los nombres de las categorías
         const categoryNames = categories.map(category => category.name);
-        return categoryNames;
 
+        return categoryNames;
     } catch (error) {
         console.error('Hubo un error al obtener las categorías:', error);
         throw new Error('Hubo un error interno del servidor.');
@@ -26,3 +20,4 @@ const getAllCategories = async () => {
 };
 
 module.exports = { getAllCategories };
+
