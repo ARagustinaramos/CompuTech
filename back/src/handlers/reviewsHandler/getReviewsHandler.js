@@ -1,13 +1,13 @@
-const {getAllReviews} = require('../../controllers/reviewsControllers/getAllReviews');
+const getAllReviews = require('../../controllers/reviewsControllers/getAllReviews');
+
 
 const getReviewsHandler = async (req, res) => {
     try {
-        const {filters, sort} = req.query;
-        const reviews = await getAllReviews(filters, sort);
-        res.json(reviews);
+        const reviews = await getAllReviews();
+        res.status(200).json(reviews);
     } catch (error) {
-        res.status(500).send('Hubo un error al obtener las reviews');
+        res.status(500).json({ message: error.message });
     }
-}
+};
 
 module.exports = { getReviewsHandler }

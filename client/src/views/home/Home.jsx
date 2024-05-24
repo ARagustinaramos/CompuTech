@@ -5,10 +5,12 @@ import { Flowbite, Pagination } from 'flowbite-react';
 
 import Cards from '../../components/cards/Cards';
 import { getProducts } from '../../redux/actions/actions';
-import CarouselComponent from '../../components/carousel/Carousel';
+import CarouselComponent from '../../components/carousel/carousel.jsx';
 import ByName from '../../components/filters/ByName';
 import ByBrand from '../../components/filters/ByBrand'; 
 import Spinner from '../../components/spinner/Spinner.jsx';
+import Swal from 'sweetalert2'
+
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -60,6 +62,7 @@ const Home = () => {
               showIcons
             />
           </div>
+          
         </div>
       </Flowbite>
     </>

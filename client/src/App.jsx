@@ -13,6 +13,7 @@ import Form from './components/form/Form'
 import About from './views/about/About'
 import Cart from './views/cart/Cart'
 import { saveCartToLocalStorage } from '../src/redux/reducer/localStorageHelpers';
+import DashboardAdmin from './views/dashboard/admin/DashboardAdmin';
 
 function App() {
   const cartItems = useSelector((state) => state.items);
@@ -40,6 +41,7 @@ function App() {
         <Route path="/form" element={<Form/>}></Route>
         <Route path={`/detail/:id`} element={<Detail />}></Route>
         <Route path="/about" element={<About/>}></Route>
+        <Route path="/dashboardadmin" element={<DashboardAdmin />}></Route>
       </Routes>
       <Footer />
     </>
