@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/actions/actions';
+import Swal from 'sweetalert2'
 
 const Card = ({ id_Product, name, image, price }) => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Card = ({ id_Product, name, image, price }) => {
       quantity: 1 // Puedes ajustar esto si necesitas iniciar con una cantidad diferente
     };
     dispatch(addToCart(productToAdd));
+    Swal.fire("Producto agregado al carrito!");
   };
 
   return (

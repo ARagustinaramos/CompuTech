@@ -62,6 +62,7 @@ const Home = () => {
               showIcons
             />
           </div>
+          
         </div>
       </Flowbite>
     </>
