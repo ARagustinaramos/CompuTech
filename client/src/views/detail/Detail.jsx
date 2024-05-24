@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetail, cleanDetail, addToCart } from '../../redux/actions/actions';
+import Swal from 'sweetalert2'
 
 const Detail = () => {
   const { id } = useParams();
@@ -9,6 +10,7 @@ const Detail = () => {
   const producto = useSelector((state) => state.productDetail);
   const handleAddToCart = () => {
     dispatch(addToCart(producto));
+    Swal.fire("Producto agregado al carrito!");
   };
 
   useEffect(() => {
