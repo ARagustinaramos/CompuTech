@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CartIcon from '../carticon/CartIcon';
 import LoginLogout from '../loginLogout/LoginLogout';
@@ -7,13 +7,14 @@ import { DarkThemeToggle } from "flowbite-react";
 import SearchBar from '../searchBar/SearchBar';
 
 export default function Navbar() {
+  const [searchResults, setSearchResults] = useState([]);
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="./assets/Recurso3.png" className="h-8" alt="Computech Logo" />
         </Link>
-        <SearchBar />
+        <SearchBar setSearchResults={setSearchResults} />
         <button
           data-collapse-toggle="navbar-dropdown"
           type="button"
