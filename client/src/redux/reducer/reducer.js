@@ -98,13 +98,13 @@ function rootReducer(state = initialState, action) {
             }
         case ORDER_NAME:
             if (action.payload === "a-z") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => a.name.localeCompare(b.name))
+                const orderByName = [...state.copyProducts].sort((a, b) => a.name.localeCompare(b.name));
                 return {
                     ...state,
                     copyPokemons: orderByName
                 }
             } else if (action.payload === "z-a") {
-                const orderByName = [...state.copyPokemons].sort((a, b) => b.name.localeCompare(a.name))
+                const orderByName = [...state.copyProducts].sort((a, b) => b.name.localeCompare(a.name));
                 return {
                     ...state,
                     copyPokemons: orderByName

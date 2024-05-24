@@ -22,6 +22,7 @@ import DashboardUser from './views/dashboard/user/DashboardUser'
 
 
 import { saveCartToLocalStorage } from '../src/redux/reducer/localStorageHelpers';
+import DashboardAdmin from './views/dashboard/admin/DashboardAdmin';
 
 function App() {
   const cartItems = useSelector((state) => state.items);
