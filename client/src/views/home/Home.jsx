@@ -9,6 +9,8 @@ import CarouselComponent from '../../components/carousel/carousel';
 import ByCategory from '../../components/filters/ByCategory.jsx';
 import ByBrand from '../../components/filters/ByBrand'; 
 import Spinner from '../../components/spinner/Spinner.jsx';
+import Swal from 'sweetalert2'
+
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -61,6 +63,7 @@ const Home = () => {
               showIcons
             />
           </div>
+          
         </div>
       </Flowbite>
     </>

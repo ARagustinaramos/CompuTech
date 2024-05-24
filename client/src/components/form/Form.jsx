@@ -36,13 +36,27 @@ export default function ProductForm() {
     
     if (isNaN(product.price)) {
       isValid = false;
-      errorMessage += "El precio debe ser un número\n";
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "El precio debe ser un número válido",
+        footer: '<a href="#"></a>'
+      });
     }
     if (isNaN(product.stock)) {
       isValid = false;
-      errorMessage += "El stock debe ser un número\n";
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "El stock debe ser un número",
+        footer: '<a href="#"></a>'
+      });
+      
     }
 
+    // if (!isValid) {
+    //   alert(errorMessage);
+    // }
 
     return isValid;
   };
@@ -85,7 +99,12 @@ export default function ProductForm() {
           });
         } else {
           const errorData = await response.json();
-          alert(`Error al guardar el producto: ${errorData.message}`);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error al guardar el producto",
+            footer: '<a href="#"></a>'
+          });
         }
       } catch (error) {
         Swal.fire({

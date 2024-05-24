@@ -2,22 +2,21 @@ const { Brand } = require('../../config/db');
 const { Op } = require('sequelize');
 
 const getAllBrands = async () => {
-try {
-// Busca todas las marcas en la base de datos de manera insensible a mayúsculas y minúsculas
-const brands = await Brand.findAll({
-attributes: ['name'],
-order: [['name', 'ASC']],
-});
+    try {
+        // Busca todas las marcas en la base de datos de manera insensible a mayúsculas y minúsculas
+        const brands = await Brand.findAll({
+            attributes: ['name'],
+            order: [['name', 'ASC']],
+        });
 
-// Extrae los nombres de las marcas
-const brandNames = brands.map(brand => brand.name);
+        // Extrae los nombres de las marcas
+        const brandNames = brands.map(brand => brand.name);
 
-return brandNames;
-} catch (error) {
-console.error('Hubo un error al obtener las marcas:', error);
-throw new Error('Hubo un error interno del servidor.');
-}
+        return brandNames;
+    } catch (error) {
+        console.error('Hubo un error al obtener las marcas:', error);
+        throw new Error('Hubo un error interno del servidor.');
+    }
 };
 
 module.exports = { getAllBrands };
-
