@@ -1,17 +1,31 @@
-require("dotenv").config();
 const { Sequelize } = require("sequelize");
-
 const fs = require("fs");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+const envFile = process.env.NODE_ENV === 'production' ? '.env' : '.env.local';
+require('dotenv').config({ path: path.resolve(process.cwd(), envFile) });
 
-const sequelize = new Sequelize(
-	`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/computech`,
-	{
-		logging: false,
-		native: false
-	}
-);
+const { DB_URL } = process.env;
+
+if (!DB_URL) {
+	throw new Error("Por favor define la variable de entorno DB_URL dentro del archivo .env");
+}
+
+const sequelizeOptions = new Sequelize(DB_URL, {
+	logging: false,
+	native: false
+});
+
+if (process.env.NODE_ENV === 'production') {
+    sequelizeOptions.dialectOptions = {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false // Puedes ajustar esto según tus necesidades de seguridad
+        }
+    };
+}
+
+const sequelize = new Sequelize(DB_URL, sequelizeOptions);
+
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
