@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getProducts } from '../../redux/actions/actions';
+import { useDispatch } from 'react-redux';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
 
@@ -33,8 +32,8 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter }) => {
   const productsToDisplay = filteredProducts.length > 0 ? filteredProducts : [];
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="grid grid-cols-4 gap-4">
+    <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {productsToDisplay.length > 0 ? (
           productsToDisplay.map((product) => (
             <Card 
@@ -43,7 +42,6 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter }) => {
               name={product.name} 
               image={product.image} 
               price={product.price} 
-              brand={product.BrandIdBrand}  
             />
           ))
         ) : (
@@ -55,7 +53,3 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter }) => {
 };
 
 export default Cards;
-
-
-
-
