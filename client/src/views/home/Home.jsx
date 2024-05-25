@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flowbite, Pagination } from 'flowbite-react';
-
-import Cards from '../../components/cards/Cards';
+import { useAuth0 } from '@auth0/auth0-react';
 import { getProducts } from '../../redux/actions/actions';
-import CarouselComponent from '../../components/carousel/carousel';
-import ByCategory from '../../components/filters/ByCategory.jsx';
+import CarouselComponent from '../../components/carousel/carousel.jsx';
+import Cards from '../../components/cards/Cards.jsx'
+import ByName from '../../components/filters/ByName';
 import ByBrand from '../../components/filters/ByBrand'; 
+import ByCategory from '../../components/filters/ByCategory.jsx'
 import Spinner from '../../components/spinner/Spinner.jsx';
 import Swal from 'sweetalert2'
 

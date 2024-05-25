@@ -12,13 +12,9 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter }) => {
     const fetchProducts = async () => {
       try {
         let url = 'http://localhost:3001/products';
-        const params = new URLSearchParams();
-        if (brandFilter) params.append('brand', brandFilter);
-        if (categoryFilter) params.append('category', categoryFilter);
-        if (nameFilter) params.append('name', nameFilter);
-
-        if (params.toString()) url += `?${params.toString()}`;
-
+        if (brandFilter) {
+          url += `?brands=${brandFilter}`;
+        }
         const response = await fetch(url);
         const data = await response.json();
         setFilteredProducts(data);
