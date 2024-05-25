@@ -12,11 +12,10 @@ const postUserControllers = async (body, user) => {
 	// Verificar si el usuario ya existe
 	const existingUser = await User.findOne({ where: { mail: body.email } });
 	if (existingUser) {
-		throw new Error("User with this email already exists");
+		return "User with this email already exists";
 	}
 
 	// Crear el nuevo usuario
-	console.log(body);
 
 	const newUser = await User.create({
 		name: body.name,
@@ -24,7 +23,6 @@ const postUserControllers = async (body, user) => {
 		image: body.picture,
 		rol: false
 	});
-	console.log(newUser);
 	return newUser;
 };
 
