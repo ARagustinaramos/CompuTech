@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
 
-const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder }) => {
+const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const allProducts = useSelector((state) => state.copyProducts);
 
@@ -28,8 +28,15 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder }) => {
       filtered.sort((a, b) => b.name.localeCompare(a.name));
     }
 
+    // Ordenar los productos según el filtro de orden por precio
+    if (priceOrder === 'asc') {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (priceOrder === 'desc') {
+      filtered.sort((a, b) => b.price - a.price);
+    }
+
     setFilteredProducts(filtered);
-  }, [allProducts, brandFilter, categoryFilter, nameFilter, nameOrder]);
+  }, [allProducts, brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder]);
 
   const productsToDisplay = filteredProducts.length > 0 ? filteredProducts : [];
 
@@ -56,10 +63,6 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder }) => {
 };
 
 export default Cards;
-
-
-
-
 
 
 
