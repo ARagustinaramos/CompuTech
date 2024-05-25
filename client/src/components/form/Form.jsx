@@ -3,7 +3,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 export default function ProductForm() {
 
-  // Cloudinary settings
+  // Cloudinary 
   const preset = 'presetComputech'; 
   const cloudName = 'damfsltm2';
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
@@ -24,8 +24,9 @@ export default function ProductForm() {
       const response = await axios.post(url, data);
       console.log(response.data);
       setUrl_img(response.data.secure_url);
-    } catch (error) {
-      alert('Error al subir la imagen');
+     } catch (error) {
+      alert('Error al subir la imagen');    
+
       console.error(error);
     }
   };

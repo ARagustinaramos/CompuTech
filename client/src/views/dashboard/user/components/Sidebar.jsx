@@ -18,12 +18,12 @@ const Sidebar = () => {
 
     <>
       <div
-        className={`bg-primary-900 h-full fixed lg:static w-[80%] md:w-[40%] lg:w-full transition-all z-50 duration-300 ${
+        className={`bg-primary-900  fixed lg:static w-[80%] md:w-[40%] lg:w-full transition-all z-50 duration-300 ${
           showMenu ? "left-0" : "-left-full"
         }`}
       >
-        {/* Perfil de ususario */}
-        <div className="flex flex-col items-center justify-center p-8 gap-2 h-[30vh]">
+        {/* Perfil de usuario */}
+        <div className="bg-gray-700 rounded-tr-[100px] h-[40vh] border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center p-8 gap-2 h-[30vh]">
           <img
             src=''
             className="w-20 h-20 object-cover rounded-full ring-2 ring-gray-300"
@@ -34,7 +34,7 @@ const Sidebar = () => {
           </p>
         </div>
         {/* Nav */}
-        <div className="bg-primary-300 p-8 rounded-tr-[100px] h-[70vh] overflow-y-scroll flex flex-col justify-between gap-8">
+        <div className="bg-gray-700 p-8 flex flex-col justify-between gap-8">
           <nav className="flex flex-col gap-8">
           <a
               href="/perfil"

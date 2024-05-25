@@ -21,16 +21,16 @@ const DashboardUser = () => {
 
   console.log('user', user)
 
- /*  if(user){
+  if(user){
     const name = user.name
     const email = user.email
-    const picture = user.picture */
+    const picture = user.picture 
    
 
   return(
     <div className="grid lg:grid-cols-4 xl:grid-cols-6 min-h-screen  dark:bg-gray-900 md:py-5">
       <Sidebar />
-      <main className="lg:col-span-3 xl:col-span-5 bg-gray-100 p-8 h-[100vh] overflow-y-scroll">
+      <main className="lg:col-span-3 xl:col-span-5 bg-gray-100 p-8 h-[100vh]">
         <Header/>
         {/* Section 1 */}
         <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mt-10 gap-8">
@@ -107,20 +107,7 @@ const DashboardUser = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-primary-900 text-gray-300 p-8 rounded-xl shadow-2xl flex items-center justify-between flex-wrap xl:flex-nowrap gap-8">
-              <div>
-                <RiHashtag className="text-4xl -rotate-12" />
-              </div>
-              <div>
-                <h5 className="font-bold text-white">Engage with clients</h5>
-                <h5>Join slack channel</h5>
-              </div>
-              <div className="w-full xl:w-auto">
-                <button className="bg-primary-100 py-2 px-6 rounded-xl text-white w-full">
-                  Join now
-                </button>
-              </div>
-            </div>
+           
           </div>
           <div>
             <h1 className="text-2xl font-bold mb-8">Novedades</h1>
@@ -151,6 +138,7 @@ const DashboardUser = () => {
       </main>
     </div>
   );
+}
 }
 
 export default DashboardUser;

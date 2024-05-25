@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
+import Swal from 'sweetalert2'
+
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetail, cleanDetail, addToCart } from '../../redux/actions/actions';
-import Swal from 'sweetalert2'
+
 
 const Detail = () => {
   const { id } = useParams();

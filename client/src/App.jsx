@@ -2,13 +2,12 @@ import {  useSelector } from 'react-redux'
 import { useEffect } from 'react';
 import { Route, Routes } from "react-router-dom"
 
+import './App.css'
+//Mercado pago
 import Success from './views/redirect/Success';
 import Failure from './views/redirect/Failure';
 import Pending from './views/redirect/Pending';
-
-
-import './App.css'
-import SearchBar from './components/searchBar/SearchBar'
+//Components
 import Home from './views/home/Home'
 import Detail from './views/detail/Detail'
 import Footer from './components/footer/Footer'
@@ -17,14 +16,13 @@ import Form from './components/form/Form'
 import About from './views/about/About'
 import Cart from './views/cart/Cart'
 import Perfil from './views/dashboard/user/components/Perfil'
-//import DashboardAdmin from './views/dashboard/admin/DashboardAdmin'
 import DashboardUser from './views/dashboard/user/DashboardUser'
 
 
 import { saveCartToLocalStorage } from '../src/redux/reducer/localStorageHelpers';
-import DashboardAdmin from './views/dashboard/admin/DashboardAdmin';
 
 function App() {
+  
   const cartItems = useSelector((state) => state.items);
 
     useEffect(() => {

@@ -49,7 +49,9 @@ const LoginLogout = () => {
                 <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Perfil</a>
                 <a href="/account-settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Configuración de Cuenta</a>
                 <a href="/order-history" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Historial de Pedidos</a>
-                <div className="border-t border-gray-100"></div>
+                <a href="/form" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Añadir producto</a>                
+
+              <div className="border-t border-gray-100"></div>
                 <button
                   onClick={() => logout({ returnTo: window.location.origin })}
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
