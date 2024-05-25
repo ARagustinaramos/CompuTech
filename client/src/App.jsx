@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Route, Routes } from "react-router-dom"
 
 import Success from './views/redirect/Success';
-import Failure from './views/redirect/Failure';
+import Failure  from './views/redirect/Failure';
 import Pending from './views/redirect/Pending';
 
 
