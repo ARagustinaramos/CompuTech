@@ -17,9 +17,18 @@ server.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     next();
 });
-server.use(cors({
-    origin: '*' // Reemplaza esto con el dominio de tu frontend
-}));
+// Configuración de CORS basada en el entorno
+if (process.env.NODE_ENV === 'development') {
+    server.use(cors({
+        origin: 'http://localhost:5173', // Permitir solicitudes desde el frontend local durante el desarrollo
+        credentials: true // Permitir enviar cookies desde el frontend
+    }));
+} else {
+    server.use(cors({
+        origin: 'https://computech.vercel.app', // Reemplazar con el dominio de tu frontend en producción
+        credentials: true // Permitir enviar cookies desde el frontend
+    }));
+}
 server.use("/", router);
 
 server.use((err, req, res, next) => {
