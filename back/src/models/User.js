@@ -17,25 +17,21 @@ module.exports = (sequelize) => {
 				type: DataTypes.STRING,
 				allowNull: false
 			},
-			password: {
-				type: DataTypes.STRING,
-				allowNull: false
-			},
 			phone: {
 				type: DataTypes.STRING,
-				allowNull: false
+				allowNull: true
 			},
 			image: {
 				type: DataTypes.STRING,
-				allowNull: false
+				allowNull: true
 			},
 			address: {
 				type: DataTypes.STRING,
-				allowNull: false
+				allowNull: true
 			},
 			active: {
 				type: DataTypes.BOOLEAN,
-				allowNull: false
+				allowNull: true
 			},
 			rol: {
 				type: DataTypes.BOOLEAN,
@@ -43,11 +39,11 @@ module.exports = (sequelize) => {
 			},
 			shoppingCart: {
 				type: DataTypes.ARRAY(DataTypes.STRING),
-				allowNull: false
+				allowNull: true
 			},
 			recurringPayment: {
 				type: DataTypes.JSONB,
-				allowNull: false
+				allowNull: true
 			}
 		},
 		{ timestamps: false }
