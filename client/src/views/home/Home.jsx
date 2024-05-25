@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flowbite, Pagination } from 'flowbite-react';
-
 import Cards from '../../components/cards/Cards';
 import { getProducts } from '../../redux/actions/actions';
 import CarouselComponent from '../../components/carousel/carousel';
+import ByName from '../../components/filters/ByName';
 import ByCategory from '../../components/filters/ByCategory.jsx';
 import ByBrand from '../../components/filters/ByBrand'; 
+import ByPrice from '../../components/filters/ByPrice.jsx';
 import Spinner from '../../components/spinner/Spinner.jsx';
 import Swal from 'sweetalert2'
 
@@ -43,6 +44,8 @@ const Home = () => {
         <div className="bg-white antialiased dark:bg-gray-900 md:py-5">
           <CarouselComponent />
           <div className="flex overflow-x-auto sm:justify-center mb-2">
+          <ByName/>
+          <ByPrice/>
             <ByBrand setBrandFilter={setBrandFilter} />
             <ByCategory setCategoryFilter={setCategoryFilter} />
             <Pagination
