@@ -3,7 +3,7 @@ export default function Footer() {
   return (
     <footer className="bg-white dark:bg-gray-900">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-              <hr className="my-6 border-gray-200 sm:mx-auto dark:border-white-400 border-gray-400 lg:my-8" />
+              <hr className="my-6 border-gray200 sm:mx-auto dark:border-white-400 border-gray400 lg:my-8" />
         <div className="md:flex md:justify-between">
             {/*LOGO Y LINK A HOME O A HENRY??*/}
           <div className="mb-6 md:mb-0">

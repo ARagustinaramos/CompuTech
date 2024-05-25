@@ -21,12 +21,13 @@ const DashboardUser = () => {
 
   console.log('user', user)
 
-  if(user){
+  if(!user){
+    return <div>argando...</div>
+  }else{
     const name = user.name
     const email = user.email
     const picture = user.picture 
-   
-
+  }
   return(
     <div className="grid lg:grid-cols-4 xl:grid-cols-6 min-h-screen  dark:bg-gray-900 md:py-5">
       <Sidebar />
@@ -34,12 +35,10 @@ const DashboardUser = () => {
         <Header/>
         {/* Section 1 */}
         <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 mt-10 gap-8">
-          {/* Perfil??? editar perfil???' */}
-
           {/* Historial de pedidos */}
           <div className="col-span-1 md:col-span-2 flex flex-col justify-between">
-            <h1 className="text-2xl font-bold mb-8">Historial de pedidos</h1>
             <div className="bg-white p-8 rounded-xl shadow-2xl">
+            <h1 className="text-2xl font-bold mb-8">Historial de pedidos</h1>
               <div className="flex items-center gap-4 mb-8">
                 <FaCheck className="w-7 h-7 object-cover rounded-full"/>
                 <div>
@@ -68,8 +67,8 @@ const DashboardUser = () => {
           {/* Historial de compras */}
         <section className="grid grid-cols-1 md:grid-cols-2 mt-10 gap-8">
           <div>
-            <h1 className="text-2xl font-bold mb-8">Historial de compras</h1>
             <div className="bg-white p-8 rounded-xl shadow-2xl mb-8 flex flex-col gap-8">
+            <h1 className="text-2xl font-bold mb-8">Historial de compras</h1>
               {/* Producto 1*/}
               <div className="grid grid-cols-1 xl:grid-cols-4 items-center gap-4 mb-4">
                 <div className="col-span-2 flex items-center gap-4">
@@ -110,8 +109,8 @@ const DashboardUser = () => {
            
           </div>
           <div>
-            <h1 className="text-2xl font-bold mb-8">Novedades</h1>
             <div className="bg-white p-8 rounded-xl shadow-2xl mb-8 flex flex-col gap-8">
+            <h1 className="text-2xl font-bold mb-8">Novedades</h1>
               <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <img
@@ -139,6 +138,6 @@ const DashboardUser = () => {
     </div>
   );
 }
-}
+
 
 export default DashboardUser;

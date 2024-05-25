@@ -107,10 +107,10 @@ export default function ProductForm() {
       };
   
       try {
-        const response = await fetch('http://localhost:3001/products', {
+        const response = await fetch('http://localhost:3001/create_preference', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(parsedProduct),
         });

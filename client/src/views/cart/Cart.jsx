@@ -194,7 +194,7 @@ const Cart = () => {
                         {preferenceId && <Wallet initialization={{ preferenceId: preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />}
 
                         <div className="flex items-center justify-center gap-2">
-                            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">or</span>
+                            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">o</span>
                             <a href="/" className="text-sm font-normal text-primary-700 hover:underline dark:text-primary-500">Continua comprando</a>
                         </div>
                     </div>

@@ -7,9 +7,9 @@ import { getProducts } from '../../redux/actions/actions';
 import CarouselComponent from '../../components/carousel/carousel';
 import ByCategory from '../../components/filters/ByCategory.jsx';
 import ByBrand from '../../components/filters/ByBrand'; 
-import ByCategory from '../../components/filters/ByCategory.jsx'
 import Spinner from '../../components/spinner/Spinner.jsx';
 import Swal from 'sweetalert2'
+import Cards from '../../components/cards/Cards.jsx'
 
 
 const Home = () => {
