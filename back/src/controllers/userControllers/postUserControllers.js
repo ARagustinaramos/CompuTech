@@ -16,7 +16,15 @@ const postUserControllers = async (body, user) => {
 	}
 
 	// Crear el nuevo usuario
-	const newUser = await User.create(body);
+	console.log(body);
+
+	const newUser = await User.create({
+		name: body.name,
+		mail: body.email,
+		image: body.picture,
+		rol: false
+	});
+	console.log(newUser);
 	return newUser;
 };
 
