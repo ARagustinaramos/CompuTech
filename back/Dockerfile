@@ -11,10 +11,9 @@ COPY package*.json ./
 RUN npm install
 
 # Bundle app source inside the Docker image
-COPY . .
-
+COPY back/src .
 # Make port 3001 available outside the container
 EXPOSE 3001
 
 # Run the app when the container launches
-CMD ["node", "server.js"]
+CMD ["node", "src/server.js"]
