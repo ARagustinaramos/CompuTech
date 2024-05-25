@@ -31,7 +31,7 @@ const LoginLogout = () => {
           <div>
             <button
               type="button"
-              className="flex items-center justify-center w-full rounded-md px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+              className="flex items-center justify-center w-full rounded-md px-4 py-2 bg-white dark:bg-gray-800 dark:text-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none"
               onClick={toggleDropdown}
             >
               <img src={user.picture} alt={user.name} className="h-8 w-8 rounded-full mr-2" />
@@ -43,16 +43,16 @@ const LoginLogout = () => {
           </div>
 
           {dropdownOpen && (
-            <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+            <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
               <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                <a href="/userDashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Dashboard</a>
-                <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Perfil</a>
-                <a href="/account-settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Configuración de Cuenta</a>
-                <a href="/order-history" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Historial de Pedidos</a>
-                <div className="border-t border-gray-100"></div>
+                <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Dashboard</a>
+                <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Perfil</a>
+                <a href="/account-settings" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Configuración de Cuenta</a>
+                <a href="/order-history" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Historial de Pedidos</a>
+                <div className="border-t border-gray-100 dark:border-gray-700"></div>
                 <button
                   onClick={() => logout({ returnTo: window.location.origin })}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   role="menuitem"
                 >
                   Cerrar sesión
@@ -67,4 +67,3 @@ const LoginLogout = () => {
 };
 
 export default LoginLogout;
-

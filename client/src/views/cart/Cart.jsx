@@ -1,16 +1,13 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeFromCart, updateCartItemQuantity } from '../../redux/actions/actions';
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
 
-
-
-
 const Cart = () => {
-    const [preferenceId, setPrefereceId] = useState(null)
+    const [preferenceId, setPrefereceId] = useState(null);
 
     initMercadoPago('TEST-057aa2fa-27a8-4181-9ebd-28a08f1a19bc', {
         locale: "es-AR",
@@ -18,7 +15,6 @@ const Cart = () => {
 
     const cartItems = useSelector(getMemoizedCartItems);
     const dispatch = useDispatch();
-
 
     const createPreference = async () => {
         try {
@@ -28,13 +24,13 @@ const Cart = () => {
                 price: item.price,
                 quantity: item.quantity
             }));
-    
+
             console.log("Items being sent:", items);
-    
+
             const response = await axios.post('http://localhost:3001/create_preference', {
                 items
             });
-    
+
             const { id } = response.data;
             return id;
         } catch (error) {
@@ -66,7 +62,7 @@ const Cart = () => {
     const handleBuy = async () => {
         const id = await createPreference();
         if (id) {
-            setPrefereceId(id)
+            setPrefereceId(id);
         }
     };
 
@@ -79,7 +75,7 @@ const Cart = () => {
         .reduce((acc, curr) => acc + curr, 0);
 
     return (
-        <div>
+        <div className="bg-white dark:bg-gray-900 min-h-screen">
             <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl text-center">Carrito de compras</h2>
@@ -94,7 +90,7 @@ const Cart = () => {
                                         <li key={index} className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                                             <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
                                                 <Link to={`/detail/${item.id_Product}`} className="shrink-0 md:order-1">
-                                                    <img className="h-20 w-20 dark:hidden" src={item.image} alt={item.name} />
+                                                    <img className="h-20 w-20" src={item.image} alt={item.name} />
                                                 </Link>
 
                                                 <div className="flex items-center justify-between md:order-3 md:justify-end">
@@ -111,13 +107,13 @@ const Cart = () => {
                                                             </svg>
                                                         </button>
                                                         <input
-                                                            type="text" // Cambiado a tipo text
+                                                            type="text"
                                                             id="counter-input"
                                                             data-input-counter
                                                             className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
                                                             placeholder=""
-                                                            value={item.quantity || 1} // Valor del campo
-                                                            onChange={(e) => handleQuantityChange(item.cartItemId, e.target.value)} // Controlador onChange
+                                                            value={item.quantity || 1}
+                                                            onChange={(e) => handleQuantityChange(item.cartItemId, e.target.value)}
                                                             required
                                                         />
                                                         <button
@@ -168,7 +164,7 @@ const Cart = () => {
             {cartItems.length > 0 && (
                 <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
                     <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                        <p className="text-xl font-semibold text-gray-900 dark:text-white">Order summary</p>
+                        <p className="text-xl font-semibold text-gray-900 dark:text-white">Total del pedido</p>
 
                         <div className="space-y-4">
                             {cartItems.map((item, index) => (
@@ -193,10 +189,6 @@ const Cart = () => {
                         </button>
                         {preferenceId && <Wallet initialization={{ preferenceId: preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />}
 
-                        <div className="flex items-center justify-center gap-2">
-                            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">or</span>
-                            <a href="/" className="text-sm font-normal text-primary-700 hover:underline dark:text-primary-500">Continua comprando</a>
-                        </div>
                     </div>
                 </div>
             )}
