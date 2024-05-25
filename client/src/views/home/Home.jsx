@@ -10,17 +10,15 @@ import ByCategory from '../../components/filters/ByCategory.jsx';
 import ByBrand from '../../components/filters/ByBrand'; 
 import ByPrice from '../../components/filters/ByPrice.jsx';
 import Spinner from '../../components/spinner/Spinner.jsx';
-import Swal from 'sweetalert2'
-
 
 const Home = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.copyProducts);
   const [brandFilter, setBrandFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
+  const [priceOrder, setPriceOrder] = useState('asc');
   const [dataQt, setDataQt] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
- 
 
   useEffect(() => {
     dispatch(getProducts());
@@ -28,7 +26,6 @@ const Home = () => {
 
   const onPageChange = (page) => setCurrentPage(page);
 
-  // Verifica si allProducts está definido y es un array
   if (!Array.isArray(allProducts) || allProducts.length === 0) {
     return <Spinner />;
   }
@@ -44,8 +41,8 @@ const Home = () => {
         <div className="bg-white antialiased dark:bg-gray-900 md:py-5">
           <CarouselComponent />
           <div className="flex overflow-x-auto sm:justify-center mb-2">
-          <ByName/>
-          <ByPrice/>
+            <ByName/>
+            <ByPrice setPriceOrder={setPriceOrder} />
             <ByBrand setBrandFilter={setBrandFilter} />
             <ByCategory setCategoryFilter={setCategoryFilter} />
             <Pagination
@@ -56,7 +53,12 @@ const Home = () => {
               showIcons
             />
           </div>
-          <Cards nData={nData} brandFilter={brandFilter} categoryFilter={categoryFilter}/>
+          <Cards 
+            nData={nData} 
+            brandFilter={brandFilter} 
+            categoryFilter={categoryFilter} 
+            priceOrder={priceOrder}
+          />
           <div className="flex overflow-x-auto sm:justify-center">
             <Pagination
               layout="navigation"
@@ -66,7 +68,6 @@ const Home = () => {
               showIcons
             />
           </div>
-          
         </div>
       </Flowbite>
     </>
