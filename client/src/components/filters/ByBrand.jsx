@@ -6,8 +6,9 @@ const ByBrand = ({ setBrandFilter }) => {
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const response = await fetch('http://localhost:3001/brands');
+        const response = await fetch('http://localhost:3001/brands'); 
         const data = await response.json();
+        console.log('Datos de marcas recibidos:', data); 
         setBrands(data);
       } catch (error) {
         console.error('Error fetching brands:', error);
@@ -18,6 +19,7 @@ const ByBrand = ({ setBrandFilter }) => {
 
   const handleBrandChange = (event) => {
     const brand = event.target.value;
+    console.log('Marca seleccionada:', brand); 
     setBrandFilter(brand);  
   };
 
@@ -42,5 +44,3 @@ const ByBrand = ({ setBrandFilter }) => {
 };
 
 export default ByBrand;
-
-
