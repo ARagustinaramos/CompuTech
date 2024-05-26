@@ -11,8 +11,8 @@ const userRouter = Router();
 
 userRouter.get("/", getUserHandlers);
 userRouter.get("/name", getUserByNameHandlers);
-userRouter.get("/:id", getUserByIdHandlers);
 userRouter.get("/email", getUserByEmailHandlers);
+userRouter.get("/:id", getUserByIdHandlers);
 userRouter.post("/", postUserHandlers);
 userRouter.put("/:id", putUserHandlers);
 userRouter.put("/admin/:id", putAdminHandlers);
