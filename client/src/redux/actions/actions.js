@@ -10,10 +10,11 @@ import {
     ORDER_NAME, 
     ORDER_ATTACK, 
     CLEAN_DETAIL,
-    SET_FILTER, 
-    ADD_TO_CART, 
-    REMOVE_FROM_CART, 
-    UPDATE_CART_ITEM_QUANTITY 
+    SET_FILTER,
+    ADD_TO_CART,
+    REMOVE_FROM_CART,
+    UPDATE_CART_ITEM_QUANTITY,
+    DELETE_PRODUCT
 } from "./types";
 
 export const getProducts = () => {
@@ -123,7 +124,7 @@ export const orderAttack = (payload) => {
 export const cleanDetail = () => {
     return {
         type: CLEAN_DETAIL,
-       
+
     }
 }
 export const setFilter = (filter) => ({
@@ -131,3 +132,9 @@ export const setFilter = (filter) => ({
     payload: filter,
 });
 
+export const deleteProduct = (id) => {
+    return {
+        type: DELETE_PRODUCT,
+        payload: id
+    };
+};
