@@ -4,8 +4,9 @@ const deleteProductsControllers = async (idProduct) => {
 	const productData = await Product.findByPk(idProduct);
 	if (!productData) return "Product not found!";
 
-	await productData.destroy();
-	return "Successful product removal!";
+	productData.active = false;
+	await productData.save();
+	return "Product successfully marked as inactive!";
 };
 
 module.exports = deleteProductsControllers;

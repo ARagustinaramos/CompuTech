@@ -1,28 +1,24 @@
 const { Product, Brand, Categories } = require("../../config/db");
-
+const normaliceFunction = require("../Utils/normaliceFunction");
 const postProducts = async (productData) => {
 	try {
+		const productNameNormalizado = normaliceFunction(productData.name);
 		// Verificar si el producto ya existe
 		const existingProduct = await Product.findOne({
-			where: { name: productData.name }
+			where: { name: productNameNormalizado }
 		});
 
 		if (existingProduct) {
 			throw new Error("El producto ya existe.");
 		}
 		//funcion para sacar los acentos y las mayusculas
-		const megaUltraFuncionQueEliminaAcentosAndPoneTodoEnMinuscula = (texto) => {
-			return texto
-				.normalize("NFD")
-				.replace(/[\u0300-\u036f]/g, "")
-				.toLowerCase();
-		};
+		
 		const brandNormalizado =
-			megaUltraFuncionQueEliminaAcentosAndPoneTodoEnMinuscula(
+			normaliceFunction(
 				productData.brand
 			);
 		const categoryNormalizado =
-			megaUltraFuncionQueEliminaAcentosAndPoneTodoEnMinuscula(
+			normaliceFunction(
 				productData.category
 			);
 		// Buscar o crear la marca
@@ -39,7 +35,7 @@ const postProducts = async (productData) => {
 
 		// Crear el producto con las asociaciones correctas
 		const product = await Product.create({
-			name: productData.name,
+			name: productNameNormalizado,
 			price: productData.price,
 			image: productData.image,
 			description: productData.description,
