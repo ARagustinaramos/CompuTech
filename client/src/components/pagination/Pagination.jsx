@@ -14,7 +14,7 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
 	};
 
 	return (
-		<div className={styles.pagination}>
+		<div>
 			<h4
 				onClick={prev}
 				style={{ cursor: currentPage > 1 ? "pointer" : "default" }}
