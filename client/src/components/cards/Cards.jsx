@@ -1,47 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
+import Pagination from '../pagination/Pagination'; 
 
 const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, setCurrentPage }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const allProducts = useSelector((state) => state.copyProducts);
-  const dataQt = 12; // Número de productos por página
+  const dataQt = 12; 
 
   useEffect(() => {
-    
-    let filtered = allProducts;
+    const fetchProducts = async () => {
+      try {
+        let url = 'http://localhost:3001/products';
+        const params = new URLSearchParams();
+  
+        if (brandFilter) params.append('brand', brandFilter);
+        if (categoryFilter) params.append('category', categoryFilter);
+        if (nameFilter) params.append('name', nameFilter);
+  
+        if (params.toString()) url += `?${params.toString()}`;
+  
+        const response = await fetch(url);
+        let data = await response.json();
+  
+        let sortedData = [...data]; 
+  
+        if (nameOrder === 'a-z') {
+          sortedData.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (nameOrder === 'z-a') {
+          sortedData.sort((a, b) => b.name.localeCompare(a.name));
+        }
+        if (priceOrder === 'asc') {
+          sortedData.sort((a, b) => a.price - b.price);
+        } else if (priceOrder === 'desc') {
+          sortedData.sort((a, b) => b.price - a.price);
+        }
+  
+      
+        setFilteredProducts(sortedData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+  
+    fetchProducts();
+  }, [brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder]);
+  
 
-    if (brandFilter) {
-      filtered = filtered.filter(product => product.brand === brandFilter);
-    }
-    if (categoryFilter) {
-      filtered = filtered.filter(product => product.category === categoryFilter);
-    }
-    if (nameFilter) {
-      filtered = filtered.filter(product => product.name.toLowerCase().includes(nameFilter.toLowerCase()));
-    }
-
-    if (nameOrder === 'a-z') {
-      filtered.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (nameOrder === 'z-a') {
-      filtered.sort((a, b) => b.name.localeCompare(a.name));
-    }
-
-    // Ordenar los productos según el filtro de orden por precio
-    if (priceOrder === 'asc') {
-      filtered.sort((a, b) => a.price - b.price);
-    } else if (priceOrder === 'desc') {
-      filtered.sort((a, b) => b.price - a.price);
-    }
-
-    setFilteredProducts(filtered);
-  }, [allProducts, brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder]);
-
-  // Calcular el número total de páginas
   const totalPages = Math.ceil(filteredProducts.length / dataQt);
-
-  // Filtrar los productos a mostrar en la página actual
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
   const productsToDisplay = filteredProducts.slice(indexInicial, indexFinal);
@@ -71,3 +76,4 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
 };
 
 export default Cards;
+

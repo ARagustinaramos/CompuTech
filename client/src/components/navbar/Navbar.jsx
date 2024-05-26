@@ -5,11 +5,14 @@ import LoginLogout from '../loginLogout/LoginLogout';
 import { DarkThemeToggle } from "flowbite-react";
 import SearchBar from "../searchBar/SearchBar";
 import { useAuth0 } from "@auth0/auth0-react";
+import Cards from '../cards/Cards';
 
 export default function Navbar() {
 	const [searchResults, setSearchResults] = useState([]);
 	const { user } = useAuth0();
 	const location = useLocation(); // Obtener la ubicación actual
+  const [currentPage, setCurrentPage] = useState(1);
+  
 	return (
 		<nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
 			<div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -86,5 +89,6 @@ export default function Navbar() {
 				<DarkThemeToggle />
 			</div>
 		</nav>
+    
 	);
 }
