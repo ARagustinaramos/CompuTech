@@ -1,4 +1,3 @@
-"use client";
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { orderName } from '../../redux/actions/actions';
@@ -12,10 +11,10 @@ const ByName = () => {
 
   return (
     <div className="py-2">
-      <label htmlFor="" className="text-slate-500">Orden alfabético: </label>
-      <select name='' onChange={handleOrderByName} className="border-hidden text-slate-500">
-        <option value="a-z" className="text-slate-500"> A-Z</option>
-        <option value="z-a" className="text-slate-500"> Z-A</option>
+      <label htmlFor="" className="text-slate-500 dark:text-gray-400">Orden alfabético: </label>
+      <select name='' onChange={handleOrderByName} className="border-hidden text-slate-500 dark:text-gray-400 bg-white dark:bg-gray-800">
+        <option value="a-z" className="text-slate-500 dark:text-gray-400"> A-Z</option>
+        <option value="z-a" className="text-slate-500 dark:text-gray-400"> Z-A</option>
       </select>
     </div>
   );

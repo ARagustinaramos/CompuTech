@@ -9,10 +9,8 @@ import ByCategory from '../../components/filters/ByCategory.jsx';
 import ByBrand from '../../components/filters/ByBrand';
 import ByPrice from '../../components/filters/ByPrice.jsx';
 import Spinner from '../../components/spinner/Spinner.jsx';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import Pagination from '../../components/pagination/Pagination.jsx';
-
-
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -20,7 +18,6 @@ const Home = () => {
   const [brandFilter, setBrandFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [priceOrder, setPriceOrder] = useState('asc');
-  const [dataQt, setDataQt] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -31,17 +28,13 @@ const Home = () => {
     return <Spinner />;
   }
 
-  const nPages = Math.ceil(allProducts.length / dataQt);
+  const nPages = Math.ceil(allProducts.length / 12);
 
   const onPageChange = (page) => {
     if (page > 0 && page <= nPages) {
       setCurrentPage(page);
     }
   };
-
-  const indexFinal = currentPage * dataQt;
-  const indexInicial = indexFinal - dataQt;
-  const nData = allProducts.slice(indexInicial, indexFinal);
 
   return (
     <>
@@ -53,6 +46,8 @@ const Home = () => {
             <ByPrice setPriceOrder={setPriceOrder} />
             <ByBrand setBrandFilter={setBrandFilter} />
             <ByCategory setCategoryFilter={setCategoryFilter} />
+          </div>
+          <div className="flex overflow-x-auto sm:justify-center mb-4">
             <Pagination
               currentPage={currentPage}
               setCurrentPage={onPageChange}
@@ -60,21 +55,19 @@ const Home = () => {
             />
           </div>
           <Cards 
-            nData={nData} 
             brandFilter={brandFilter} 
             categoryFilter={categoryFilter} 
             priceOrder={priceOrder}
             currentPage={currentPage}
-            onPageChange={onPageChange}
-            totalPages={nPages}
-          />
-        </div>
-        <div className="flex overflow-x-auto sm:justify-center">
-          <Pagination
-            currentPage={currentPage}
             setCurrentPage={onPageChange}
-            totalPages={nPages}
           />
+          <div className="flex overflow-x-auto sm:justify-center mt-4">
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={onPageChange}
+              totalPages={nPages}
+            />
+          </div>
         </div>
       </Flowbite>
     </>
@@ -82,5 +75,3 @@ const Home = () => {
 };
 
 export default Home;
-
-

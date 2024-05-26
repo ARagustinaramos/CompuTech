@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
-import Pagination from '../pagination/Pagination'; // Importamos el componente de paginación
 
 const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, setCurrentPage }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -67,11 +66,6 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
           )}
         </div>
       </div>
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-      />
     </div>
   );
 };
