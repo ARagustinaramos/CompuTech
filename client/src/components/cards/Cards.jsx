@@ -1,56 +1,77 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
+import Pagination from '../pagination/Pagination'; // Importamos el componente de paginación
 
-const Cards = ({ brandFilter, categoryFilter, nameFilter, currentPage, dataQt }) => {
-  const dispatch = useDispatch();
+const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, setCurrentPage }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const allProducts = useSelector((state) => state.copyProducts);
+  const dataQt = 12; // Número de productos por página
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        let url = 'http://localhost:3001/products';
-        const params = new URLSearchParams();
-        if (brandFilter) params.append('brand', brandFilter);
-        if (categoryFilter) params.append('category', categoryFilter);
-        if (nameFilter) params.append('name', nameFilter);
+    
+    let filtered = allProducts;
 
-        if (params.toString()) url += `?${params.toString()}`;
+    if (brandFilter) {
+      filtered = filtered.filter(product => product.brand === brandFilter);
+    }
+    if (categoryFilter) {
+      filtered = filtered.filter(product => product.category === categoryFilter);
+    }
+    if (nameFilter) {
+      filtered = filtered.filter(product => product.name.toLowerCase().includes(nameFilter.toLowerCase()));
+    }
 
-        const response = await fetch(url);
-        const data = await response.json();
-        setFilteredProducts(data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
+    if (nameOrder === 'a-z') {
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (nameOrder === 'z-a') {
+      filtered.sort((a, b) => b.name.localeCompare(a.name));
+    }
 
-    fetchProducts();
-  }, [brandFilter, categoryFilter, nameFilter]);
+    // Ordenar los productos según el filtro de orden por precio
+    if (priceOrder === 'asc') {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (priceOrder === 'desc') {
+      filtered.sort((a, b) => b.price - a.price);
+    }
 
-  // Logic to calculate which products to display based on currentPage and dataQt
+    setFilteredProducts(filtered);
+  }, [allProducts, brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder]);
+
+  // Calcular el número total de páginas
+  const totalPages = Math.ceil(filteredProducts.length / dataQt);
+
+  // Filtrar los productos a mostrar en la página actual
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
   const productsToDisplay = filteredProducts.slice(indexInicial, indexFinal);
 
   return (
-    <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {productsToDisplay.length > 0 ? (
-          productsToDisplay.map((product) => (
-            <Card 
-              key={product.id_Product} 
-              id_Product={product.id_Product} 
-              name={product.name} 
-              image={product.image} 
-              price={product.price} 
-            />
-          ))
-        ) : (
-          <Spinner />
-        )}
+    <div>
+      <div className="flex justify-center items-center">
+        <div className="grid grid-cols-4 gap-4">
+          {productsToDisplay.length > 0 ? (
+            productsToDisplay.map((product) => (
+              <Card 
+                key={product.id_Product} 
+                id_Product={product.id_Product} 
+                name={product.name} 
+                image={product.image} 
+                price={product.price} 
+                brand={product.BrandIdBrand}  
+              />
+            ))
+          ) : (
+            <Spinner />
+          )}
+        </div>
       </div>
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 };
