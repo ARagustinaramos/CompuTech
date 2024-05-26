@@ -4,14 +4,13 @@ import Spinner from '../spinner/Spinner';
 import Pagination from '../pagination/Pagination';
 
 const Cards = ({ brandFilter, categoryFilter, nameOrder, priceOrder, currentPage, setCurrentPage, searchResults }) => {
-
   const [filteredProducts, setFilteredProducts] = useState([]);
   const dataQt = 12;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        let url = 'https://computechback.onrender.com/products';
+        let url = 'http://localhost:3001/products';
         const params = new URLSearchParams();
 
         if (brandFilter) params.append('brand', brandFilter);
@@ -71,6 +70,11 @@ const Cards = ({ brandFilter, categoryFilter, nameOrder, priceOrder, currentPage
           )}
         </div>
       </div>
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 };
