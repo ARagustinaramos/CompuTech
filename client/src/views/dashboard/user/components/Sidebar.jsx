@@ -38,11 +38,12 @@ const Sidebar = () => {
         <a
             href="/perfil"
             className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
+            data-modal-target="crud-modal" data-modal-toggle="crud-modal"
           >
             <BsPersonSquare /> Perfil
           </a>
           <a
-            href="/home"
+            href="/"
             className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
           >
             <RiHome3Line /> Home
