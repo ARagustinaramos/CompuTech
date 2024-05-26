@@ -5,7 +5,6 @@ import LoginLogout from '../loginLogout/LoginLogout';
 import { DarkThemeToggle } from "flowbite-react";
 import SearchBar from "../searchBar/SearchBar";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useAuth0 } from "@auth0/auth0-react";
 import Cards from '../cards/Cards';
 
 export default function Navbar() {
