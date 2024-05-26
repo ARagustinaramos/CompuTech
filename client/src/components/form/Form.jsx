@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2'
+import API_URL from "../../config";
+
 
 export default function ProductForm() {
   const [product, setProduct] = useState({
@@ -72,7 +74,7 @@ export default function ProductForm() {
       };
 
       try {
-        const response = await fetch('http://localhost:3001/products', {
+        const response = await fetch(`${API_URL}/products`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

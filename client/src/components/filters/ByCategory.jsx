@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from "../../config";
+
 
 const ByCategory = ({ setCategoryFilter }) => {
   const [categories, setCategories] = useState([]);
@@ -7,7 +9,7 @@ const ByCategory = ({ setCategoryFilter }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:3001/categories'); // Endpoint para obtener categorías
+        const response = await fetch(`${API_URL}/categories`); // Endpoint para obtener categorías
         const data = await response.json();
         console.log('Datos de categorías recibidos:', data); 
         setCategories(data);

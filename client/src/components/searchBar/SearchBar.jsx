@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import API_URL from "../../config";
+
 
 const SearchBar = ({ setSearchResults }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -10,7 +12,7 @@ const SearchBar = ({ setSearchResults }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3001/products?search=${searchQuery}`);
+      const response = await fetch(`${API_URL}/products?search=${searchQuery}`);
       if (!response.ok) {
         throw new Error('Failed to fetch search results');
       }

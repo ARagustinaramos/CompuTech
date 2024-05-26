@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import API_URL from "../../config";
+
 
 const ByBrand = ({ setBrandFilter }) => {
   const [brands, setBrands] = useState([]);
@@ -6,7 +8,7 @@ const ByBrand = ({ setBrandFilter }) => {
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const response = await fetch('http://localhost:3001/brands'); 
+        const response = await fetch(`${API_URL}/brands`); 
         const data = await response.json();
         console.log('Datos de marcas recibidos:', data); 
         setBrands(data);

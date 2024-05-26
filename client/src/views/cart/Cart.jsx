@@ -5,8 +5,7 @@ import { removeFromCart, updateCartItemQuantity } from '../../redux/actions/acti
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import axios from 'axios';
-
-
+import API_URL from "../../config";
 
 
 const Cart = () => {
@@ -31,7 +30,7 @@ const Cart = () => {
     
             console.log("Items being sent:", items);
     
-            const response = await axios.post('http://localhost:3001/create_preference', {
+            const response = await axios.post(`${API_URL}/create_preference`, {
                 items
             });
     
