@@ -7,8 +7,8 @@ const getUserByNameHandlers = require("../handlers/userHandlers/getUserByNameHan
 const userRouter = Router();
 
 userRouter.get("/", getUserHandlers);
-userRouter.get("/:id", getUserByIdHandlers);
 userRouter.get("/name", getUserByNameHandlers);
+userRouter.get("/:id", getUserByIdHandlers);
 userRouter.post("/", postUserHandlers);
 
 module.exports = userRouter;
