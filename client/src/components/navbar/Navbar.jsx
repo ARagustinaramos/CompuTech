@@ -10,7 +10,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default function Navbar() {
 	const [searchResults, setSearchResults] = useState([]);
 	const { user } = useAuth0();
-	console.log("Hola desde navbar", user);
 	return (
 		<nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
 			<div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
