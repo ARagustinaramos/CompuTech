@@ -25,9 +25,9 @@ router.post('/', async (req, res) => {
                 currency_id: 'ARS'
             })),
             back_urls: {
-                success: "http://localhost:3000/success",
-                failure: "http://localhost:3000/failure",
-                pending: "http://localhost:3000/pending"
+                success: "https://computech.vercel.app/",
+                failure: "https://computech.vercel.app/",
+                pending: "https://computech.vercel.app/"
             },
             auto_return: "approved",
             external_reference: 'TU_REFERENCIA_EXTERNA',

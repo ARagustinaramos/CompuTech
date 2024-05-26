@@ -1,5 +1,7 @@
 const { Brand } = require('../../config/db');
 const { Op } = require('sequelize');
+const normaliceFunction = require('../Utils/normaliceFunction');
+
 
 const getAllBrands = async () => {
     try {
@@ -12,7 +14,7 @@ const getAllBrands = async () => {
         // Extrae los nombres de las marcas
         const brandNames = brands.map(brand => brand.name);
 
-        return brandNames;
+        return brandNames.map(normaliceFunction);
     } catch (error) {
         console.error('Hubo un error al obtener las marcas:', error);
         throw new Error('Hubo un error interno del servidor.');
