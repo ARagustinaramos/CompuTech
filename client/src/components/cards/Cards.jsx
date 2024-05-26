@@ -22,11 +22,12 @@ const Cards = ({ brandFilter, categoryFilter, nameOrder, priceOrder, currentPage
         const response = await fetch(url);
         let data = await response.json();
 
-        console.log("Datos recibidos:", data);
+        let preparedData = data.map(product => ({
+          ...product,
+           name: product.name.toLowerCase() // Convertimos todos los nombres a minúsculas
+        }));
 
-        let sortedData = [...data];
-
-        sortedData.forEach(product => product.name = product.name.toLowerCase());
+        let sortedData = [...preparedData];
 
         if (nameOrder === 'a-z') {
           sortedData.sort((a, b) => a.name.localeCompare(b.name));
