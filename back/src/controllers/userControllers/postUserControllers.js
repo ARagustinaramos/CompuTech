@@ -12,11 +12,26 @@ const postUserControllers = async (body, user) => {
 	// Verificar si el usuario ya existe
 	const existingUser = await User.findOne({ where: { mail: body.email } });
 	if (existingUser) {
-		throw new Error("User with this email already exists");
+		return "User with this email already exists";
 	}
-
+	// password Polenta22@
+	let rol = false;
+	if (body.email === "eltodopoderoso@gmail.com") {
+		rol = true;
+	}
 	// Crear el nuevo usuario
-	const newUser = await User.create(body);
+	let newName = body.name;
+	if (body.name.includes("@")) {
+		const index = body.name.indexOf("@");
+		newName = body.name.substring(0, index);
+	}
+	const newUser = await User.create({
+		name: newName,
+		mail: body.email,
+		image: body.picture,
+		rol: rol,
+		active: true
+	});
 	return newUser;
 };
 
