@@ -2,7 +2,7 @@ const getUserByNameControllers = require("../../controllers/userControllers/getU
 
 const getUserByNameHandlers = async (req, res) => {
 	try {
-		const name = req.query;
+		const { name } = req.query;
 		const response = await getUserByNameControllers(name);
 		res.status(200).json(response);
 	} catch (error) {
