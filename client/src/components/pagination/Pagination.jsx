@@ -1,19 +1,26 @@
-import React from 'react';
-import { Pagination as FlowbitePagination } from 'flowbite-react';
+import React from 'react'
+import styles from './pagination.module.css'
 
-const CustomPagination = ({ currentPage, totalPages, onPageChange }) => {
+ const customPagination = ({ currentPage, setCurrentPage, nPages }) => {
+  const next = () => {
+    if (currentPage !== nPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
+  const prev = () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
+
   return (
-    <FlowbitePagination
-      currentPage={currentPage}
-      totalPages={totalPages}
-      onPageChange={(page) => {
-        onPageChange(page);
-      }}
-      showIcons
-      previousLabel="Anterior"
-      nextLabel="Siguiente"
-    />
-  );
-};
+    <div className={styles.pagination}>
+      <h4 onClick={prev}>Anterior </h4>
+      <div> {currentPage} / {nPages}</div>
+      <h4 onClick={next} >Siguiente</h4>
+    </div>
+  )
+}
 
-export default CustomPagination;
+export default customPagination
