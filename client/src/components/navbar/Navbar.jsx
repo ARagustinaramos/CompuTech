@@ -1,13 +1,15 @@
-// src/components/Navbar.jsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CartIcon from '../carticon/CartIcon';
 import LoginLogout from '../loginLogout/LoginLogout';
 import { DarkThemeToggle } from "flowbite-react";
 import SearchBar from '../searchBar/SearchBar';
+import Cards from '../cards/Cards';
 
 export default function Navbar() {
   const [searchResults, setSearchResults] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -73,5 +75,6 @@ export default function Navbar() {
         <DarkThemeToggle />
       </div>
     </nav>
+    
   );
 }

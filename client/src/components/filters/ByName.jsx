@@ -1,13 +1,9 @@
-"use client";
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { orderName } from '../../redux/actions/actions';
 
-const ByName = () => {
-  const dispatch = useDispatch();
 
+const ByName = ({ setNameOrder }) => { 
   const handleOrderByName = (event) => {
-    dispatch(orderName(event.target.value));
+    setNameOrder(event.target.value); 
   };
 
   return (

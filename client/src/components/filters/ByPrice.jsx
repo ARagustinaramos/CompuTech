@@ -17,4 +17,3 @@ const ByPrice = ({ setPriceOrder }) => {
 };
 
 export default ByPrice;
-
