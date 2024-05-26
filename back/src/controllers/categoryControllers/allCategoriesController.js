@@ -12,7 +12,7 @@ const getAllCategories = async () => {
         // Extrae los nombres de las categorías
         const categoryNames = categories.map(category => category.name);
 
-        return categoryNames;
+        return categoryNames.map(normaliceFunction);
     } catch (error) {
         console.error('Hubo un error al obtener las categorías:', error);
         throw new Error('Hubo un error interno del servidor.');
