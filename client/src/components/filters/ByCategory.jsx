@@ -9,7 +9,7 @@ const ByCategory = ({ setCategoryFilter }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`${API_URL}/categories`); // Endpoint para obtener categorías
+        const response = await fetch('https://computechback.onrender.com/categories'); // Endpoint para obtener categorías
         const data = await response.json();
         console.log('Datos de categorías recibidos:', data); 
         setCategories(data);

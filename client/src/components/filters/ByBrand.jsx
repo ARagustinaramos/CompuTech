@@ -8,7 +8,7 @@ const ByBrand = ({ setBrandFilter }) => {
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const response = await fetch(`${API_URL}/brands`); 
+        const response = await fetch('https://computechback.onrender.com/brands'); 
         const data = await response.json();
         console.log('Datos de marcas recibidos:', data); 
         setBrands(data);

@@ -14,22 +14,14 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-4 space-x-4">
-      <button 
-        onClick={prev} 
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
-        disabled={currentPage <= 1}
-      >
+    <div>
+      <h4 onClick={prev} style={{ cursor: currentPage > 1 ? 'pointer' : 'default' }}>
         Anterior
-      </button>
-      <div className="text-gray-700 dark:text-gray-300">{currentPage} / {totalPages}</div>
-      <button 
-        onClick={next} 
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
-        disabled={currentPage >= totalPages}
-      >
+      </h4>
+      <div>{currentPage} / {totalPages}</div>
+      <h4 onClick={next} style={{ cursor: currentPage < totalPages ? 'pointer' : 'default' }}>
         Siguiente
-      </button>
+      </h4>
     </div>
   );
 };
