@@ -18,9 +18,10 @@ const Home = () => {
   const [brandFilter, setBrandFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [priceOrder, setPriceOrder] = useState('asc');
-  const [nameOrder, setNameOrder] = useState(''); 
+  const [nameOrder, setNameOrder] = useState('');
   const [dataQt, setDataQt] = useState(12);
-  const [currentPage, setCurrentPage] = useState(1); 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchResults, setSearchResults] = useState([]); 
 
   useEffect(() => {
     dispatch(getProducts());
@@ -41,7 +42,7 @@ const Home = () => {
         <div className="bg-white antialiased dark:bg-gray-900 md:py-5">
           <CarouselComponent />
           <div className="flex overflow-x-auto sm:justify-center mb-2">
-            <ByName setNameOrder={setNameOrder} />  
+            <ByName setNameOrder={setNameOrder} />
             <ByPrice setPriceOrder={setPriceOrder} />
             <ByBrand setBrandFilter={setBrandFilter} />
             <ByCategory setCategoryFilter={setCategoryFilter} />
@@ -57,9 +58,10 @@ const Home = () => {
             brandFilter={brandFilter}
             categoryFilter={categoryFilter}
             priceOrder={priceOrder}
-            nameOrder={nameOrder} 
+            nameOrder={nameOrder}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
+            setSearchResults={setSearchResults}
           />
         </div>
         <div className="flex overflow-x-auto sm:justify-center">
@@ -75,6 +77,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-

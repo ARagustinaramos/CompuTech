@@ -89,6 +89,4 @@ export default function Navbar() {
 				<DarkThemeToggle />
 			</div>
 		</nav>
-    
-	);
-}
+  )}
