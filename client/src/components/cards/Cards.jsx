@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../../redux/actions/actions';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
+import API_URL from "../../config";
 
 const Cards = ({ brandFilter, categoryFilter, nameFilter }) => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        let url = 'http://localhost:3001/products';
+        let url = `${API_URL}/products`;
         const params = new URLSearchParams();
         if (brandFilter) params.append('brand', brandFilter);
         if (categoryFilter) params.append('category', categoryFilter);
