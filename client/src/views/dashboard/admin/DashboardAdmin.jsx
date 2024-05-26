@@ -1,5 +1,6 @@
 import CardStat from '../../../components/cardstat/CardStat'
 import { Chart } from '../../../components/charts/Chart'
+import { DangerCard } from '../../../components/dangercard/DangerCard';
 import SideBarAdmin from '../../../components/sidebaradmin/SideBarAdmin';
 import { TableUsageExample } from '../../../components/tables/tableUser/TableUsageExample'
 import { Card } from '@tremor/react';
@@ -27,9 +28,14 @@ const DashboardAdmin = () => {
             <Card className="mb-5 ">
               <Chart></Chart>
             </Card>
-            <Card className=" ">
+            <Card className="mb-5 ">
               <Chart></Chart>
             </Card>
+            <Card className="mb-5 ">
+              <DangerCard></DangerCard>
+
+            </Card>
+            
           </div>
         </div>
       </div>

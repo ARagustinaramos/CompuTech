@@ -23,6 +23,7 @@ export function TableUsageExample() {
         dispatch(getProducts());
     }, [dispatch]);
     
+    console.log(allProducts)
     return (
         <Card>
             <h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">Lista de productos en Stock</h3>
@@ -35,6 +36,7 @@ export function TableUsageExample() {
                         <TableHeaderCell>Precio unitario</TableHeaderCell>
                         <TableHeaderCell>Status</TableHeaderCell>
                         <TableHeaderCell>Cantidad</TableHeaderCell>
+                        <TableHeaderCell>id del producto</TableHeaderCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -58,6 +60,9 @@ export function TableUsageExample() {
                             </TableCell>
                             <TableCell>
                                 {item.stock}
+                            </TableCell>
+                            <TableCell>
+                                {item.id_Product}
                             </TableCell>
                         </TableRow>
                     ))}

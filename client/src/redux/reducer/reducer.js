@@ -10,8 +10,8 @@ import {
     FILTERDBAPI, 
     FILTER_TYPE, 
     ORDER_NAME, 
-    ORDER_ATTACK, 
     SET_FILTER,
+    DELETE_PRODUCT
 } from "../actions/types";
 
 import { loadCartFromLocalStorage, saveCartToLocalStorage } from '../reducer/localStorageHelpers';
@@ -138,13 +138,11 @@ function rootReducer(state = initialState, action) {
                     copyProducts: orderByName
                 };
             }
-        case ORDER_ATTACK:
-            const sortAttack = action.payload === "min"
-                ? [...state.copyProducts].sort((a, b) => a.ataque - b.ataque)
-                : [...state.copyProducts].sort((a, b) => b.ataque - a.ataque);
+            case DELETE_PRODUCT:
             return {
                 ...state,
-                copyProducts: sortAttack
+                allProducts: state.allProducts.filter(product => product.id !== action.payload),
+                copyProducts: state.copyProducts.filter(product => product.id !== action.payload),
             };
         default:
             return { ...state };
