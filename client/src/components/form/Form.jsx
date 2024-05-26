@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Spinner from '../spinner/Spinner'; // Asegúrate de importar Spinner
 
 export default function ProductForm() {
   const [product, setProduct] = useState({
@@ -14,6 +15,7 @@ export default function ProductForm() {
   });
   const [errors, setErrors] = useState({});
   const [nameLengthError, setNameLengthError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Estado para manejar el spinner
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -132,25 +134,31 @@ export default function ProductForm() {
             position: "center",
             icon: "success",
             title: "Producto agregado al carrito",
-            showConfirmButton: false,
-            timer: 1500
+            showConfirmButton: true,
+            confirmButtonText: "Agregar otro producto",
+            cancelButtonText: "Volver al Home",
+            showCancelButton: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Agregar otro producto
+              setProduct({
+                name: "",
+                description: "",
+                price: "",
+                image: "",
+                stock: "",
+                brand: "",
+                category: ""
+              });
+              setErrors({});
+            } else {
+              // Volver al Home
+              setIsLoading(true);
+              setTimeout(() => {
+                navigate('/');
+              }, 1500);
+            }
           });
-
-          // Esperar 3 segundos antes de redirigir
-          setTimeout(() => {
-            navigate('/');
-          }, 3000);
-
-          setProduct({
-            name: "",
-            description: "",
-            price: "",
-            image: "",
-            stock: "",
-            brand: "",
-            category: ""
-          });
-          setErrors({});
         } else {
           const errorData = await response.json();
           Swal.fire({
@@ -171,6 +179,10 @@ export default function ProductForm() {
       }
     }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 antialiased md:py-5">

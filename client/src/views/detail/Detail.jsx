@@ -2,12 +2,15 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetail, cleanDetail, addToCart } from '../../redux/actions/actions';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import Spinner from '../../../src/components/spinner/Spinner';  
 
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const producto = useSelector((state) => state.productDetail);
+  const isLoading = useSelector((state) => state.isLoading);
+
   const handleAddToCart = () => {
     dispatch(addToCart(producto));
     Swal.fire("Producto agregado al carrito!");
@@ -21,9 +24,18 @@ const Detail = () => {
         console.log(error.message);
       }
     };
+
     fetchProducto();
-    return () => dispatch(cleanDetail());
+    window.scrollTo(0, 0); // Asegura que la página se desplace hacia la parte superior
+
+    return () => {
+      dispatch(cleanDetail());
+    };
   }, [dispatch, id]);
+
+  if (isLoading || !producto) {
+    return <Spinner />;
+  }
 
   const hasObjectWithName = producto.tipos && producto.tipos.some((item) => typeof item === 'object' && item.hasOwnProperty('name'));
 

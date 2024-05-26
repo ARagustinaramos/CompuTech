@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
 
-const Cards = ({ brandFilter, categoryFilter, nameFilter }) => {
+const Cards = ({ brandFilter, categoryFilter, nameFilter, currentPage, dataQt }) => {
   const dispatch = useDispatch();
   const [filteredProducts, setFilteredProducts] = useState([]);
-  
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -29,7 +29,10 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter }) => {
     fetchProducts();
   }, [brandFilter, categoryFilter, nameFilter]);
 
-  const productsToDisplay = filteredProducts.length > 0 ? filteredProducts : [];
+  // Logic to calculate which products to display based on currentPage and dataQt
+  const indexFinal = currentPage * dataQt;
+  const indexInicial = indexFinal - dataQt;
+  const productsToDisplay = filteredProducts.slice(indexInicial, indexFinal);
 
   return (
     <div className="flex justify-center items-center bg-gray-50 dark:bg-gray-900">

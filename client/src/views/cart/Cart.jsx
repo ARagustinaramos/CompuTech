@@ -8,6 +8,7 @@ import axios from 'axios';
 
 const Cart = () => {
     const [preferenceId, setPrefereceId] = useState(null);
+    console.log(preferenceId)
 
     initMercadoPago('TEST-057aa2fa-27a8-4181-9ebd-28a08f1a19bc', {
         locale: "es-AR",
