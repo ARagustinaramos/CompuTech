@@ -1,7 +1,11 @@
 const { Product } = require("../../config/db");
 const getProductById = async (id) => {
 	try {
-		const foundProduct = await Product.findOne(id);
+		const foundProduct = await Product.findOne({
+			where: {
+				id_Product: id
+			}
+		});
 		if (foundProduct.dataValues) {
 			return foundProduct.dataValues;
 		}
