@@ -1,18 +1,19 @@
 import axios from "axios";
-import { 
-    GET_DETAIL, 
-    GET_PRODUCTS, 
-    GET_BY_NAME, 
-    GET_TYPES, 
-    FILTERDBAPI, 
-    FILTER_TYPE, 
-    ORDER_NAME, 
-    ORDER_ATTACK, 
+import {
+    GET_DETAIL,
+    GET_PRODUCTS,
+    GET_BY_NAME,
+    GET_TYPES,
+    FILTERDBAPI,
+    FILTER_TYPE,
+    ORDER_NAME,
+    ORDER_ATTACK,
     CLEAN_DETAIL,
-    SET_FILTER, 
-    ADD_TO_CART, 
-    REMOVE_FROM_CART, 
-    UPDATE_CART_ITEM_QUANTITY 
+    SET_FILTER,
+    ADD_TO_CART,
+    REMOVE_FROM_CART,
+    UPDATE_CART_ITEM_QUANTITY,
+    DELETE_PRODUCT
 } from "./types";
 
 export const getProducts = () => {
@@ -122,26 +123,17 @@ export const orderAttack = (payload) => {
 export const cleanDetail = () => {
     return {
         type: CLEAN_DETAIL,
-       
+
     }
 }
 export const setFilter = (filter) => ({
     type: SET_FILTER,
     payload: filter,
-  });
+});
 
-// export const createPokemon = (info) => {
-//     return async (dispatch) => {
-//         try {
-//             const response = await axios.post('http://localhost:3001/pokemons/', info)
-//             dispatch({
-//                 type: CREATE_POKEMON,
-//                 payload: response.data
-//             });
-//             alert("Pokemon creado con exito");
-//             return response;
-//         } catch (error) {
-//             console.log(error.message)
-//         }
-//     }
-// }
+export const deleteProduct = (id) => {
+    return {
+        type: DELETE_PRODUCT,
+        payload: id
+    };
+};
