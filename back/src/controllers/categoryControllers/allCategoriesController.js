@@ -1,6 +1,8 @@
 const { Categories } = require('../../config/db');
 const { Op } = require('sequelize');
 
+const normaliceFunction = require('../Utils/normaliceFunction');
+
 const getAllCategories = async () => {
     try {
         // Busca todas las categorías en la base de datos
