@@ -9,50 +9,38 @@ import Sidebar from "./components/Sidebar";
 import { useAuth0 } from '@auth0/auth0-react';
 import HistorialDePedidos from "./components/HistorialDePedidos";
 import HistorialDeCompras from './components/HistorialDeCompras'
+import Novedades from './components/Novedades'
 
 
 const DashboardUser = () => {
   const { user , isLoading} = useAuth0();
 
   console.log('user', user)
-
-  return(
-    <div className="grid lg:grid-cols-4 xl:grid-cols-6 min-h-screen  dark:bg-gray-900 md:py-5">
-      <Sidebar/>
-      <main className=" xl:col-span-5 dark:bg-gray-900 p-8">
-        <Header/>
+  return (
+    <div className="min-h-screen dark:bg-gray-900 flex">
+      <div className="p-3 w-1/7">
+        <Sidebar/>
+      </div>
+      <main className="flex flex-col mx-2 flex-grow dark:bg-gray-900">
+        <Header className="mx-2 my-2" />
         {/* Section 1 */}
-        <section className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-1 mt-6">
+        <section className="grid grid-cols-2 gap-4 py-2 flex-grow">
           {/* Historial de pedidos */}
-          <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-2 mt-10 gap-8">
-            <HistorialDePedidos />
-            <div className="grid grid-cols-2 xl:col-span-1 md:grid-cols-2 xl:grid-cols-2 mt-6">
-            <HistorialDeCompras />
-            </div>
-          </div>
+          <Novedades />
+          <HistorialDePedidos className="cols-span-3" />
+          <HistorialDeCompras className="cols-span-6" />
+          <div className="container col-span-2"></div>
         </section>
-        <section className="grid grid-cols-1 md:grid-cols-2 mt-10 gap-8">
-          
-
-          <div>
-            <div className="bg-white p-8 rounded-xl shadow-2xl mb-8 flex flex-col ">
-            <h1 className="text-2xl font-bold mb-8">Novedades</h1>
-              <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
-                  <img
-                    src="/assets/Mouse2.jpg"
-                    className="w-14 h-14 object-cover rounded-full"/>
-                  <div>
-                    <h3 className="font-bold">Mouse logitech</h3>
-                    <p className="text-gray-500">Subido hace 3 hs</p>
-                  </div>
-                </div>
-              </div>
-              </div>
+        {/* Section 2 */}
+        <section className="grid grid-cols-1 md:grid-cols-2 mt-10 gap-8 p-4 w-full">
+          {/* Otro contenido */}
         </section>
       </main>
     </div>
   );
-}
+  
+  
+  
+};
 
-
-export default DashboardUser;
+export default DashboardUser

@@ -8,9 +8,9 @@ const Header = () => {
     return <div>Cargando...</div>;
   }
   return (
-    <header className="flex flex-col md:flex-row items-center justify-between gap-4">
+    <header className="md:flex-row items-center justify-between gap-4">
       <h1 className="text-2xl text-gray-600 dark:text-gray-100 md:text-3xl font-bold  dark:bg-gray-900 dark:border-gray-900" >
-        Hola, <span className="  dark:border-gray-900" >{user.given_name}</span>
+        Hola, <span className="dark:border-gray-900" >{user.given_name}</span>
       </h1>
     </header>
   );
