@@ -14,13 +14,12 @@ import Cart from "./views/cart/Cart";
 import { saveCartToLocalStorage } from "../src/redux/reducer/localStorageHelpers";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import Perfil from './views/dashboard/user/components/Perfil'
-import DashboardUser from './views/dashboard/user/DashboardUser'
-import DashboardAdmin from './views/dashboard/admin/DashboardAdmin'
+import Perfil from "./views/dashboard/user/components/Perfil";
+import DashboardUser from "./views/dashboard/user/DashboardUser";
+import DashboardAdmin from "./views/dashboard/admin/DashboardAdmin";
 
 function App() {
-  
-  const cartItems = useSelector((state) => state.items);
+	const cartItems = useSelector((state) => state.items);
 
 	useEffect(() => {
 		saveCartToLocalStorage(cartItems);
@@ -71,7 +70,7 @@ function App() {
 				<Route path={`/detail/:id`} element={<Detail />}></Route>
 				<Route path="/about" element={<About />}></Route>
 				<Route path="/dashboardadmin" element={<DashboardAdmin />}></Route>
-        <Route path="/dashboarduser" element={<DashboardUser />}></Route>
+				<Route path="/dashboarduser" element={<DashboardUser />}></Route>
 			</Routes>
 			<Footer />
 		</>
