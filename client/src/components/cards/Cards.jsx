@@ -11,7 +11,7 @@ const Cards = ({ brandFilter, categoryFilter, nameOrder, priceOrder, currentPage
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        let url = 'http://localhost:3001/products';
+        let url = 'https://computechback.onrender.com/products';
         const params = new URLSearchParams();
 
         if (brandFilter) params.append('brand', brandFilter);
@@ -71,11 +71,6 @@ const Cards = ({ brandFilter, categoryFilter, nameOrder, priceOrder, currentPage
           )}
         </div>
       </div>
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-      />
     </div>
   );
 };

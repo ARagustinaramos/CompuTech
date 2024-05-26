@@ -12,7 +12,7 @@ const SearchBar = ({ setSearchResults }) => {
     event.preventDefault();
     setError(''); 
     try {
-      const response = await fetch(`http://localhost:3001/products?search=${searchQuery}`);
+      const response = await fetch(`https://computechback.onrender.com/products?search=${searchQuery}`);
       if (!response.ok) {
         throw new Error('Failed to fetch search results');
       }

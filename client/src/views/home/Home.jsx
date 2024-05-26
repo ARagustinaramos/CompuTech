@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flowbite } from 'flowbite-react';
@@ -47,6 +46,8 @@ const Home = () => {
             <ByPrice setPriceOrder={setPriceOrder} />
             <ByBrand setBrandFilter={setBrandFilter} />
             <ByCategory setCategoryFilter={setCategoryFilter} />
+          </div>
+          <div className="flex overflow-x-auto sm:justify-center mb-4">
             <Pagination
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}

@@ -7,10 +7,10 @@ const ByPrice = ({ setPriceOrder }) => {
 
     return (
         <div className="py-2">
-            <label htmlFor="" className="text-slate-500">Orden por precio: </label>
-            <select name='' onChange={handleOrderChange} className="border-hidden text-slate-500">
-                <option value="asc" className="text-slate-500"> Menor a Mayor</option>
-                <option value="desc" className="text-slate-500"> Mayor a Menor</option>
+            <label htmlFor="" className="text-slate-500 dark:text-gray-400">Orden por precio: </label>
+            <select name='' onChange={handleOrderChange} className="border-hidden text-slate-500 dark:text-gray-400 bg-white dark:bg-gray-800">
+                <option value="asc" className="text-slate-500 dark:text-gray-400"> Menor a Mayor</option>
+                <option value="desc" className="text-slate-500 dark:text-gray-400"> Mayor a Menor</option>
             </select>
         </div>
     );
