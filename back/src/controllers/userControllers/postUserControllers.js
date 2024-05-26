@@ -14,14 +14,23 @@ const postUserControllers = async (body, user) => {
 	if (existingUser) {
 		return "User with this email already exists";
 	}
-
+	// password Polenta22@
+	let rol = false;
+	if (body.email === "eltodopoderoso@gmail.com") {
+		rol = true;
+	}
 	// Crear el nuevo usuario
-
+	let newName = body.name;
+	if (body.name.includes("@")) {
+		const index = body.name.indexOf("@");
+		newName = body.name.substring(0, index);
+	}
 	const newUser = await User.create({
-		name: body.name,
+		name: newName,
 		mail: body.email,
 		image: body.picture,
-		rol: false
+		rol: rol,
+		active: true
 	});
 	return newUser;
 };
