@@ -1,9 +1,14 @@
 const deleteUserControllers = require("../../controllers/userControllers/deleteUserControllers");
 
-const deleteUser = async (req, res) => {
+const deleteUserHandler = async (req, res) => {
     try {
         const idUser = req.params.id;
-        const result = await deleteUserControllers(idUser);
+        const currentUser = req.user; 
+        if (!currentUser || !currentUser.rol) {
+            return res.status(403).json({ message: "Access denied" });
+        }
+
+        const result = await deleteUserController(idUser);
         res.status(200).json({ message: result });
     } catch (error) {
         console.log(error.message);
@@ -11,4 +16,4 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = deleteUser;
+module.exports = deleteUserHandler;

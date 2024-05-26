@@ -6,6 +6,7 @@ const getUserByNameHandlers = require("../handlers/userHandlers/getUserByNameHan
 const putUserHandlers = require("../handlers/userHandlers/putUserHandlers");
 const putAdminHandlers = require("../handlers/userHandlers/putAdminHandlers");
 const getUserByEmailHandlers = require("../handlers/userHandlers/getUserByEmailHandlers");
+const deleteUserHandlers = require("../handlers/userHandlers/deleteUserHandler");
 
 const userRouter = Router();
 
@@ -16,5 +17,6 @@ userRouter.get("/:id", getUserByIdHandlers);
 userRouter.post("/", postUserHandlers);
 userRouter.put("/:id", putUserHandlers);
 userRouter.put("/admin/:id", putAdminHandlers);
+userRouter.delete("/:id", deleteUserHandlers);
 
 module.exports = userRouter;
