@@ -12,10 +12,15 @@ import Navbar from './components/navbar/Navbar'
 import Form from './components/form/Form'
 import About from './views/about/About'
 import Cart from './views/cart/Cart'
+import Perfil from './views/dashboard/user/components/Perfil'
+import DashboardUser from './views/dashboard/user/DashboardUser'
+import DashboardAdmin from './views/dashboard/admin/DashboardAdmin'
+
+
 import { saveCartToLocalStorage } from '../src/redux/reducer/localStorageHelpers';
-import DashboardAdmin from './views/dashboard/admin/DashboardAdmin';
 
 function App() {
+  
   const cartItems = useSelector((state) => state.items);
 
     useEffect(() => {
@@ -42,6 +47,7 @@ function App() {
         <Route path={`/detail/:id`} element={<Detail />}></Route>
         <Route path="/about" element={<About/>}></Route>
         <Route path="/dashboardadmin" element={<DashboardAdmin />}></Route>
+        <Route path="/dashboarduser" element={<DashboardUser />}></Route>
       </Routes>
       <Footer />
     </>

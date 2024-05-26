@@ -1,21 +1,53 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/Spinner'; // Asegúrate de importar Spinner
 
 export default function ProductForm() {
+  // Cloudinary 
+  const preset = 'presetComputech'; 
+  const cloudName = 'damfsltm2';
+  const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+  const [url_img, setUrl_img] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log('url de la imagen cloudinary', url_img);
+
+  const changeUploadImage = async (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', preset);
+
+    try {
+      const response = await axios.post(url, data);
+      console.log(response.data);
+      setUrl_img(response.data.secure_url);
+    } catch (error) {
+      Swal.fire('Error al subir la imagen');
+      console.error(error);
+    }
+  };
+
+  // Reset image
+  const deleteImage = () => {
+    setUrl_img('');
+  };
+
   const [product, setProduct] = useState({
     name: "",
     description: "",
     price: "",
-    image: "",
     stock: "",
     brand: "",
     category: ""
   });
   const [errors, setErrors] = useState({});
   const [nameLengthError, setNameLengthError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Estado para manejar el spinner
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -71,7 +103,7 @@ export default function ProductForm() {
       isValid = false;
       missingFields.push("Precio válido");
     }
-    if (!product.image) {
+    if (!url_img) {
       newErrors.image = "La imagen es obligatoria.";
       isValid = false;
       missingFields.push("Imagen");
@@ -117,7 +149,7 @@ export default function ProductForm() {
         ...product,
         price: parseFloat(product.price),
         stock: parseInt(product.stock, 10),
-        image: product.image.split(',').map(img => img.trim())
+        image: url_img.split(',').map(img => img.trim())
       };
 
       try {
@@ -133,7 +165,7 @@ export default function ProductForm() {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Producto agregado al carrito",
+            title: "Producto guardado correctamente",
             showConfirmButton: true,
             confirmButtonText: "Agregar otro producto",
             cancelButtonText: "Volver al Home",
@@ -145,11 +177,11 @@ export default function ProductForm() {
                 name: "",
                 description: "",
                 price: "",
-                image: "",
                 stock: "",
                 brand: "",
                 category: ""
               });
+              setUrl_img('');
               setErrors({});
             } else {
               // Volver al Home
@@ -228,14 +260,25 @@ export default function ProductForm() {
           <div className="mb-4">
             <label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Imagen</label>
             <input
-              type="text"
+              type="file"
+              accept="image/*"
               id="image"
               name="image"
-              value={product.image}
-              onChange={handleChange}
-              className={`mt-1 p-2 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 ${errors.image ? 'border-red-500' : ''}`}
-              placeholder="URLs de las imágenes, separadas por comas"
+              onChange={changeUploadImage}
+              className="mt-1 p-2 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
             />
+            {url_img && (
+              <div>
+                <img src={url_img} alt="Uploaded" className="mt-2" />
+                <button
+                  type="button"
+                  className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded mt-2"
+                  onClick={deleteImage}
+                >
+                  Eliminar imagen
+                </button>
+              </div>
+            )}
             {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image}</p>}
           </div>
           <div className="mb-4">
