@@ -33,7 +33,7 @@ function App() {
 				try {
 					const token = await getAccessTokenSilently();
 					const response = await axios.post(
-						`http://localhost:3001/users`,
+						`https://computechback.onrender.com/users`,
 						{
 							name: user.name,
 							email: user.email,
