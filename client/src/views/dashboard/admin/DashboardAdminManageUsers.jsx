@@ -11,6 +11,7 @@ import { VisitorsChart } from '../../../components/charts/VisitorsChart';
 
 const DashboardAdminManageUsers = () => {
     return (
+        <div className="pt-16">
         <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
             <SideBarAdmin></SideBarAdmin>
 
@@ -30,6 +31,7 @@ const DashboardAdminManageUsers = () => {
                     </Card>
                 </div>
 
+                </div>
                 </div>
             </div>
         </div>

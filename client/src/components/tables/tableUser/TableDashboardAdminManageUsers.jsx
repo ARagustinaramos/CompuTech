@@ -12,69 +12,58 @@ import {
 
 const data = [
   {
-    name: 'Viola Amherd',
-    Role: 'Federal Councillor',
-    departement:
-      'The Federal Department of Defence, Civil Protection and Sport (DDPS)',
-    status: 'active',
+    name: 'Jorge Gonzalez',
+    Role: 'Usuario',
+    status: 'activo',
+    correo: 'jorge42@gmail.com'
   },
   {
-    name: 'Albert Rösti',
-    Role: 'Federal Councillor',
-    departement:
-      'The Federal Department of the Environment, Transport, Energy and Communications (DETEC)',
-    status: 'active',
+    name: 'Gilberto Diaz',
+    Role: 'Admin',
+    status: 'activo',
+    correo: 'gilberto145@gmail.com'
   },
   {
-    name: 'Beat Jans',
-    Role: 'Federal Councillor',
-    departement: 'The Federal Department of Justice and Police (FDJP)',
-    status: 'active',
+    name: 'Agustina Ramos',
+    Role: 'Usuario',
+    status: 'activo',
+    correo: 'agustina99@gmail.com'
   },
   {
-    name: 'Ignazio Cassis',
-    Role: 'Federal Councillor',
-    departement: 'The Federal Department of Foreign Affairs (FDFA)',
-    status: 'active',
+    name: 'Florencia Córdoba',
+    Role: 'Admin',
+    status: 'activo',
+    correo: 'flor123@gmail.com'
   },
   {
-    name: 'Karin Keller-Sutter',
-    Role: 'Federal Councillor',
-    departement: 'The Federal Department of Finance (FDF)',
-    status: 'active',
+    name: 'Hernán Ponce de León',
+    Role: 'Admin',
+    status: 'activo',
+    correo: 'hernan19@gmail.com'
   },
-  {
-    name: 'Guy Parmelin',
-    Role: 'Federal Councillor',
-    departement:
-      'The Federal Department of Economic Affairs, Education and Research (EAER)',
-    status: 'active',
-  },
-  {
-    name: 'Elisabeth Baume-Schneider',
-    Role: 'Federal Councillor',
-    departement: 'The Federal Department of Home Affairs (FDHA)',
-    status: 'active',
-  },
+
 ];
 
 export function TableDashboardAdminManageUsers() {
   return (
+    
     <Card>
+     
       <h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">List de usuarios registrados</h3>
       <Table className="mt-5">
         <TableHead>
           <TableRow>
             <TableHeaderCell>Nombre</TableHeaderCell>
-            <TableHeaderCell>Position</TableHeaderCell>
-            <TableHeaderCell>Department</TableHeaderCell>
-            <TableHeaderCell>Status</TableHeaderCell>
+            <TableHeaderCell>Correo</TableHeaderCell>
+            <TableHeaderCell>Rol</TableHeaderCell>
+            <TableHeaderCell>Estatus</TableHeaderCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((item) => (
             <TableRow key={item.name}>
               <TableCell>{item.name}</TableCell>
+              <TableCell>{item.correo}</TableCell>
               <TableCell>
                 {item.Role}
               </TableCell>
@@ -90,6 +79,7 @@ export function TableDashboardAdminManageUsers() {
           ))}
         </TableBody>
       </Table>
+      
     </Card>
   );
 }
