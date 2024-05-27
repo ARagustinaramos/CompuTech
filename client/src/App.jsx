@@ -31,8 +31,9 @@ function App() {
 			if (isAuthenticated) {
 				try {
 					const token = await getAccessTokenSilently();
+
 					const response = await axios.post(
-						`https://computechback.onrender.com/users`,
+						`https://computechback.onrender.com`,
 						{
 							name: user.name,
 							email: user.email,
