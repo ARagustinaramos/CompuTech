@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
             },
             auto_return: "approved",
             external_reference: 'TU_REFERENCIA_EXTERNA',
-            notification_url: 'https://computechback.onrender.com/products'
+            notification_url: 'https://co/products'
         };
 
         // Creación de la preferencia

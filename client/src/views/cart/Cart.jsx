@@ -28,7 +28,7 @@ const Cart = () => {
 
             console.log("Items being sent:", items);
 
-            const response = await axios.post('https://computechback.onrender.com/create_preference', {
+            const response = await axios.post('http://localhost:3001/create_preference', {
                 items
             });
 
