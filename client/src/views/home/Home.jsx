@@ -50,11 +50,6 @@ const Home = () => {
             <ByCategory setCategoryFilter={setCategoryFilter} />
           </div>
           <div className="flex overflow-x-auto sm:justify-center mb-4">
-            <Pagination
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              totalPages={nPages}
-            />
           </div>
           <Cards
             brandFilter={brandFilter}
