@@ -1,4 +1,4 @@
-const deleteUserControllers = require("../../controllers/userControllers/deleteUserControllers");
+const deleteUserController = require("../../controllers/userControllers/deleteUserController");
 
 const deleteUserHandler = async (req, res) => {
     try {

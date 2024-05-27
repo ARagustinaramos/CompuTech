@@ -2,9 +2,9 @@ const postUserControllers = require("../../controllers/userControllers/postUserC
 
 const postUserHandlers = async (req, res) => {
 	try {
-		const body = req.body;
+		// const body = req.body;
 		const user = req.user;
-		const response = await postUserControllers(body, user);
+		const response = await postUserControllers(user);
 		res.status(200).json(response);
 	} catch (error) {
 		console.log(error.message);
