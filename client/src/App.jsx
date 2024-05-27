@@ -34,6 +34,11 @@ function App() {
 					const token = await getAccessTokenSilently();
 					console.log("token:", token);
 					console.log("user:", user);
+					const newUser = {
+						name: user.name,
+						email: user.email,
+						picture: user.picture
+					};
 					const response = await fetch(
 						`https://computechback.onrender.com/users`,
 						{
@@ -41,7 +46,7 @@ function App() {
 							headers: {
 								"Content-Type": "application/json"
 							},
-							body: JSON.stringify(user)
+							body: JSON.stringify(newUser)
 						}
 					);
 					console.log("Usuario registrado: ", response);

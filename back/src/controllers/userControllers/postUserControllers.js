@@ -2,9 +2,9 @@ const { User } = require("../../config/db");
 
 const postUserControllers = async (body) => {
 	// Validar los datos de usuario
-	if (!body.name || !body.email || !body.picture) {
-		throw new Error("All fields are required");
-	}
+	// if (!body.name || !body.email || !body.picture) {
+	// 	throw new Error("All fields are required");
+	// }
 	// if (!user.name || !user.email || !user.picture) {
 	// 	throw new Error("All fields are required");
 	// }
