@@ -14,14 +14,13 @@ import Cart from "./views/cart/Cart";
 import { saveCartToLocalStorage } from "../src/redux/reducer/localStorageHelpers";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import Perfil from './views/dashboard/user/components/Perfil'
-import DashboardUser from './views/dashboard/user/DashboardUser'
-import DashboardAdmin from './views/dashboard/admin/DashboardAdmin'
-import DashboardAdminManageUsers from './views/dashboard/admin/DashboardAdminManageUsers';
+import Perfil from "./views/dashboard/user/components/Perfil";
+import DashboardUser from "./views/dashboard/user/DashboardUser";
+import DashboardAdmin from "./views/dashboard/admin/DashboardAdmin";
+import DashboardAdminManageUsers from "./views/dashboard/admin/DashboardAdminManageUsers";
 
 function App() {
-  
-  const cartItems = useSelector((state) => state.items);
+	const cartItems = useSelector((state) => state.items);
 
 	useEffect(() => {
 		saveCartToLocalStorage(cartItems);
@@ -33,8 +32,9 @@ function App() {
 			if (isAuthenticated) {
 				try {
 					const token = await getAccessTokenSilently();
+
 					const response = await axios.post(
-						`https://computechback.onrender.com/users`,
+						`https://computechback.onrender.com`,
 						{
 							name: user.name,
 							email: user.email,
@@ -66,18 +66,24 @@ function App() {
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path={`/detail/:id`} element={<Detail />}></Route>        
       */}
-        <Route path="/" element={<Home/>}></Route>
-        <Route path="/cart" element={<Cart/>}></Route>
-        <Route path="/form" element={<Form/>}></Route>
-        <Route path={`/detail/:id`} element={<Detail />}></Route>
-        <Route path="/about" element={<About/>}></Route>
-        <Route path="/dashboardadmin/manage/products" element={<DashboardAdmin />}></Route>
-        <Route path="/dashboardadmin/manage/users" element={<DashboardAdminManageUsers />}></Route>
-		<Route path="/dashboarduser" element={<DashboardUser />}></Route>
-      </Routes>
-      <Footer />
-    </>
-  )
+				<Route path="/" element={<Home />}></Route>
+				<Route path="/cart" element={<Cart />}></Route>
+				<Route path="/form" element={<Form />}></Route>
+				<Route path={`/detail/:id`} element={<Detail />}></Route>
+				<Route path="/about" element={<About />}></Route>
+				<Route
+					path="/dashboardadmin/manage/products"
+					element={<DashboardAdmin />}
+				></Route>
+				<Route
+					path="/dashboardadmin/manage/users"
+					element={<DashboardAdminManageUsers />}
+				></Route>
+				<Route path="/dashboarduser" element={<DashboardUser />}></Route>
+			</Routes>
+			<Footer />
+		</>
+	);
 }
 
 export default App;
