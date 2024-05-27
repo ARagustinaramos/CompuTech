@@ -1,12 +1,12 @@
 const { Router } = require("express");
 const getUserHandlers = require("../handlers/userHandlers/getUserHandlers");
-const postUserHandlers = require("../handlers/userHandlers/postUserHandlers"); // Corregido el nombre del archivo
 const getUserByIdHandlers = require("../handlers/userHandlers/getUserByIdHandlers");
 const getUserByNameHandlers = require("../handlers/userHandlers/getUserByNameHandlers");
 const putUserHandlers = require("../handlers/userHandlers/putUserHandlers");
 const putAdminHandlers = require("../handlers/userHandlers/putAdminHandlers");
 const getUserByEmailHandlers = require("../handlers/userHandlers/getUserByEmailHandlers");
 const { checkJwt } = require("../server");
+const postUserHandlers = require("../handlers/userHandlers/postUserHandlers");
 
 const userRouter = Router();
 
