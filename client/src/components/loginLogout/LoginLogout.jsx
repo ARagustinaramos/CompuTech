@@ -17,7 +17,7 @@ const LoginLogout = () => {
   if (isLoading) {
     return <div>Cargando...</div>;
   }
-
+console.log(user)
   return (
     <li className="relative content-center">
       {!isAuthenticated ? (
@@ -70,7 +70,7 @@ const LoginLogout = () => {
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                   role="menuitem"
                 >
-                  Dashboard
+                  Administrador
                 </a>
                 <a
                   href="/profile"
