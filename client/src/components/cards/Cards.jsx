@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
-import Pagination from '../pagination/Pagination'; 
+import Pagination from '../pagination/Pagination';
 
-const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, setCurrentPage }) => {
+const Cards = ({ brandFilter, categoryFilter, nameOrder, priceOrder, currentPage, setCurrentPage, searchResults }) => {
+
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const dataQt = 12; 
+  const dataQt = 12;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         let url = 'https://computechback.onrender.com/products';
         const params = new URLSearchParams();
-  
+
         if (brandFilter) params.append('brand', brandFilter);
         if (categoryFilter) params.append('category', categoryFilter);
-        if (nameFilter) params.append('name', nameFilter);
-  
+
         if (params.toString()) url += `?${params.toString()}`;
-  
+
         const response = await fetch(url);
         let data = await response.json();
-  
-        let sortedData = [...data]; 
-  
+
+        let preparedData = data.map(product => ({
+          ...product,
+           name: product.name.toLowerCase() // Convertimos todos los nombres a minúsculas
+        }));
+
+        let sortedData = [...preparedData];
+
         if (nameOrder === 'a-z') {
           sortedData.sort((a, b) => a.name.localeCompare(b.name));
         } else if (nameOrder === 'z-a') {
@@ -34,22 +39,22 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
         } else if (priceOrder === 'desc') {
           sortedData.sort((a, b) => b.price - a.price);
         }
-  
-      
+
         setFilteredProducts(sortedData);
       } catch (error) {
         console.log(error.message);
       }
     };
-  
-    fetchProducts();
-  }, [brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder]);
-  
 
-  const totalPages = Math.ceil(filteredProducts.length / dataQt);
+    fetchProducts();
+  }, [brandFilter, categoryFilter, nameOrder, priceOrder]);
+
+  const displayProducts = searchResults && searchResults.length > 0 ? searchResults : filteredProducts;
+
+  const totalPages = Math.ceil(displayProducts.length / dataQt);
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
-  const productsToDisplay = filteredProducts.slice(indexInicial, indexFinal);
+  const productsToDisplay = displayProducts.slice(indexInicial, indexFinal);
 
   return (
     <div>
@@ -57,13 +62,13 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
         <div className="grid grid-cols-4 gap-4">
           {productsToDisplay.length > 0 ? (
             productsToDisplay.map((product) => (
-              <Card 
-                key={product.id_Product} 
-                id_Product={product.id_Product} 
-                name={product.name} 
-                image={product.image} 
-                price={product.price} 
-                brand={product.BrandIdBrand}  
+              <Card
+                key={product.id_Product}
+                id_Product={product.id_Product}
+                name={product.name}
+                image={product.image}
+                price={product.price}
+                brand={product.BrandIdBrand}
               />
             ))
           ) : (
@@ -76,4 +81,3 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
 };
 
 export default Cards;
-

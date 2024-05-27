@@ -14,19 +14,21 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
 	};
 
 	return (
-		<div>
+		<div className="flowbite-pagination">
 			<h4
 				onClick={prev}
-				style={{ cursor: currentPage > 1 ? "pointer" : "default" }}
+				style={{ cursor: currentPage === 1 ? "not-allowed" : "pointer" }}
 			>
 				Anterior
 			</h4>
-			<div>
+			<div className="flowbite-pagination-current">
 				{currentPage} / {totalPages}
 			</div>
 			<h4
 				onClick={next}
-				style={{ cursor: currentPage < totalPages ? "pointer" : "default" }}
+				style={{
+					cursor: currentPage === totalPages ? "not-allowed" : "pointer"
+				}}
 			>
 				Siguiente
 			</h4>

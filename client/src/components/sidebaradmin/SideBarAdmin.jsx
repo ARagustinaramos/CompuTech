@@ -6,13 +6,11 @@ const SideBarAdmin = () => {
     <Sidebar aria-label="Default sidebar example">
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="#" icon={HiChartPie}>
-            Dashboard
-          </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiUser}>
+          
+          <Sidebar.Item href="/dashboardadmin/manage/users" icon={HiUser}>
             Gestionar Ususarios
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={HiShoppingBag}>
+          <Sidebar.Item href="/dashboardadmin/manage/products" icon={HiShoppingBag}>
             Gestionar Productos
           </Sidebar.Item>
           <Sidebar.Item href="#" icon={HiArrowSmRight}>

@@ -21,6 +21,7 @@ const Home = () => {
 	const [nameOrder, setNameOrder] = useState("");
 	const [dataQt, setDataQt] = useState(12);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [searchResults, setSearchResults] = useState([]);
 
 	useEffect(() => {
 		dispatch(getProducts());
@@ -60,6 +61,7 @@ const Home = () => {
 						nameOrder={nameOrder}
 						currentPage={currentPage}
 						setCurrentPage={setCurrentPage}
+						setSearchResults={setSearchResults}
 					/>
 				</div>
 				<div className="flex overflow-x-auto sm:justify-center">
