@@ -17,6 +17,7 @@ import axios from "axios";
 import Perfil from './views/dashboard/user/components/Perfil'
 import DashboardUser from './views/dashboard/user/DashboardUser'
 import DashboardAdmin from './views/dashboard/admin/DashboardAdmin'
+import DashboardAdminManageUsers from './views/dashboard/admin/DashboardAdminManageUsers';
 
 function App() {
   
@@ -33,7 +34,7 @@ function App() {
 				try {
 					const token = await getAccessTokenSilently();
 					const response = await axios.post(
-						`http://localhost:3001/users`,
+						`https://computechback.onrender.com/users`,
 						{
 							name: user.name,
 							email: user.email,
@@ -65,17 +66,18 @@ function App() {
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path={`/detail/:id`} element={<Detail />}></Route>        
       */}
-				<Route path="/" element={<Home />}></Route>
-				<Route path="/cart" element={<Cart />}></Route>
-				<Route path="/form" element={<Form />}></Route>
-				<Route path={`/detail/:id`} element={<Detail />}></Route>
-				<Route path="/about" element={<About />}></Route>
-				<Route path="/dashboardadmin" element={<DashboardAdmin />}></Route>
-        <Route path="/dashboarduser" element={<DashboardUser />}></Route>
-			</Routes>
-			<Footer />
-		</>
-	);
+        <Route path="/" element={<Home/>}></Route>
+        <Route path="/cart" element={<Cart/>}></Route>
+        <Route path="/form" element={<Form/>}></Route>
+        <Route path={`/detail/:id`} element={<Detail />}></Route>
+        <Route path="/about" element={<About/>}></Route>
+        <Route path="/dashboardadmin/manage/products" element={<DashboardAdmin />}></Route>
+        <Route path="/dashboardadmin/manage/users" element={<DashboardAdminManageUsers />}></Route>
+		<Route path="/dashboarduser" element={<DashboardUser />}></Route>
+      </Routes>
+      <Footer />
+    </>
+  )
 }
 
 export default App;
