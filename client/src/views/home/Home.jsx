@@ -17,10 +17,13 @@ const Home = () => {
   const allProducts = useSelector((state) => state.copyProducts);
   const [brandFilter, setBrandFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
-  const [priceOrder, setPriceOrder] = useState('asc');
-  const [nameOrder, setNameOrder] = useState(''); 
+  const [priceOrder, setPriceOrder] = useState('');
+  const [nameOrder, setNameOrder] = useState('');
   const [dataQt, setDataQt] = useState(12);
-  const [currentPage, setCurrentPage] = useState(1); 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const resetNameOrder = () => setNameOrder('');
+  const resetPriceOrder = () => setPriceOrder('');
 
   useEffect(() => {
     dispatch(getProducts());
@@ -41,8 +44,8 @@ const Home = () => {
         <div className="bg-white antialiased dark:bg-gray-900 md:py-5">
           <CarouselComponent />
           <div className="flex overflow-x-auto sm:justify-center mb-2">
-            <ByName setNameOrder={setNameOrder} />  
-            <ByPrice setPriceOrder={setPriceOrder} />
+            <ByName setNameOrder={setNameOrder} resetPriceOrder={resetPriceOrder} />
+            <ByPrice setPriceOrder={setPriceOrder} resetNameOrder={resetNameOrder} />
             <ByBrand setBrandFilter={setBrandFilter} />
             <ByCategory setCategoryFilter={setCategoryFilter} />
           </div>
@@ -57,12 +60,12 @@ const Home = () => {
             brandFilter={brandFilter}
             categoryFilter={categoryFilter}
             priceOrder={priceOrder}
-            nameOrder={nameOrder} 
+            nameOrder={nameOrder}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
         </div>
-        <div className="flex overflow-x-auto sm:justify-center">
+        <div className="flex overflow-x-auto sm:justify-center bg-white antialiased dark:bg-gray-900 md:py-5">
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
@@ -75,6 +78,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-

@@ -14,14 +14,28 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
   };
 
   return (
-    <div className={styles.pagination}>
-      <h4 onClick={prev} style={{ cursor: currentPage > 1 ? 'pointer' : 'default' }}>
+    <div className="flex justify-center items-center gap-4 p-4">
+      <button 
+        onClick={prev} 
+        className={`px-4 py-2 rounded-lg transition-colors ${
+          currentPage <= 1 ? 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed' : 'bg-blue-500 dark:bg-blue-700 hover:bg-blue-600 dark:hover:bg-blue-600 text-white'
+        }`} 
+        disabled={currentPage <= 1}
+      >
         Anterior
-      </h4>
-      <div>{currentPage} / {totalPages}</div>
-      <h4 onClick={next} style={{ cursor: currentPage < totalPages ? 'pointer' : 'default' }}>
+      </button>
+      <div className="font-bold text-gray-700 dark:text-gray-300">
+        {currentPage} / {totalPages}
+      </div>
+      <button 
+        onClick={next} 
+        className={`px-4 py-2 rounded-lg transition-colors ${
+          currentPage >= totalPages ? 'bg-gray-300 dark:bg-gray-700 cursor-not-allowed' : 'bg-blue-500 dark:bg-blue-700 hover:bg-blue-600 dark:hover:bg-blue-600 text-white'
+        }`} 
+        disabled={currentPage >= totalPages}
+      >
         Siguiente
-      </h4>
+      </button>
     </div>
   );
 };
