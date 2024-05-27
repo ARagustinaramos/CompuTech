@@ -12,8 +12,18 @@ server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
+server.use(
+	cors({
+		origin: "https://computech.vercel.app", // Permite solicitudes desde este dominio
+		credentials: true,
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+		allowedHeaders:
+			"Origin, X-Requested-With, Content-Type, Accept, Authorization"
+	})
+);
+
 server.use((req, res, next) => {
-	res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+	res.header("Access-Control-Allow-Origin", "https://computech.vercel.app");
 	res.header("Access-Control-Allow-Credentials", "true");
 	res.header(
 		"Access-Control-Allow-Headers",
@@ -22,11 +32,6 @@ server.use((req, res, next) => {
 	res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
 	next();
 });
-server.use(
-	cors({
-		origin: "*" // Reemplaza esto con el dominio de tu frontend
-	})
-);
 
 // Configuración de JWT y autenticación
 // const authConfig = {
