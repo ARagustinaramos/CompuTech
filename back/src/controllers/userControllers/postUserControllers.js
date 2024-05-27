@@ -1,8 +1,7 @@
 const { User } = require("../../config/db");
 
-const postUserControllers = async (body, user) => {
+const postUserControllers = async (user) => {
 	// Validar los datos de usuario
-	console.log("user post: ", user);
 	// if (!body.name || !body.email || !body.picture) {
 	// 	throw new Error("All fields are required");
 	// }
