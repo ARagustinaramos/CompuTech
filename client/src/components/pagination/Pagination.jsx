@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./pagination.module.css";
 const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
 	const next = () => {
 		if (currentPage < totalPages) {
