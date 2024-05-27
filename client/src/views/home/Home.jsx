@@ -45,7 +45,7 @@ const Home = () => {
         <div className="bg-white antialiased dark:bg-gray-900 md:py-5">
           <div className="pt-16">
             <CarouselComponent />
-            <div className="flex justify-center mb-4">
+            <div className="flex justify-center mb-4 ">
             </div>
             <div className="flex overflow-x-auto sm:justify-center mb-2">
               <ByName setNameOrder={setNameOrder} resetPriceOrder={resetPriceOrder} />
