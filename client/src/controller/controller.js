@@ -4,7 +4,7 @@ export async function postPokemon(create){
     //event.preventDefault()
     try {
         console.log("previus")
-        const response = await axios.post("http://localhost:3001/pokemons", create);
+        const response = await axios.post("https://computechback.onrender.com/pokemons", create);
         console.log(response)
         if (response) {
           alert("Pokemon creado con éxito");
