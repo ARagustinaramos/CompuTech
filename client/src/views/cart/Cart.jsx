@@ -76,6 +76,7 @@ const Cart = () => {
         .reduce((acc, curr) => acc + curr, 0);
 
     return (
+        <div className="pt-16">
         <div className="bg-white dark:bg-gray-900 min-h-screen">
             <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16 w-full">
                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0 text-center">
@@ -202,6 +203,7 @@ const Cart = () => {
                     </div>
                 )}
             </section>
+        </div>
         </div>
     );
 };

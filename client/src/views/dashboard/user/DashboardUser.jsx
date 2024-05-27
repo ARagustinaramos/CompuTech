@@ -17,6 +17,7 @@ const DashboardUser = () => {
   console.log('user', user)
 
   return(
+    <div className="pt-16">
     <div className="grid lg:grid-cols-4 xl:grid-cols-6 min-h-screen  dark:bg-gray-900 md:py-5">
       <Sidebar/>
       <main className=" xl:col-span-5 dark:bg-gray-900 p-8">
@@ -50,6 +51,7 @@ const DashboardUser = () => {
               </div>
         </section>
       </main>
+    </div>
     </div>
   );
 }
