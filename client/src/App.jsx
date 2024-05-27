@@ -34,21 +34,17 @@ function App() {
 					const token = await getAccessTokenSilently();
 					console.log("token:", token);
 					console.log("user:", user);
-					const response = await axios.post(
+					const response = await fetch(
 						`https://computechback.onrender.com/users`,
 						{
-							name: user.name,
-							email: user.email,
-							picture: user.picture
-						},
-						{
+							method: "POST",
 							headers: {
-								Authorization: `Bearer ${token}`,
 								"Content-Type": "application/json"
-							}
+							},
+							body: JSON.stringify(user)
 						}
 					);
-					console.log("Usuario registrado: ", response.data);
+					console.log("Usuario registrado: ", response);
 				} catch (error) {
 					console.log(error.message);
 				}
