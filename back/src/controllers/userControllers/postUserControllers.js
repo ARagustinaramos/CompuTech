@@ -1,4 +1,5 @@
 const { User } = require("../../config/db");
+const sendEmail = require("../../config/sendEmail");
 
 const postUserControllers = async (body, user) => {
 	// Validar los datos de usuario
@@ -32,6 +33,8 @@ const postUserControllers = async (body, user) => {
 		rol: rol,
 		active: true
 	});
+
+	await sendWelcomeEmail(body.email, newName);
 	return newUser;
 };
 
