@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const LoginLogout = () => {
-  const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } =
-    useAuth0();
+  const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -95,7 +94,7 @@ const LoginLogout = () => {
                 </a>
                 <div className="border-t border-gray-100 dark:border-gray-700"></div>
                 <button
-                  onClick={() => logout({ returnTo: 'https://computech.vercel.app/' })}
+                  onClick={() => logout({ returnTo: window.location.origin })}
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                   role="menuitem"
                 >
