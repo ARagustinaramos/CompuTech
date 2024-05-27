@@ -11,7 +11,7 @@ import { deleteProduct } from '../../redux/actions/actions';
 export function DangerCard() {
 
     const dispatch = useDispatch();
-    const allProducts = useSelector((state) => state.copyProducts);
+    const allProducts = useSelector((state) => state.allProducts);
     
     useEffect(() => {
         dispatch(getProducts());
