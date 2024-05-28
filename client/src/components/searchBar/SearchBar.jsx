@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setFilterProducts } from '../../redux/actions/actions';
 
-const SearchBar = ({ setSearchResults }) => {
+const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -9,22 +13,30 @@ const SearchBar = ({ setSearchResults }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError('');
     try {
-      const response = await fetch(`http://localhost:3001/products?search=${searchQuery}`);
+      const response = await fetch(`http://localhost:3001/products/name?name=${searchQuery}`);
       if (!response.ok) {
         throw new Error('Failed to fetch search results');
       }
       const data = await response.json();
-      setSearchResults(data);
+      console.log(data);
+      dispatch(setFilterProducts(data)); // Despacha la acción para actualizar el estado de Redux
     } catch (error) {
+      setError('Error searching products. Please try again.');
       console.error('Error searching products:', error);
     }
+  };
+
+  const handleReset = () => {
+    setSearchQuery('');
+    dispatch(setFilterProducts([])); // Resetea los productos filtrados en el estado de Redux
   };
 
   return (
     <div className="form relative flex justify-center bg-white antialiased dark:bg-gray-900">
       <form className="form relative" onSubmit={handleSubmit}>
-        <button className="absolute left-2 -translate-y-1/2 top-1/2 p-1">
+        <button className="absolute left-2 -translate-y-1/2 top-1/2 p-1" aria-label="Search">
           <svg
             width="17"
             height="16"
@@ -48,10 +60,11 @@ const SearchBar = ({ setSearchResults }) => {
           placeholder="Search..."
           value={searchQuery}
           onChange={handleInputChange}
-          required=""
+          required
           type="text"
+          aria-label="Search products"
         />
-        <button type="reset" className="absolute right-3 -translate-y-1/2 top-1/2 p-1">
+        <button type="button" onClick={handleReset} className="absolute right-3 -translate-y-1/2 top-1/2 p-1" aria-label="Clear search">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-5 h-5 text-gray-700"
@@ -63,6 +76,7 @@ const SearchBar = ({ setSearchResults }) => {
           </svg>
         </button>
       </form>
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 };

@@ -4,7 +4,9 @@ const { sortByPrice, sortByRanking, calculateAverageRating } = require("../Utils
 
 const getProducts = async (filters, sort) => {
 	try {
-		let queryOptions = {};
+		let queryOptions = {
+			where: {active: true},
+		};
 
 		// Obtener todos los productos
 		const products = await Product.findAll(queryOptions);

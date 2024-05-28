@@ -1,33 +1,57 @@
 import axios from "axios";
-import { 
-    GET_DETAIL, 
-    GET_PRODUCTS, 
-    GET_BY_NAME, 
-    GET_TYPES, 
-    FILTERDBAPI, 
-    FILTER_TYPE, 
-    ORDER_NAME, 
-    ORDER_ATTACK, 
+import {
+    GET_DETAIL,
+    GET_PRODUCTS,
+    GET_BY_NAME,
+    GET_TYPES,
+    FILTERDBAPI,
+    FILTER_TYPE,
+    ORDER_NAME,
+    ORDER_ATTACK,
     CLEAN_DETAIL,
-    SET_FILTER, 
-    ADD_TO_CART, 
-    REMOVE_FROM_CART, 
-    UPDATE_CART_ITEM_QUANTITY 
+    SET_FILTER,
+    ADD_TO_CART,
+    REMOVE_FROM_CART,
+    UPDATE_CART_ITEM_QUANTITY,
+    SET_FILTER_PRODUCTS,
+    DELETE_PRODUCT,
+    SET_ALL_PRODUCTS,
+    SET_CATEGORY_FILTER,
+    SET_BRAND_FILTER
+    
+    
 } from "./types";
 
-export const getProducts = () => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.get("http://localhost:3001/products");
-            return dispatch({
-                type: GET_PRODUCTS,
-                payload: data
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
+export const getProducts = () => async (dispatch) => {
+    try {
+      const response = await fetch('http://localhost:3001/products');
+      const data = await response.json();
+      dispatch(setAllProducts(data));
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
 };
+
+export const setAllProducts = (products) => ({
+    type: SET_ALL_PRODUCTS,
+    payload: products,
+  });
+
+  export const setCategoryFilter = (category) => ({
+    type: SET_CATEGORY_FILTER,
+    payload: category,
+  });
+
+export const setFilterProducts = (products) => ({
+    type: SET_FILTER_PRODUCTS,
+    payload: products,
+  });
+
+  export const setBrandFilter = (brand) => ({
+    type: SET_BRAND_FILTER,
+    payload: brand,
+  });
+
 
 export const addToCart = (product) => {
     return {
@@ -122,26 +146,17 @@ export const orderAttack = (payload) => {
 export const cleanDetail = () => {
     return {
         type: CLEAN_DETAIL,
-       
+
     }
 }
 export const setFilter = (filter) => ({
     type: SET_FILTER,
     payload: filter,
-  });
+});
 
-// export const createPokemon = (info) => {
-//     return async (dispatch) => {
-//         try {
-//             const response = await axios.post('http://localhost:3001/pokemons/', info)
-//             dispatch({
-//                 type: CREATE_POKEMON,
-//                 payload: response.data
-//             });
-//             alert("Pokemon creado con exito");
-//             return response;
-//         } catch (error) {
-//             console.log(error.message)
-//         }
-//     }
-// }
+export const deleteProduct = (id) => {
+    return {
+        type: DELETE_PRODUCT,
+        payload: id
+    };
+};
