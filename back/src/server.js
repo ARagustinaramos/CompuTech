@@ -50,8 +50,8 @@ const checkJwt = jwt.expressjwt({
 	algorithms: ["RS256"]
 });
 
-// server.use(checkJwt);
 server.use("/", router);
+server.use(checkJwt);
 
 server.use((err, req, res, next) => {
 	const status = err.status || 500;
