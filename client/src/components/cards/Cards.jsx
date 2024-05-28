@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
-import Pagination from '../pagination/Pagination';
-import Pagination from '../pagination/Pagination';
+
 
 const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, setCurrentPage, filterProducts }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -12,16 +11,13 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
     const fetchProducts = async () => {
       try {
         let url = 'http://localhost:3001/products';
-        let url = 'http://localhost:3001/products';
         const params = new URLSearchParams();
-
 
         if (brandFilter) params.append('brand', brandFilter);
         if (categoryFilter) params.append('category', categoryFilter);
         if (nameFilter) params.append('name', nameFilter);
 
         if (params.toString()) url += `?${params.toString()}`;
-
 
         const response = await fetch(url);
         let data = await response.json();
@@ -55,10 +51,10 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
     }
   }, [brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, filterProducts]);
 
-  const totalPages = Math.ceil(displayProducts.length / dataQt);
+  const totalPages = Math.ceil(filteredProducts.length / dataQt);
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
-  const productsToDisplay = displayProducts.slice(indexInicial, indexFinal);
+  const productsToDisplay = filteredProducts.slice(indexInicial, indexFinal);
 
   return (
     <div>
@@ -73,13 +69,6 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
                 image={product.image}
                 price={product.price}
                 brand={product.BrandIdBrand}
-              <Card
-                key={product.id_Product}
-                id_Product={product.id_Product}
-                name={product.name}
-                image={product.image}
-                price={product.price}
-                brand={product.BrandIdBrand}
               />
             ))
           ) : (
@@ -87,11 +76,6 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
           )}
         </div>
       </div>
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-      />
     </div>
   );
 };
