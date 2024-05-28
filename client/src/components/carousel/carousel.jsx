@@ -26,7 +26,7 @@ const CarouselComponent = () => {
   return (
     <div id="default-carousel" className="relative w-full" data-carousel="slide">
       {/* Carousel wrapper */}
-      <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+      <div className="relative h-56 overflow-hidden rounded-lg md:h-96 w-full">
         {items.map((src, index) => (
           <div
             key={index}
@@ -35,7 +35,7 @@ const CarouselComponent = () => {
           >
             <img
               src={src}
-              className="absolute max-w-none max-h-full h-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              className="w-full h-full object-cover"
               alt={`Slide ${index + 1}`}
             />
           </div>
@@ -84,6 +84,5 @@ const CarouselComponent = () => {
     </div>
   );
 };
-
 
 export default CarouselComponent;

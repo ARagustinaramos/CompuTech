@@ -17,15 +17,14 @@ const DashboardUser = () => {
 
   const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
 
-  console.log('user desde dashboard:', user)
-  
-  return (
-    <div className="min-h-screen dark:bg-gray-900 flex">
-      <div className="p-3 w-1/7">
-        <Sidebar/>
-      </div>
-      <main className="flex flex-col mx-2 flex-grow dark:bg-gray-900">
-        <Header className="mx-2 my-2" />
+  console.log('user', user)
+
+  return(
+    <div className="pt-16">
+    <div className="grid lg:grid-cols-4 xl:grid-cols-6 min-h-screen  dark:bg-gray-900 md:py-5">
+      <Sidebar/>
+      <main className=" xl:col-span-5 dark:bg-gray-900 p-8">
+        <Header/>
         {/* Section 1 */}
         <section className="grid grid-cols-2 gap-4 py-2 flex-grow">
           {/* Historial de pedidos */}
@@ -35,6 +34,7 @@ const DashboardUser = () => {
           <div className="container col-span-2"></div>
         </section>
       </main>
+    </div>
     </div>
   );
   

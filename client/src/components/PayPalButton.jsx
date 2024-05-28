@@ -2,6 +2,8 @@ import React from 'react';
 import { PayPalButtons } from "@paypal/react-paypal-js";
 
 
+
+
 const PayPalButton = ({ total, items }) => {
     return (
         <PayPalButtons
@@ -9,7 +11,7 @@ const PayPalButton = ({ total, items }) => {
             createOrder={(data, actions) => {
                 return actions.order.create({
                     purchase_units: [{
-                        description: items.name, 
+                        description: items.name,
                         amount: {
                             value: total // Reemplaza con el monto real
                         }
@@ -21,7 +23,7 @@ const PayPalButton = ({ total, items }) => {
                     const details = await actions.order.capture();
                     console.log('Transaction exitosa ' + details.payer.name.given_name);
                     console.log('Order details:', details);
-                    
+                   
                     // Lógica adicional después de la aprobación
                 } catch (error) {
                     console.error('Error capturing order:', error);
@@ -30,5 +32,6 @@ const PayPalButton = ({ total, items }) => {
         />
     );
 };
+
 
 export default PayPalButton;

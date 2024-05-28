@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeFromCart, updateCartItemQuantity } from '../../redux/actions/actions';
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
-import axios from 'axios';
-
 import PayPalButton from '../../components/PayPalButton'; // Asegúrate de que esta ruta sea correcta
 
 const Cart = () => {
-    const [preferenceId, setPreferenceId] = useState(null);
-
-    initMercadoPago('TEST-057aa2fa-27a8-4181-9ebd-28a08f1a19bc', {
-        locale: "es-AR",
-    });
-
+    const [showPayPalButton, setShowPayPalButton] = useState(false);
     const cartItems = useSelector(getMemoizedCartItems);
     const dispatch = useDispatch();
 
@@ -24,19 +16,6 @@ const Cart = () => {
         price: item.price,
         quantity: item.quantity
     }));
-
-    const createPreference = async () => {
-        try {
-            const response = await axios.post('http://localhost:3001/create_preference', {
-                items
-            });
-
-            const { id } = response.data;
-            return id;
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const handleRemoveItemClick = (itemId) => {
         dispatch(removeFromCart(itemId));
@@ -59,13 +38,6 @@ const Cart = () => {
         handleQuantityChange(itemId, newQuantity);
     };
 
-    const handleBuy = async () => {
-        const id = await createPreference();
-        if (id) {
-            setPreferenceId(id);
-        }
-    };
-
     const total = cartItems
         .map(item => {
             const itemPrice = parseFloat(item.price);
@@ -74,14 +46,27 @@ const Cart = () => {
         })
         .reduce((acc, curr) => acc + curr, 0);
 
+    const handleProceedToCheckout = () => {
+        setShowPayPalButton(true);
+    };
+
     return (
-        <div>
-            <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+        <div className="pt-16">
+        <div className="flex flex-col min-h-screen">
+            <section className="flex-grow bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl text-center">Carrito de compras</h2>
 
                     {cartItems.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center mt-6 sm:mt-8">
+                        <img src="https://www.ancestralanimalsoul.com/imagenes/carrito-vacio.png" alt="Carrito vacío" className="mx-auto mb-4 h-48 w-48" />
                         <p className="mt-6 sm:mt-8 text-2xl font-bold text-gray-500 dark:text-gray-400 text-center">El carrito está vacío</p>
+                        <Link to="/" className="mt-4 inline-block rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Seguir comprando
+                        </Link>
+                        
+                        </div>
+                        
                     ) : (
                         <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
                             <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
@@ -90,7 +75,16 @@ const Cart = () => {
                                         <li key={index} className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                                             <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
                                                 <Link to={`/detail/${item.id_Product}`} className="shrink-0 md:order-1">
-                                                    <img className="h-20 w-20 dark:hidden" src={item.image} alt={item.name} />
+                                                    <img 
+                                                        className="h-20 w-20 " 
+                                                        src={item.image} 
+                                                        alt={item.name} 
+                                                    />
+                                                    <img 
+                                                        className="h-20 w-20 hidden " 
+                                                        src={item.darkImage} 
+                                                        alt={item.name} 
+                                                    />
                                                 </Link>
 
                                                 <div className="flex items-center justify-between md:order-3 md:justify-end">
@@ -107,13 +101,13 @@ const Cart = () => {
                                                             </svg>
                                                         </button>
                                                         <input
-                                                            type="text" // Cambiado a tipo text
+                                                            type="text"
                                                             id="counter-input"
                                                             data-input-counter
                                                             className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
                                                             placeholder=""
-                                                            value={item.quantity || 1} // Valor del campo
-                                                            onChange={(e) => handleQuantityChange(item.cartItemId, e.target.value)} // Controlador onChange
+                                                            value={item.quantity || 1}
+                                                            onChange={(e) => handleQuantityChange(item.cartItemId, e.target.value)}
                                                             required
                                                         />
                                                         <button
@@ -157,45 +151,46 @@ const Cart = () => {
                                     ))}
                                 </ul>
                             </div>
+
+                            <div className="mt-8 flex-none space-y-4 lg:mt-0">
+                                <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Resumen de la orden</h3>
+                                   
+                                </div>
+
+                                <div className="space-y-4">
+                                    {cartItems.map((item, index) => (
+                                        <div key={index} className="space-y-2">
+                                            <dl className="flex items-center justify-between gap-4">
+                                                <dt className="text-base font-normal text-gray-500 dark:text-gray-400">{item.name} x {item.quantity}</dt>
+                                                <dd className="text-base font-medium text-gray-900 dark:text-white">{(item.price * item.quantity).toFixed(2)}$</dd>
+                                            </dl>
+                                        </div>
+                                    ))}
+                                    <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
+                                        <dt className="text-base font-bold text-gray-900 dark:text-white">Total</dt>
+                                        <dd className="text-base font-bold text-gray-900 dark:text-white">{total.toFixed(2)}$</dd>
+                                    </dl>
+                                </div>
+
+                                <button 
+                                    onClick={handleProceedToCheckout} 
+                                    className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 sm:text-base"
+                                >
+                                    Proceder con la compra
+                                </button>
+
+                                {showPayPalButton && (
+                                    <div className="mt-6">
+                                        <PayPalButton total={total} items={items} />
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
                 </div>
             </section>
-            {cartItems.length > 0 && (
-                <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
-                    <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                        <p className="text-xl font-semibold text-gray-900 dark:text-white">Order summary</p>
-
-                        <div className="space-y-4">
-                            {cartItems.map((item, index) => (
-                                <div key={index} className="space-y-2">
-                                    <dl className="flex items-center justify-between gap-4">
-                                        <dt className="text-base font-normal text-gray-500 dark:text-gray-400">{item.name} x {item.quantity}</dt>
-                                        <dd className="text-base font-medium text-gray-900 dark:text-white">{(item.price * item.quantity).toFixed(2)}$</dd>
-                                    </dl>
-                                </div>
-                            ))}
-                            <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
-                                <dt className="text-base font-bold text-gray-900 dark:text-white">Total</dt>
-                                <dd className="text-base font-bold text-gray-900 dark:text-white">{total.toFixed(2)}$</dd>
-                            </dl>
-                        </div>
-
-                        <button onClick={handleBuy}
-                            type="button"
-                            className="w-full flex items-center justify-center rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        >
-                            Proceder con el Pago
-                        </button>
-                        {preferenceId && <PayPalButton total={total} items={items} />}
-
-                        <div className="flex items-center justify-center gap-2">
-                            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">o</span>
-                            <a href="/" className="text-sm font-normal text-primary-700 hover:underline dark:text-primary-500">Continua comprando</a>
-                        </div>
-                    </div>
-                </div>
-            )}
+        </div>
         </div>
     );
 };

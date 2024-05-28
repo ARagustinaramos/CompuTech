@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import Spinner from '../spinner/Spinner';
+import Spinner from '../spinner/Spinner'; // Asegúrate de importar Spinner
 
 export default function ProductForm() {
   // Cloudinary 
@@ -12,10 +12,7 @@ export default function ProductForm() {
 
   const [url_img, setUrl_img] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
-  if(isLoading){
-    <Spinner />
-  }
+
   console.log('url de la imagen cloudinary', url_img);
 
   const changeUploadImage = async (e) => {
