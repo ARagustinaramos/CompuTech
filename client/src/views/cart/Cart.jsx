@@ -1,16 +1,15 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeFromCart, updateCartItemQuantity } from '../../redux/actions/actions';
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 import axios from 'axios';
 
-
-
+import PayPalButton from '../../components/PayPalButton'; // Asegúrate de que esta ruta sea correcta
 
 const Cart = () => {
-    const [preferenceId, setPrefereceId] = useState(null)
+    const [preferenceId, setPreferenceId] = useState(null);
 
     initMercadoPago('TEST-057aa2fa-27a8-4181-9ebd-28a08f1a19bc', {
         locale: "es-AR",
@@ -19,22 +18,19 @@ const Cart = () => {
     const cartItems = useSelector(getMemoizedCartItems);
     const dispatch = useDispatch();
 
+    const items = cartItems.map(item => ({
+        id_Product: item.id_Product,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity
+    }));
 
     const createPreference = async () => {
         try {
-            const items = cartItems.map(item => ({
-                id_Product: item.id_Product,
-                name: item.name,
-                price: item.price,
-                quantity: item.quantity
-            }));
-    
-            console.log("Items being sent:", items);
-    
             const response = await axios.post('http://localhost:3001/create_preference', {
                 items
             });
-    
+
             const { id } = response.data;
             return id;
         } catch (error) {
@@ -66,7 +62,7 @@ const Cart = () => {
     const handleBuy = async () => {
         const id = await createPreference();
         if (id) {
-            setPrefereceId(id)
+            setPreferenceId(id);
         }
     };
 
@@ -191,7 +187,7 @@ const Cart = () => {
                         >
                             Proceder con el Pago
                         </button>
-                        {preferenceId && <Wallet initialization={{ preferenceId: preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />}
+                        {preferenceId && <PayPalButton total={total} items={items} />}
 
                         <div className="flex items-center justify-center gap-2">
                             <span className="text-sm font-normal text-gray-500 dark:text-gray-400">o</span>

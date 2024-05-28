@@ -1,16 +1,17 @@
 //Auth 0
 import { useAuth0 } from '@auth0/auth0-react';
 
+import Cargando from '../components/Cargando'
+
 const Header = () => {
-  const { user , isLoading} = useAuth0();
-  
-  if (isLoading) {
-    return <div>Cargando...</div>;
-  }
+
+  const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
+
+
   return (
     <header className="md:flex-row items-center justify-between gap-4">
       <h1 className="text-2xl text-gray-600 dark:text-gray-100 md:text-3xl font-bold  dark:bg-gray-900 dark:border-gray-900" >
-        Hola, <span className="dark:border-gray-900" >{user.given_name}</span>
+        Hola, <span className="dark:border-gray-900" >[nombre]</span>
       </h1>
     </header>
   );

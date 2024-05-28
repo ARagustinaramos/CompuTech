@@ -1,14 +1,15 @@
 //Auth 0
 import { useAuth0 } from '@auth0/auth0-react';
-// Iconos
-import { ImCross } from "react-icons/im";
-import { FaCheck } from "react-icons/fa";
-import {  RiHashtag } from "react-icons/ri";
 
+import Cargando from '../components/Cargando'
 import ComponentePedido from './ComponentePedido';
 
 const HistorialDePedidos = () => {
     const { user , isLoading} = useAuth0();
+
+    if(isLoading){
+      <Cargando />
+    }
     return(
         <div className="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-600">
             <div className="flex items-center justify-between mb-4">

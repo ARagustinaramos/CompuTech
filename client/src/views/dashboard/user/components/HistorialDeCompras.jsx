@@ -2,13 +2,14 @@
 import { useAuth0 } from '@auth0/auth0-react';
 
 import ComponenteProducto from './ComponenteProducto';
+import Cargando from '../components/Cargando'
 
 
 const HistorialDeCompras = () => {
   const { user , isLoading} = useAuth0();
-  
-  if (isLoading) {
-    return <div>Cargando...</div>;
+    
+  if(isLoading){
+    <Cargando />
   }
   return (
     <div className="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-600">

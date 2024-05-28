@@ -4,11 +4,14 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
 import {  RiHashtag } from "react-icons/ri";
+import Cargando from '../components/Cargando'
 
 const Novedades = () => {
     const { user , isLoading} = useAuth0();
 
-    if (isLoading) return <div>Cargando ...</div>;
+    if(isLoading){
+      return <Cargando />
+    }
 
     return(
        <div className="justify-between">
