@@ -6,7 +6,8 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import App from './App.jsx';
 import './index.css';
 import store from "./redux/store/store.js";
-import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { LoadingProvider } from './context/LoadingContext.jsx'
 
 const domain = "dev-y3wtga4i20zjum82.us.auth0.com";
 const clientId = "8gpnrSvqMHgA0GBY09ydiT71NkFkFl2X";
@@ -28,7 +29,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         onRedirectCallback={onRedirectCallback}
       >
         <BrowserRouter>
+        <LoadingProvider>
           <App />
+          </LoadingProvider>
         </BrowserRouter>
       </Auth0Provider>
     </React.StrictMode>
