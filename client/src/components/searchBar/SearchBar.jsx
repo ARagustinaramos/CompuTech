@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import API_URL from "../../config";
+import { useDispatch } from 'react-redux';
+import { setFilterProducts } from '../../redux/actions/actions';
 
-
-const SearchBar = ({ setSearchResults }) => {
+const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState('');
+  const dispatch = useDispatch();
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -12,14 +13,15 @@ const SearchBar = ({ setSearchResults }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(''); 
+    setError('');
     try {
-      const response = await fetch(`https://computechback.onrender.com/products?search=${searchQuery}`);
+      const response = await fetch(`http://localhost:3001/products/name?name=${searchQuery}`);
       if (!response.ok) {
         throw new Error('Failed to fetch search results');
       }
       const data = await response.json();
-      setSearchResults(data);
+      console.log(data);
+      dispatch(setFilterProducts(data)); // Despacha la acción para actualizar el estado de Redux
     } catch (error) {
       setError('Error searching products. Please try again.');
       console.error('Error searching products:', error);
@@ -28,7 +30,7 @@ const SearchBar = ({ setSearchResults }) => {
 
   const handleReset = () => {
     setSearchQuery('');
-    setSearchResults([]); 
+    dispatch(setFilterProducts([])); // Resetea los productos filtrados en el estado de Redux
   };
 
   return (

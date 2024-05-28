@@ -154,7 +154,7 @@ export default function ProductForm() {
       };
 
       try {
-        const response = await fetch('https://computechback.onrender.com/products', {
+        const response = await fetch('http://localhost:3001/products', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

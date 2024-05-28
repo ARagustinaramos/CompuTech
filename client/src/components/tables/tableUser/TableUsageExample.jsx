@@ -17,7 +17,7 @@ import {
 export function TableUsageExample() {
     
     const dispatch = useDispatch();
-    const allProducts = useSelector((state) => state.copyProducts);
+    const allProducts = useSelector((state) => state.allProducts);
     
     useEffect(() => {
         dispatch(getProducts());

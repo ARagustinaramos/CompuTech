@@ -43,7 +43,13 @@ const Detail = () => {
     <section className="text-gray-700 body-font overflow-hidden bg-white py-8 antialiased dark:bg-gray-900 dark:text-gray-200 md:py-16">
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
-          <img alt="ecommerce" className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200 dark:border-gray-700" src={producto.image} />
+          <div className="lg:w-1/2 w-full aspect-w-1 aspect-h-1">
+            <img 
+              alt="ecommerce" 
+              className="object-contain object-center w-full h-full rounded border border-gray-200 dark:border-gray-700" 
+              src={producto.image} 
+            />
+          </div>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 dark:text-gray-400 tracking-widest">{producto.brand}</h2>
             <h1 className="text-gray-900 dark:text-white text-3xl title-font font-medium mb-1">{producto.name}</h1>

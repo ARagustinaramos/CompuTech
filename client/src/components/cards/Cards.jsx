@@ -3,19 +3,19 @@ import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
 import Pagination from '../pagination/Pagination';
 
-const Cards = ({ brandFilter, categoryFilter, nameOrder, priceOrder, currentPage, setCurrentPage, searchResults }) => {
-
+const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, setCurrentPage, filterProducts }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const dataQt = 12;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        let url = 'https://computechback.onrender.com/products';
+        let url = 'http://localhost:3001/products';
         const params = new URLSearchParams();
 
         if (brandFilter) params.append('brand', brandFilter);
         if (categoryFilter) params.append('category', categoryFilter);
+        if (nameFilter) params.append('name', nameFilter);
 
         if (params.toString()) url += `?${params.toString()}`;
 
@@ -24,15 +24,18 @@ const Cards = ({ brandFilter, categoryFilter, nameOrder, priceOrder, currentPage
 
         let sortedData = [...data];
 
-        if (nameOrder === 'a-z') {
-          sortedData.sort((a, b) => a.name.localeCompare(b.name));
-        } else if (nameOrder === 'z-a') {
-          sortedData.sort((a, b) => b.name.localeCompare(a.name));
-        }
-        if (priceOrder === 'asc') {
-          sortedData.sort((a, b) => a.price - b.price);
-        } else if (priceOrder === 'desc') {
-          sortedData.sort((a, b) => b.price - a.price);
+        if (nameOrder) {
+          if (nameOrder === 'a-z') {
+            sortedData.sort((a, b) => a.name.localeCompare(b.name));
+          } else if (nameOrder === 'z-a') {
+            sortedData.sort((a, b) => b.name.localeCompare(a.name));
+          }
+        } else if (priceOrder) {
+          if (priceOrder === 'asc') {
+            sortedData.sort((a, b) => a.price - b.price);
+          } else if (priceOrder === 'desc') {
+            sortedData.sort((a, b) => b.price - a.price);
+          }
         }
 
         setFilteredProducts(sortedData);
@@ -41,10 +44,12 @@ const Cards = ({ brandFilter, categoryFilter, nameOrder, priceOrder, currentPage
       }
     };
 
-    fetchProducts();
-  }, [brandFilter, categoryFilter, nameOrder, priceOrder]);
-
-  const displayProducts = searchResults && searchResults.length > 0 ? searchResults : filteredProducts;
+    if (!filterProducts.length) {
+      fetchProducts();
+    } else {
+      setFilteredProducts(filterProducts);
+    }
+  }, [brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, filterProducts]);
 
   const totalPages = Math.ceil(displayProducts.length / dataQt);
   const indexFinal = currentPage * dataQt;

@@ -35,7 +35,7 @@ function App() {
 					console.log("token:", token);
 					console.log("user:", user);
 					const response = await axios.post(
-						`https://computechback.onrender.com/users`,
+						`http://localhost:3001/users`,
 						{
 							name: user.name,
 							email: user.email,

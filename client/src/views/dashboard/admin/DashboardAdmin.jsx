@@ -7,7 +7,7 @@ import { Card } from '@tremor/react';
 
 const DashboardAdmin = () => {
   return (
-
+    <div className="pt-16">
     <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
       {/* Sidebar */}
       <SideBarAdmin></SideBarAdmin>
@@ -39,6 +39,7 @@ const DashboardAdmin = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
 
   )

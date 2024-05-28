@@ -12,7 +12,7 @@ export function Chart() {
         Intl.NumberFormat('us').format(number).toString();
 
     const dispatch = useDispatch();
-    const allProducts = useSelector((state) => state.copyProducts);
+    const allProducts = useSelector((state) => state.allProducts);
 
     let products = allProducts.map(p => {
         return { 
