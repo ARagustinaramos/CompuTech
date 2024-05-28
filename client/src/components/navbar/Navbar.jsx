@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import CartIcon from '../carticon/CartIcon';
-import LoginLogout from '../loginLogout/LoginLogout';
-import { DarkThemeToggle } from 'flowbite-react';
-import SearchBar from '../searchBar/SearchBar';
-import { useAuth0 } from '@auth0/auth0-react';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import CartIcon from "../carticon/CartIcon";
+import LoginLogout from "../loginLogout/LoginLogout";
+import { DarkThemeToggle } from "flowbite-react";
+import SearchBar from "../searchBar/SearchBar";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Navbar() {
 	const [searchResults, setSearchResults] = useState([]);
@@ -12,13 +12,26 @@ export default function Navbar() {
 	const location = useLocation(); // Obtener la ubicación actual
 	const [currentPage, setCurrentPage] = useState(1);
 
+	const [dropdownOpen, setDropdownOpen] = useState(false); // Estado para controlar el dropdown
+
+	const toggleDropdown = () => {
+		setDropdownOpen(!dropdownOpen); // Alternar el estado del dropdown
+	};
+
 	return (
 		<nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 fixed top-0 left-0 w-full z-50">
 			<div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-				<Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-					<img src="/assets/Recurso3.png" className="h-8" alt="Computech Logo" />
+				<Link
+					to="/"
+					className="flex items-center space-x-3 rtl:space-x-reverse"
+				>
+					<img
+						src="/assets/Recurso3.png"
+						className="h-8"
+						alt="Computech Logo"
+					/>
 				</Link>
-				{location.pathname === '/' && (
+				{location.pathname === "/" && (
 					<SearchBar setSearchResults={setSearchResults} />
 				)}
 				<button
@@ -49,7 +62,7 @@ export default function Navbar() {
 					<ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 content-center">
 						{isAuthenticated && (
 							<>
-								{user?.email === 'prueba.juan.henry@gmail.com' ? (
+								{user?.email === "prueba.juan.henry@gmail.com" ? (
 									<li className="content-center">
 										<Link
 											to="/dashboarduser"
@@ -60,7 +73,7 @@ export default function Navbar() {
 										</Link>
 									</li>
 								) : null}
-								{user?.email === 'sebas.rodriguez.is123@gmail.com' && (
+								{user?.email === "sebas.rodriguez.is123@gmail.com" && (
 									<li className="content-center">
 										<div className="relative inline-block text-left">
 											<div>
@@ -129,7 +142,9 @@ export default function Navbar() {
 														</a>
 														<div className="border-t border-gray-100 dark:border-gray-700"></div>
 														<button
-															onClick={() => logout({ returnTo: window.location.origin })}
+															onClick={() =>
+																logout({ returnTo: window.location.origin })
+															}
 															className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
 															role="menuitem"
 														>
@@ -143,9 +158,9 @@ export default function Navbar() {
 								)}
 							</>
 						)}
-						
+
 						<li className="content-center">
-							{user?.email === 'eltodopoderoso@gmail.com' ? (
+							{user?.email === "eltodopoderoso@gmail.com" ? (
 								<Link
 									to="/form"
 									className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
