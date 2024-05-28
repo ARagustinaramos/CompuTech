@@ -17,8 +17,8 @@ import {
     DELETE_PRODUCT,
     SET_ALL_PRODUCTS,
     SET_CATEGORY_FILTER,
-    SET_BRAND_FILTER
-    
+    SET_BRAND_FILTER,
+    SET_CART_ITEMS,
     
 } from "./types";
 
@@ -58,7 +58,7 @@ export const addToCart = (product) => {
         type: ADD_TO_CART,
         payload: {
             ...product,
-            cartItemId: Math.random().toString(36).substr(2, 9) // Genera un ID único para el cartItemId
+            cartItemId: Math.random().toString(36).substr(2, 9) 
         }
     };
 };
@@ -72,6 +72,12 @@ export const removeFromCart = (cartitemId) => ({
     type: REMOVE_FROM_CART,
     payload: cartitemId
 });
+
+export const setCartItems = (items) => ({
+    type: SET_CART_ITEMS,
+    payload: items
+});
+
 
 export const getDetail = (id) => {
     return async (dispatch) => {

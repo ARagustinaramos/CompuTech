@@ -6,6 +6,7 @@ const LogoutButton = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('auth_token');
+    sessionStorage.removeItem('cartItems'); 
     logout({ returnTo: 'https://computech.vercel.app/' });
   };
 

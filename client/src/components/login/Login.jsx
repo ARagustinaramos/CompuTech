@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const LoginButton = () => {
-  const { loginWithRedirect, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
 
-  const handleLogin = async () => {
-    await loginWithRedirect();
-    if (isAuthenticated) {
-      const token = await getAccessTokenSilently();
-      localStorage.setItem('auth_token', token);
+  useEffect(() => {
+    const storedCartItems = JSON.parse(sessionStorage.getItem('cartItems'));
+    if (storedCartItems) {
+      localStorage.setItem('cartItems', JSON.stringify(storedCartItems));
     }
+  }, []);
+
+  const handleLogin = () => {
+    loginWithRedirect();
   };
 
   return <button onClick={handleLogin}>Log In</button>;
