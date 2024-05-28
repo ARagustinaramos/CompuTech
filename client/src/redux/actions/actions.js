@@ -24,7 +24,7 @@ import {
 
 export const getProducts = () => async (dispatch) => {
     try {
-      const response = await fetch('https://computechback.onrender.com/products');
+      const response = await fetch('http://localhost:3001/products');
       const data = await response.json();
       dispatch(setAllProducts(data));
     } catch (error) {
@@ -76,7 +76,7 @@ export const removeFromCart = (cartitemId) => ({
 export const getDetail = (id) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`https://computechback.onrender.com/products/${id}`);
+            const { data } = await axios.get(`http://localhost:3001/products/${id}`);
             return dispatch({
                 type: GET_DETAIL,
                 payload: data
@@ -90,7 +90,7 @@ export const getDetail = (id) => {
 export const getByName = (nombre) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`https://computechback.onrender.com/pokemons?nombre=${nombre}`);
+            const { data } = await axios.get(`http://localhost:3001/pokemons?nombre=${nombre}`);
             return dispatch({
                 type: GET_BY_NAME,
                 payload: data
@@ -104,7 +104,7 @@ export const getByName = (nombre) => {
 export const getTypes = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get('https://computechback.onrender.com/types/', {});
+            const { data } = await axios.get('http://localhost:3001/types/', {});
             return dispatch({
                 type: GET_TYPES,
                 payload: data

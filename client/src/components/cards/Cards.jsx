@@ -10,7 +10,7 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        let url = 'https://computechback.onrender.com/products';
+        let url = 'http://localhost:3001/products';
         const params = new URLSearchParams();
 
         if (brandFilter) params.append('brand', brandFilter);
