@@ -46,9 +46,9 @@ const Cart = () => {
     useEffect(() => {
         const clearCartAndStorage = () => {
             if (!isAuthenticated) {
-                dispatch(setCartItems([]));
+                //dispatch(setCartItems([]));
                 //localStorage.removeItem('cartItems');
-                sessionStorage.removeItem('cartItem');
+                //sessionStorage.removeItem('cartItem');
                
             }
         };
@@ -100,14 +100,14 @@ const Cart = () => {
                     <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                         <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl text-center">Carrito de compras</h2>
 
-                        {cartItems.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center mt-6 sm:mt-8">
-                                <img src="https://www.ancestralanimalsoul.com/imagenes/carrito-vacio.png" alt="Carrito vacío" className="mx-auto mb-4 h-48 w-48" />
-                                <p className="mt-6 sm:mt-8 text-2xl font-bold text-gray-500 dark:text-gray-400 text-center">El carrito está vacío</p>
-                                <Link to="/" className="mt-4 inline-block rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    Seguir comprando
-                                </Link>
-                            </div>
+                        {cartItems.length === 0 || !isAuthenticated? (
+                          <div className="flex flex-col items-center justify-center mt-6 sm:mt-8">
+                            <img src="https://www.ancestralanimalsoul.com/imagenes/carrito-vacio.png" alt="Carrito vacío" className="mx-auto mb-4 h-48 w-48" />
+                             <p className="mt-6 sm:mt-8 text-2xl font-bold text-gray-500 dark:text-gray-400 text-center">El carrito está vacío</p>
+                              <Link to="/" className="mt-4 inline-block rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                               Seguir comprando
+                           </Link>
+                       </div>
                         ) : (
                             <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
                                 <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
