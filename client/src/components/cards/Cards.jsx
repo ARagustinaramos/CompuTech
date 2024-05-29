@@ -51,10 +51,10 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
     }
   }, [brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, filterProducts]);
 
-  const totalPages = Math.ceil(filteredProducts.length / dataQt);
+  const totalPages = Math.ceil(displayProducts.length / dataQt);
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
-  const productsToDisplay = filteredProducts.slice(indexInicial, indexFinal);
+  const productsToDisplay = displayProducts.slice(indexInicial, indexFinal);
 
   return (
     <div>

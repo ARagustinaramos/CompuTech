@@ -1,13 +1,14 @@
 import axios from "axios";
-import {
-    GET_DETAIL,
-    GET_PRODUCTS,
-    GET_BY_NAME,
+import API_URL from "../../config";
+import { 
+    GET_DETAIL, 
+    GET_PRODUCTS, 
+    GET_BY_NAME, 
     GET_TYPES,
-    FILTERDBAPI,
-    FILTER_TYPE,
-    ORDER_NAME,
-    ORDER_ATTACK,
+    FILTERDBAPI, 
+    FILTER_TYPE, 
+    ORDER_NAME, 
+    ORDER_ATTACK, 
     CLEAN_DETAIL,
     SET_FILTER,
     ADD_TO_CART,
