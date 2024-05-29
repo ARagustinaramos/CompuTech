@@ -2,12 +2,7 @@ import axios from "axios";
 import {
     GET_DETAIL,
     GET_PRODUCTS,
-    GET_BY_NAME,
-    GET_TYPES,
-    FILTERDBAPI,
-    FILTER_TYPE,
     ORDER_NAME,
-    ORDER_ATTACK,
     CLEAN_DETAIL,
     SET_FILTER,
     ADD_TO_CART,
@@ -87,48 +82,6 @@ export const getDetail = (id) => {
     };
 };
 
-export const getByName = (nombre) => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.get(`http://localhost:3001/pokemons?nombre=${nombre}`);
-            return dispatch({
-                type: GET_BY_NAME,
-                payload: data
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
-};
-
-export const getTypes = () => {
-    return async (dispatch) => {
-        try {
-            const { data } = await axios.get('http://localhost:3001/types/', {});
-            return dispatch({
-                type: GET_TYPES,
-                payload: data
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
-};
-
-export const filterDbApi = (value) => {
-    return {
-        type: FILTERDBAPI,
-        payload: value
-    };
-};
-
-export const filterType = (payload) => {
-    return {
-        type: FILTER_TYPE,
-        payload
-    };
-};
-
 export const orderName = (order) => {
     return {
         type: ORDER_NAME,
@@ -136,12 +89,6 @@ export const orderName = (order) => {
     };
 };
 
-export const orderAttack = (payload) => {
-    return {
-        type: ORDER_ATTACK,
-        payload
-    };
-};
 
 export const cleanDetail = () => {
     return {

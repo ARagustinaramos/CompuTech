@@ -6,9 +6,6 @@ import {
   UPDATE_CART_ITEM_QUANTITY,
   CLEAN_DETAIL,
   GET_BY_NAME,
-  GET_TYPES,
-  FILTERDBAPI,
-  FILTER_TYPE,
   ORDER_NAME,
   SET_FILTER,
   DELETE_PRODUCT,
@@ -28,7 +25,6 @@ const initialState = {
   copyProducts: [],
   producto: [],
   productDetail: {},
-  types: [],
   items: loadCartFromLocalStorage(),
   BrandIdBrand: "",
   filteredProducts: [],
@@ -125,39 +121,8 @@ function rootReducer(state = initialState, action) {
         ...state,
         copyProducts: action.payload,
       };
-    case GET_TYPES:
-      return {
-        ...state,
-        types: action.payload,
-      };
-    case FILTERDBAPI:
-      if (action.payload === "db") {
-        const result = state.allProducts.filter((e) => e.created);
-        return {
-          ...state,
-          copyProducts: result,
-        };
-      } else if (action.payload === "api") {
-        const result = state.allProducts.filter((e) => !e.created);
-        return {
-          ...state,
-          copyProducts: result,
-        };
-      } else {
-        return {
-          ...state,
-          copyProducts: state.allProducts,
-        };
-      }
-    case FILTER_TYPE:
-      const filterTypes =
-        action.payload === "all"
-          ? state.copyProducts
-          : state.copyProducts.filter((p) => p.Types.includes(action.payload));
-      return {
-        ...state,
-        copyProducts: filterTypes,
-      };
+
+
     case ORDER_NAME:
       if (action.payload === "a-z") {
         const orderByName = [...state.copyProducts].sort((a, b) =>
