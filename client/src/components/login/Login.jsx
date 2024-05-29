@@ -1,18 +1,20 @@
 import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth } from "react-firebase-hooks/auth";
+import { auth } from "./firebase";
 
-const LoginButton = () => {
-  const { loginWithRedirect, isAuthenticated, getAccessTokenSilently } = useAuth0();
+const LogoutButton = () => {
+  const [, , logout] = useAuth(auth);
 
-  const handleLogin = async () => {
-    await loginWithRedirect();
-    if (isAuthenticated) {
-      const token = await getAccessTokenSilently();
-      localStorage.setItem('auth_token', token);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token');
+    logout();
   };
 
-  return <button onClick={handleLogin}>Log In</button>;
+  return (
+    <button onClick={handleLogout}>
+      LogOut
+    </button>
+  );
 };
 
-export default LoginButton;
+export default LogoutButton;

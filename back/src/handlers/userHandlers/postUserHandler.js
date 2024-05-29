@@ -1,12 +1,12 @@
-const { postUserControllers } = require('../../controllers/userController');
+const postUserController = require('../../controllers/userControllers/postUserController');
 
-const postUserHandlers = async (req, res) => {
+const postUserHandler = async (req, res) => {
   try {
-    const newUser = await postUserControllers(req.userInfo);
+    const newUser = await postUserController(req.userInfo);
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ message: 'Error creating user', error });
   }
 };
 
-module.exports = postUserHandlers;
+module.exports = postUserHandler;

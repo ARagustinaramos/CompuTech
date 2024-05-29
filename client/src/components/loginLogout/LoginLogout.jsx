@@ -1,31 +1,63 @@
 import React, { useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, googleProvider, signInWithEmailAndPassword } from "../../firebase/firebase";
+import { signInWithRedirect } from 'firebase/auth';
 
 const LoginLogout = () => {
-  const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
+  const [user] = useAuthState(auth);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  if (isLoading) {
-    return <div>Cargando...</div>;
-  }
+  const handleEmailLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   return (
     <li className="relative content-center">
-      {!isAuthenticated ? (
-        <button
-          onClick={() => loginWithRedirect()}
-          className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent content-center"
-        >
-          Iniciar Sesión
-        </button>
+      {!user ? (
+        <div>
+          <button
+            onClick={() => signInWithRedirect(auth, googleProvider)}
+            className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent content-center"
+          >
+            Iniciar Sesión con Google
+          </button>
+          <form onSubmit={e => { e.preventDefault(); handleEmailLogin(); }}>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="block py-2 px-3 mt-2 text-gray-900 rounded"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="block py-2 px-3 mt-2 text-gray-900 rounded"
+              required
+            />
+            <button
+              type="submit"
+              className="block py-2 px-3 mt-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            >
+              Iniciar Sesión
+            </button>
+          </form>
+          {error && <p className="text-red-500">{error}</p>}
+        </div>
       ) : (
         <div className="relative inline-block text-left">
           <div>
@@ -35,11 +67,11 @@ const LoginLogout = () => {
               onClick={toggleDropdown}
             >
               <img
-                src={user.picture}
-                alt={user.name}
+                src={user.photoURL}
+                alt={user.displayName}
                 className="h-8 w-8 rounded-full mr-2"
               />
-              Hola, {user.name}
+              Hola, {user.displayName}
               <svg
                 className="ml-2 -mr-1 h-5 w-5"
                 xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +126,7 @@ const LoginLogout = () => {
                 </a>
                 <div className="border-t border-gray-100 dark:border-gray-700"></div>
                 <button
-                  onClick={() => logout({ returnTo: window.location.origin })}
+                  onClick={() => auth.signOut()}
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                   role="menuitem"
                 >

@@ -1,12 +1,13 @@
 import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth } from "react-firebase-hooks/auth";
+import { auth } from "./firebase";
 
 const LogoutButton = () => {
-  const { logout } = useAuth0();
+  const [, , logout] = useAuth(auth);
 
   const handleLogout = () => {
     localStorage.removeItem('auth_token');
-    logout({ returnTo: 'https://computech.vercel.app/' });
+    logout();
   };
 
   return (
