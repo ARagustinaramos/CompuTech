@@ -12,25 +12,6 @@ const Cart = () => {
     const dispatch = useDispatch();
     const { isAuthenticated } = useAuth0();
 
-    useEffect(() => {
-        const storedCartItems = JSON.parse(sessionStorage.getItem('cartItems'));
-        if (storedCartItems) {
-            dispatch(setCartItems(storedCartItems)); 
-        }
-    }, [dispatch]);
-    
-    useEffect(() => {
-        if (!isAuthenticated) {
-            const storedCartItems = JSON.parse(localStorage.getItem('cartItems'));
-            if (storedCartItems) {
-                sessionStorage.setItem('cartItems', JSON.stringify(storedCartItems));
-            }
-            dispatch(setCartItems([])); 
-            localStorage.removeItem('cartItems');
-        }
-    }, [isAuthenticated, dispatch]);
-
-    
     const items = cartItems.map(item => ({
         id_Product: item.id_Product,
         name: item.name,
@@ -38,24 +19,60 @@ const Cart = () => {
         quantity: item.quantity
     }));
 
-    const saveCartToLocalStorage = (cartItems) => {
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    };
-    
+    useEffect(() => {
+        const restoreCartFromStorage = () => {
+            const storedCartItems = isAuthenticated
+                ? JSON.parse(localStorage.getItem('cartItems')) || []
+                : JSON.parse(localStorage.getItem('cartItems')) || [];
+            dispatch(setCartItems(storedCartItems));
+        };
+
+        restoreCartFromStorage();
+    }, [dispatch, isAuthenticated]);
+
+    useEffect(() => {
+        const saveCartToStorage = () => {
+            if (isAuthenticated) {
+                sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            } else {
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            }
+        };
+
+        saveCartToStorage();
+    }, [cartItems, isAuthenticated]);
+
+    useEffect(() => {
+        const clearCartAndStorage = () => {
+            if (!isAuthenticated) {
+                dispatch(setCartItems([]));
+                //localStorage.removeItem('cartItems');
+                sessionStorage.removeItem('cartItem');
+               
+            }
+        };
+
+        clearCartAndStorage();
+    }, [isAuthenticated, dispatch]);
+
+    useEffect(() => {
+        const saveCartToSessionStorage = () => {
+            if (isAuthenticated) {
+                sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+            }
+        };
+
+        saveCartToSessionStorage();
+    }, [cartItems, isAuthenticated]);
+
     const handleRemoveItemClick = (itemId) => {
         dispatch(removeFromCart(itemId));
-        saveCartToLocalStorage(cartItems.filter(item => item.cartItemId !== itemId));
     };
     
     const handleQuantityChange = (itemId, newQuantity) => {
         const quantity = Math.max(1, parseInt(newQuantity, 10) || 1);
-        if (!isNaN(quantity)) {
-            dispatch(updateCartItemQuantity(itemId, quantity));
-            const updatedCartItems = cartItems.map(item => 
-                item.cartItemId === itemId ? { ...item, quantity } : item
-            );
-            saveCartToLocalStorage(updatedCartItems);
-        }
+        dispatch(updateCartItemQuantity(itemId, quantity));
     };
     
     const handleIncrement = (itemId, currentQuantity) => {
@@ -69,11 +86,7 @@ const Cart = () => {
     };
 
     const total = cartItems
-        .map(item => {
-            const itemPrice = parseFloat(item.price);
-            const itemQuantity = parseInt(item.quantity, 10);
-            return !isNaN(itemPrice) && !isNaN(itemQuantity) ? itemPrice * itemQuantity : 0;
-        })
+        .map(item => parseFloat(item.price) * parseInt(item.quantity, 10))
         .reduce((acc, curr) => acc + curr, 0);
 
     const handleProceedToCheckout = () => {
