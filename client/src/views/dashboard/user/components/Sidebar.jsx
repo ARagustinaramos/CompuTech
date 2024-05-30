@@ -6,11 +6,23 @@ import { RiHome3Line, RiWalletLine, RiPieChartLine, RiCloseFill, RiMore2Fill } f
 import { IoCart } from 'react-icons/io5';
 import { FaRegGrinBeamSweat } from 'react-icons/fa';
 import Cargando from './Cargando';
+import Perfil from './Perfil'
 
 
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
 
 
   return (
@@ -22,23 +34,24 @@ const Sidebar = () => {
     >
       <div className="bg-gradient-to-r from-blue-600 to-sky-500 rounded-tr-[100px]  h-[40vh] border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center p-8 gap-2 h-[30vh]">
         <img
-          src={user.picture}
+          src={user?.picture||'https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg'}
           className="w-20 h-20 object-cover rounded-full ring-2 ring-gray-300"
         />
-        <h1 className="text-xl text-white font-bold">{user.given_name}</h1>
+        <h1 className="text-xl text-white font-bold">{user?.given_name||'usuario'}</h1>
         <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
-          {user.email}
+          {user?.email|| 'No se encuentra email'}
         </p>
       </div>
       <div className="bg-gradient-to-r from-blue-600 to-sky-500 p-2 rounded-br-[100px] flex flex-col justify-between ">
         <nav className="flex flex-col gap-8 pb-8 pt-0">
         <a
-            href="/perfil"
+            onClick={openModal}
             className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
             data-modal-target="crud-modal" data-modal-toggle="crud-modal"
           >
             <BsPersonSquare /> Perfil
           </a>
+            <Perfil isOpen={isModalOpen} onClose={closeModal}/>
           <a
             href="/"
             className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
