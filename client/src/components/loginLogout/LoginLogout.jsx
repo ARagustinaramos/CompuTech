@@ -1,41 +1,16 @@
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, googleProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "../../firebase/firebase";
-import { signInWithRedirect } from 'firebase/auth';
+import { auth } from "../../firebase/firebase";
+import SignInButton from '../../firebase/authGoogle';
+import { SignUpForm, SignInForm } from '../../firebase/authManual';
 
 const LoginLogout = () => {
   const [user] = useAuthState(auth);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
-  const [message, setMessage] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
-  };
-
-  const handleEmailLogin = async (e) => {
-    e.preventDefault();
-    setError('');
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setError('');
-    setMessage('');
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      setMessage('Usuario registrado exitosamente. ¡Por favor, inicia sesión!');
-    } catch (error) {
-      setError(error.message);
-    }
   };
 
   return (
@@ -44,69 +19,15 @@ const LoginLogout = () => {
         <div>
           {!isRegistering ? (
             <div>
-              <button
-                onClick={() => signInWithRedirect(auth, googleProvider)}
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100"
-              >
-                Iniciar Sesión con Google
-              </button>
-              <form onSubmit={handleEmailLogin}>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block py-2 px-3 mt-2 text-gray-900 rounded"
-                  required
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block py-2 px-3 mt-2 text-gray-900 rounded"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="block py-2 px-3 mt-2 text-gray-900 rounded hover:bg-gray-100"
-                >
-                  Iniciar Sesión
-                </button>
-              </form>
-              {error && <p className="text-red-500">{error}</p>}
+              <SignInButton />
+              <SignInForm />
               <p className="mt-2">
                 ¿No tienes una cuenta? <button onClick={() => setIsRegistering(true)} className="text-blue-500">Regístrate</button>
               </p>
             </div>
           ) : (
             <div>
-              <form onSubmit={handleRegister}>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="block py-2 px-3 mt-2 text-gray-900 rounded"
-                  required
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block py-2 px-3 mt-2 text-gray-900 rounded"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="block py-2 px-3 mt-2 text-gray-900 rounded hover:bg-gray-100"
-                >
-                  Registrarse
-                </button>
-              </form>
-              {error && <p className="text-red-500">{error}</p>}
-              {message && <p className="text-green-500">{message}</p>}
+              <SignUpForm />
               <p className="mt-2">
                 ¿Ya tienes una cuenta? <button onClick={() => setIsRegistering(false)} className="text-blue-500">Inicia Sesión</button>
               </p>

@@ -10,25 +10,9 @@ import About from "./views/about/About";
 import DashboardUser from "./views/dashboard/user/DashboardUser";
 import DashboardAdmin from "./views/dashboard/admin/DashboardAdmin";
 import DashboardAdminManageUsers from "./views/dashboard/admin/DashboardAdminManageUsers";
-import { FirebaseProvider, createUserWithEmailAndPassword } from "./firebase/firebase";
+import { FirebaseProvider } from "./firebase/firebase"; // Asegúrate de importar correctamente FirebaseProvider
 
 function App() {
-  useEffect(() => {
-    const registerUser = async () => {
-      try {
-        // Aquí puedes implementar la lógica para registrar usuarios con Firebase
-        const email = "example@example.com"; // Correo electrónico del usuario
-        const password = "password123"; // Contraseña del usuario
-        const userCredential = await createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-        console.log('Usuario registrado con éxito:', user);
-      } catch (error) {
-        console.error('Error al registrar usuario:', error);
-      }
-    };
-    registerUser();
-  }, []);
-
   return (
     <FirebaseProvider>
       <>

@@ -20,11 +20,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-// Exporta auth, googleProvider, signInWithEmailAndPassword y createUserWithEmailAndPassword
-export { auth, googleProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword };
-
 // Crea un contexto para Firebase
-const FirebaseContext = createContext({ app, auth });
+const FirebaseContext = createContext({ app, auth, googleProvider });
 
 // Hook para consumir el contexto
 export const useFirebase = () => useContext(FirebaseContext);
@@ -32,8 +29,11 @@ export const useFirebase = () => useContext(FirebaseContext);
 // Proveedor para envolver la aplicación con el contexto de Firebase
 export const FirebaseProvider = ({ children }) => {
   return (
-    <FirebaseContext.Provider value={{ app, auth }}>
+    <FirebaseContext.Provider value={{ app, auth, googleProvider }}>
       {children}
     </FirebaseContext.Provider>
   );
 };
+
+// Exporta auth, googleProvider, signInWithEmailAndPassword y createUserWithEmailAndPassword
+export { auth, googleProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword };
