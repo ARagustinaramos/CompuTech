@@ -1,16 +1,18 @@
 const { Router } = require("express");
-const getUserHandlers = require("../handlers/userHandlers/getUserHandlers");
-const getUserByIdHandlers = require("../handlers/userHandlers/getUserByIdHandlers");
-const postUserHandlers = require("../handlers/userHandlers/postUserHandlers");
-const deleteUserHandlers = require("../handlers/userHandlers/deleteUserHandlers");
-const { checkJwt, getUserInfoFromJwt, checkAdminRole } = require("../middleware/auth0");
+const getUserHandler = require("../handlers/userHandlers/getUserHandler");
+const getUserIdHandler = require("../handlers/userHandlers/getIdUserHandler");
+const postUserHandler = require("../handlers/userHandlers/postUserHandler");
+const deactivateUserHandler = require("../handlers/userHandlers/deactivateUserHandler");
+const syncUsersHandler = require("../handlers/userHandlers/syncUsersHandler");
+
 
 const userRouter = Router();
 
-userRouter.get("/", checkJwt, getUserInfoFromJwt, getUserHandlers);
-userRouter.get("/:id", checkJwt, getUserInfoFromJwt, getUserByIdHandlers);
-userRouter.post("/", checkJwt, getUserInfoFromJwt, postUserHandlers);
-userRouter.delete("/:id", checkJwt, getUserInfoFromJwt, checkAdminRole, deleteUserHandlers);
+userRouter.get("/", getUserHandler);
+userRouter.get("/:id", getUserIdHandler);
+userRouter.post("/", postUserHandler);
+userRouter.delete("/:id", deactivateUserHandler);
+userRouter.post('/sync', syncUsersHandler);
 
 module.exports = userRouter;
 
