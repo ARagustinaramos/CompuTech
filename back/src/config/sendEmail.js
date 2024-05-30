@@ -1,28 +1,25 @@
-const transporter = require('../config/nodemailer');
+const transporter = require('./nodemailer');
 
-const sendPurchaseEmail = async (userEmail, purchaseDetails) => {
+const sendWelcomeEmail = async (userEmail, userName) => {
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: userEmail,
-        subject: 'Detalles de tu compra',
+        subject: '¡Bienvenido a Nuestra Plataforma!',
         html: `
-            <h1>Gracias por tu compra</h1>
-            <p>Estos son los detalles de tu compra:</p>
-            <ul>
-                ${purchaseDetails.map(item => `
-                    <li>${item.productName} - Cantidad: ${item.quantity} - Precio: $${item.price}</li>
-                `).join('')}
-            </ul>
-            <p>Total: $${purchaseDetails.reduce((total, item) => total + item.price * item.quantity, 0)}</p>
+            <h1>Bienvenido, ${userName}!</h1>
+            <p>Gracias por registrarte en nuestra plataforma. Estamos encantados de tenerte con nosotros.</p>
+            <p>Si tienes alguna pregunta o necesitas ayuda, no dudes en contactarnos.</p>
+            <p>Saludos,</p>
+            <p>El equipo de [Computech]</p>
         `,
     };
 
     try {
         await transporter.sendMail(mailOptions);
-        console.log('Correo enviado correctamente');
+        console.log('Correo de bienvenida enviado correctamente');
     } catch (error) {
-        console.error('Error enviando el correo:', error);
+        console.error('Error enviando el correo de bienvenida:', error);
     }
 };
 
-module.exports = sendPurchaseEmail;
+module.exports = sendWelcomeEmail;

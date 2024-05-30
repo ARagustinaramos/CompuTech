@@ -2,7 +2,6 @@ const { Brand } = require('../../config/db');
 const { Op } = require('sequelize');
 const normaliceFunction = require('../Utils/normaliceFunction');
 
-
 const getAllBrands = async () => {
     try {
         // Busca todas las marcas en la base de datos de manera insensible a mayúsculas y minúsculas
