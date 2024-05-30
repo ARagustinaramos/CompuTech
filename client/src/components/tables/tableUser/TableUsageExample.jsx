@@ -54,7 +54,7 @@ export function TableUsageExample() {
                                 {item.price}
                             </TableCell>
                             <TableCell>
-                                <Badge color="emerald" icon={RiFlag2Line}>
+                                <Badge color="emerald" icon={RiFlag2Line} onClick={true}>
                                     {item.status}
                                 </Badge>
                             </TableCell>
