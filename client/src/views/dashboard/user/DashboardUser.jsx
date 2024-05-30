@@ -1,20 +1,35 @@
-//REACT-REDUX
-import { useState ,useSelector} from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useFirebase } from "../../../firebase/firebase"; // Importa el hook useFirebase
 
-//COMPONENTES
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-
-
-import { useAuth0 } from '@auth0/auth0-react';
 import HistorialDePedidos from "./components/HistorialDePedidos";
-import HistorialDeCompras from './components/HistorialDeCompras'
-
+import HistorialDeCompras from './components/HistorialDeCompras';
 
 const DashboardUser = () => {
-  const { user , isLoading} = useAuth0();
+  const { auth } = useFirebase();
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate(); 
+  
 
-  console.log('user', user)
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setIsLoading(false);
+      } else {
+        navigate('/login'); // Utiliza navigate en lugar de history.push
+      }
+    });
+
+    return () => unsubscribe();
+  }, [auth, navigate]);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Puedes mostrar un spinner de carga mientras se verifica la autenticación
+  }
 
   return(
     <div className="pt-16">
@@ -33,8 +48,6 @@ const DashboardUser = () => {
           </div>
         </section>
         <section className="grid grid-cols-1 md:grid-cols-2 mt-10 gap-8">
-          
-
           <div>
             <div className="bg-white p-8 rounded-xl shadow-2xl mb-8 flex flex-col ">
             <h1 className="text-2xl font-bold mb-8">Novedades</h1>

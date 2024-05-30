@@ -15,7 +15,8 @@ import {
   SET_FILTER_PRODUCTS,
   SET_ALL_PRODUCTS,
   SET_CATEGORY_FILTER, 
-  SET_BRAND_FILTER
+  SET_BRAND_FILTER,
+  SET_CART_ITEMS,
 } from "../actions/types";
 
 import {
@@ -109,6 +110,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         items: updatedItemsAfterQuantityChange,
       };
+      
+      case SET_CART_ITEMS:
+        return {
+          ...state,
+          items: action.payload,
+        };
+        
     case SET_FILTER:
       return {
         ...state,

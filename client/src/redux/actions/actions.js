@@ -18,48 +18,46 @@ import {
     DELETE_PRODUCT,
     SET_ALL_PRODUCTS,
     SET_CATEGORY_FILTER,
-    SET_BRAND_FILTER
-    
-    
+    SET_BRAND_FILTER,
+    SET_CART_ITEMS,
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
     try {
-      const response = await fetch('http://localhost:3001/products');
-      const data = await response.json();
-      dispatch(setAllProducts(data));
+        const response = await fetch('http://localhost:3001/products');
+        const data = await response.json();
+        dispatch(setAllProducts(data));
     } catch (error) {
-      console.error('Error fetching products:', error);
+        console.error('Error fetching products:', error);
     }
 };
 
 export const setAllProducts = (products) => ({
     type: SET_ALL_PRODUCTS,
     payload: products,
-  });
+});
 
-  export const setCategoryFilter = (category) => ({
+export const setCategoryFilter = (category) => ({
     type: SET_CATEGORY_FILTER,
     payload: category,
-  });
+});
 
 export const setFilterProducts = (products) => ({
     type: SET_FILTER_PRODUCTS,
     payload: products,
-  });
+});
 
-  export const setBrandFilter = (brand) => ({
+export const setBrandFilter = (brand) => ({
     type: SET_BRAND_FILTER,
     payload: brand,
-  });
-
+});
 
 export const addToCart = (product) => {
     return {
         type: ADD_TO_CART,
         payload: {
             ...product,
-            cartItemId: Math.random().toString(36).substr(2, 9) // Genera un ID único para el cartItemId
+            cartItemId: Math.random().toString(36).substr(2, 9) // Generates a unique ID for the cartItemId
         }
     };
 };
@@ -69,9 +67,14 @@ export const updateCartItemQuantity = (itemId, quantity) => ({
     payload: { itemId, quantity },
 });
 
-export const removeFromCart = (cartitemId) => ({
+export const removeFromCart = (cartItemId) => ({
     type: REMOVE_FROM_CART,
-    payload: cartitemId
+    payload: cartItemId
+});
+
+export const setCartItems = (items) => ({
+    type: SET_CART_ITEMS,
+    payload: items
 });
 
 export const getDetail = (id) => {
@@ -147,9 +150,9 @@ export const orderAttack = (payload) => {
 export const cleanDetail = () => {
     return {
         type: CLEAN_DETAIL,
-
     }
 }
+
 export const setFilter = (filter) => ({
     type: SET_FILTER,
     payload: filter,
