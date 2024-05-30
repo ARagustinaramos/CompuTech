@@ -1,4 +1,4 @@
-const syncUsersFromFirebase = require('../../controllers/userControllers/syncUsersController');
+const syncUsersFromFirebase = require('../../controllers/userControllers/syncUserController');
 
 const syncUsersHandler = async (req, res) => {
   try {
