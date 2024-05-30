@@ -1,5 +1,5 @@
 const { User } = require("../../config/db");
-const sendEmail = require("../../config/sendEmail");
+//const sendEmail = require("../../config/sendEmail");
 
 const postUserController = async (userInfo) => {
 	const { name, email, phone, image, address, roles } = userInfo;
@@ -15,7 +15,7 @@ const postUserController = async (userInfo) => {
     shoppingCart: [],
     recurringPayment: {}
 	});
-	sendEmail(email, name);
+	//sendEmail(email, name);
 	return user;
 };
 
