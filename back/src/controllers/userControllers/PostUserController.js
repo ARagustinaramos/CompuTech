@@ -1,7 +1,8 @@
 const { User } = require("../../config/db");
-const sendEmail = require("../../config/sendEmail");
+//const sendEmail = require("../../config/sendEmail");
 
-const postUserControllers = async (userInfo) => {
+const postUserController = async (userInfo) => {
+  console.log('User Info:', userInfo);
 	const { name, email, phone, image, address, roles } = userInfo;
 
 	const user = await User.create({
@@ -15,8 +16,8 @@ const postUserControllers = async (userInfo) => {
     shoppingCart: [],
     recurringPayment: {}
 	});
-	sendEmail(email, name);
+	//sendEmail(email, name);
 	return user;
 };
 
-module.exports = postUserControllers;
+module.exports = postUserController;
