@@ -32,7 +32,7 @@ const Sidebar = () => {
         showMenu ? "left-0" : "-left-full"
       }`}
     >
-      <div className="bg-gradient-to-r from-blue-600 to-sky-500 rounded-tr-[100px]  h-[40vh] border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center p-8 gap-2 h-[30vh]">
+      <div className="bg-gradient-to-r from-blue-600 to-green-600 1 rounded-tr-[100px] dark:border-gray-700 flex flex-col items-center justify-center h-[30vh]">
         <img
           src={user?.picture||'https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg'}
           className="w-20 h-20 object-cover rounded-full ring-2 ring-gray-300"
@@ -45,8 +45,14 @@ const Sidebar = () => {
           {user?.adress|| 'Dirección de usuario'}
         </p>
       </div>
-      <div className="bg-gradient-to-r from-blue-600 to-sky-500 p-2 rounded-br-[100px] flex flex-col justify-between ">
+      <div className="bg-gradient-to-r from-blue-600 to-green-600  rounded-br-[100px] flex flex-col justify-between ">
         <nav className="flex flex-col gap-8 pb-8 pt-0">
+          <a
+            href="/"
+            className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
+          >
+            <RiHome3Line /> Home
+          </a>
         <a
             onClick={openModal}
             className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
@@ -55,12 +61,6 @@ const Sidebar = () => {
             <BsPersonSquare /> Perfil
           </a>
             <Perfil isOpen={isModalOpen} onClose={closeModal}/>
-          <a
-            href="/"
-            className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
-          >
-            <RiHome3Line /> Home
-          </a>
           <a
             href="/cart"
             className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
