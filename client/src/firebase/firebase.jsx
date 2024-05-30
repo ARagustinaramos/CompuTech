@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -20,8 +20,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-// Exporta auth, googleProvider y signInWithEmailAndPassword
-export { auth, googleProvider, signInWithEmailAndPassword };
+// Exporta auth, googleProvider, signInWithEmailAndPassword y createUserWithEmailAndPassword
+export { auth, googleProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword };
 
 // Crea un contexto para Firebase
 const FirebaseContext = createContext({ app, auth });
