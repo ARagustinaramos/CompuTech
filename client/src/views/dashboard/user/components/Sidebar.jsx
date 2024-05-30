@@ -1,21 +1,32 @@
-import { useState } from "react";
-//Auth0
-import { useAuth0 } from '@auth0/auth0-react';
-// Icons
+import { useState, useEffect } from "react";
+
+import { useFirebase } from '../../../../firebase/firebase'; // Importa el hook useFirebase
 import {RiHome3Line, RiWalletLine, RiPieChartLine, RiMore2Fill, RiCloseFill} from "react-icons/ri";
 import { IoCart } from "react-icons/io5";
 import { FaRegGrinBeamSweat } from "react-icons/fa";
 import { BsPersonSquare } from "react-icons/bs";
 
-
-
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const { user , isLoading} = useAuth0();
+  const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setIsLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
 
   if (isLoading) {
     return <div>Cargando...</div>;
   }
+
   return (
     <>
     <div
@@ -23,7 +34,7 @@ const Sidebar = () => {
         showMenu ? "left-0" : "-left-full"
       }`}
     >
-      <div className="bg-gradient-to-r from-blue-600 to-sky-500 rounded-tr-[100px]  h-[40vh] border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center p-8 gap-2 h-[30vh]">
+      <div className="bg-gradient-to-r from-blue-600 to-sky-500 rounded-tr-[100px]  h-[40vh] border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center p-8 gap-2 ">
         <img
           src={user.picture}
           className="w-20 h-20 object-cover rounded-full ring-2 ring-gray-300"

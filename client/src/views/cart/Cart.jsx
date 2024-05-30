@@ -3,14 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeFromCart, updateCartItemQuantity, setCartItems } from '../../redux/actions/actions';
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
-import PayPalButton from '../../components/PayPalButton'; 
-import { useAuth0 } from "@auth0/auth0-react"; 
+import PayPalButton from '../../components/PayPalButton';
+import { useFirebase } from '../../firebase/firebase.jsx'
 
 const Cart = () => {
     const [showPayPalButton, setShowPayPalButton] = useState(false);
     const cartItems = useSelector(getMemoizedCartItems);
     const dispatch = useDispatch();
-    const { isAuthenticated } = useAuth0();
+    const { auth } = useFirebase();
+    const isAuthenticated = !!auth.currentUser;
 
     const items = cartItems.map(item => ({
         id_Product: item.id_Product,
@@ -49,7 +50,6 @@ const Cart = () => {
                 //dispatch(setCartItems([]));
                 //localStorage.removeItem('cartItems');
                 //sessionStorage.removeItem('cartItem');
-               
             }
         };
 
@@ -211,18 +211,17 @@ const Cart = () => {
                                         </div>
 
                                         <button 
-                                            type="button"
-                                            className="w-full rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                            onClick={handleProceedToCheckout}
-                                        >
-                                            Proceed to Checkout
-                                        </button>
+                                    onClick={handleProceedToCheckout} 
+                                    className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 sm:text-base"
+                                >
+                                    Proceder con la compra
+                                </button>
 
-                                        {showPayPalButton && (
-                                            <div className="mt-4">
-                                                <PayPalButton items={items} />
-                                            </div>
-                                        )}
+                                {showPayPalButton && (
+                                    <div className="mt-6">
+                                        <PayPalButton total={total} items={items} />
+                                    </div>
+                                )}
                                     </div>
                                 </div>
                             </div>
