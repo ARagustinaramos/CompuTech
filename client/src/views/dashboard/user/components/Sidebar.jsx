@@ -41,6 +41,9 @@ const Sidebar = () => {
         <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
           {user?.email|| 'No se encuentra email'}
         </p>
+        <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
+          {user?.adress|| 'Dirección de usuario'}
+        </p>
       </div>
       <div className="bg-gradient-to-r from-blue-600 to-sky-500 p-2 rounded-br-[100px] flex flex-col justify-between ">
         <nav className="flex flex-col gap-8 pb-8 pt-0">
