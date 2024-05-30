@@ -1,3 +1,4 @@
+const sendCorrero = require("../../../sendGrid");
 const { User } = require("../../config/db");
 
 const postUserControllers = async (body, user) => {
@@ -25,6 +26,8 @@ const postUserControllers = async (body, user) => {
 		const index = body.name.indexOf("@");
 		newName = body.name.substring(0, index);
 	}
+	// await sendCorrero(body.email);
+
 	const newUser = await User.create({
 		name: newName,
 		mail: body.email,
@@ -32,6 +35,7 @@ const postUserControllers = async (body, user) => {
 		rol: rol,
 		active: true
 	});
+
 	return newUser;
 };
 
