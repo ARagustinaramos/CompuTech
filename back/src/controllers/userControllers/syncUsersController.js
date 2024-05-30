@@ -33,6 +33,7 @@ const syncUsersFromFirebase = async () => {
     });
 
     await Promise.all(userPromises);
+    console.log('Users synchronized successfully');
     return { message: 'Users synchronized successfully' };
   } catch (error) {
     console.error('Error syncing users:', error);
