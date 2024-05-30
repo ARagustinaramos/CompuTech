@@ -1,17 +1,16 @@
-import React from 'react';
-
+import React from "react";
 const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
-  const next = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+	const next = () => {
+		if (currentPage < totalPages) {
+			setCurrentPage(currentPage + 1);
+		}
+	};
 
-  const prev = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+	const prev = () => {
+		if (currentPage > 1) {
+			setCurrentPage(currentPage - 1);
+		}
+	};
 
   return (
     <div className="flex justify-center items-center gap-4 p-4">

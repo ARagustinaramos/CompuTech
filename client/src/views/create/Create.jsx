@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2'
+import API_URL from "../../config";
+
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
-import Swal from 'sweetalert2';
+
 
 export default function ProductForm() {
   const [product, setProduct] = useState({

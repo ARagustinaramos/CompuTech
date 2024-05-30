@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/Spinner'; // Asegúrate de importar Spinner
+import API_URL from "../../config";
 
 export default function ProductForm() {
   // Cloudinary 

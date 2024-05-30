@@ -26,13 +26,13 @@ const Home = () => {
   const resetNameOrder = () => setNameOrder('');
   const resetPriceOrder = () => setPriceOrder('');
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+	useEffect(() => {
+		dispatch(getProducts());
+	}, [dispatch]);
 
-  if (!Array.isArray(allProducts) || allProducts.length === 0) {
-    return <Spinner />;
-  }
+	if (!Array.isArray(allProducts) || allProducts.length === 0) {
+		return <Spinner />;
+	}
 
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
