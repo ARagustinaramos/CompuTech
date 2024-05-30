@@ -11,8 +11,14 @@ import {
   DELETE_PRODUCT,
   SET_FILTER_PRODUCTS,
   SET_ALL_PRODUCTS,
-  SET_CATEGORY_FILTER, 
-  SET_BRAND_FILTER
+  SET_CATEGORY_FILTER,
+  FILTER_BY_BRAND,
+  FETCH_BRANDS,
+  SET_BRANDS,
+  SET_CATEGORIES,
+  SEARCH_PRODUCTS_BY_NAME,
+  FILTER_BY_CATEGORY,
+  RESET_FILTERS
 } from "../actions/types";
 
 import {
@@ -26,10 +32,43 @@ const initialState = {
   producto: [],
   productDetail: {},
   items: loadCartFromLocalStorage(),
-  BrandIdBrand: "",
   filteredProducts: [],
-  categoryFilter: '',
-  brandFilter: '',
+  categoryFilter: "",
+  brandFilter: "",
+  brands: [],
+  categories: [],
+  searchResults: [],
+};
+
+const applyFilters = (products, filters) => {
+  const { searchResults, categoryFilter, brandFilter } = filters;
+
+  let filtered = products;
+
+  // Aplicar búsqueda por nombre
+  if (searchResults && searchResults.length > 0) {
+    filtered = filtered.filter(product => {
+      return searchResults.some(result => result.id === product.id);
+    });
+  }
+
+  // Aplicar filtro de categoría
+  if (categoryFilter !== "" && categoryFilter !== "") {
+    filtered = filtered.filter(product => {
+      const normalizedCategoryPayload = String(product.CategoryIdCategory).toLowerCase();
+      return normalizedCategoryPayload === categoryFilter;
+    });
+  }
+
+  // Aplicar filtro de marca
+  if (brandFilter !== "default" && brandFilter !== "") {
+    filtered = filtered.filter(product => {
+      const normalizedBrandIdBrand = String(product.BrandIdBrand).toLowerCase();
+      return normalizedBrandIdBrand === brandFilter;
+    });
+  }
+
+  return filtered;
 };
 
 function rootReducer(state = initialState, action) {
@@ -40,26 +79,97 @@ function rootReducer(state = initialState, action) {
         allProducts: action.payload,
         copyProducts: [...action.payload],
       };
+
+      case SEARCH_PRODUCTS_BY_NAME:
+      const { payload: searchResults } = action;
+
+      // Restablecer los filtros a sus valores predeterminados
+      const resetFiltersState = {
+        ...state,
+        categoryFilter: "",
+        brandFilter: "",
+        searchResults,
+      };
+        // Aplicar todos los filtros (que ahora están restablecidos) a los resultados de búsqueda
+        const filteredResultsAfterSearch = applyFilters(state.allProducts, resetFiltersState);
+
+        return {
+          ...resetFiltersState,
+          filteredProducts: searchResults,
+        };
+
     case GET_DETAIL:
       return {
         ...state,
         productDetail: action.payload,
       };
-      case SET_ALL_PRODUCTS:
+
+    case SET_BRANDS:
+      return { ...state, brands: action.payload };
+
+    case SET_CATEGORIES:
+      return { ...state, categories: action.payload };
+
+    case SET_ALL_PRODUCTS:
       return {
         ...state,
         allProducts: action.payload,
       };
-      case SET_CATEGORY_FILTER:
+
+    case SET_CATEGORY_FILTER:
       return {
         ...state,
         categoryFilter: action.payload,
       };
-    case SET_BRAND_FILTER:
-      return {
-        ...state,
-        brandFilter: action.payload,
-      };
+
+      case FILTER_BY_BRAND:
+        const { payload: brandPayload } = action;
+        const normalizedBrandPayload = String(brandPayload).toLowerCase();
+  
+        // Aplicar todos los filtros, incluyendo el de marca recién recibido
+        const newStateAfterBrandFilter = {
+          ...state,
+          brandFilter: normalizedBrandPayload,
+        };
+  
+        const filteredResultsByBrand = applyFilters(
+          state.searchResults.length > 0 ? state.searchResults : state.allProducts, 
+          newStateAfterBrandFilter
+        );
+  
+        if (filteredResultsByBrand.length === 0) {
+          alert("No se encontraron productos con esa marca");
+        }
+  
+        return {
+          ...newStateAfterBrandFilter,
+          filteredProducts: filteredResultsByBrand,
+        };
+
+        case FILTER_BY_CATEGORY:
+          const { payload: categoryPayload } = action;
+          const normalizedCategoryPayload = String(categoryPayload).toLowerCase();
+    
+          // Aplicar todos los filtros, incluyendo el de categoría recién recibido
+          const newStateAfterCategoryFilter = {
+            ...state,
+            categoryFilter: normalizedCategoryPayload,
+          };
+    
+          const filteredProductsByCategory = applyFilters(
+            state.searchResults.length > 0 ? state.searchResults : state.allProducts, 
+            newStateAfterCategoryFilter
+          );
+    
+          if (filteredProductsByCategory.length === 0) {
+            alert("No se encontraron productos en esa categoría");
+          }
+    
+          return {
+            ...newStateAfterCategoryFilter,
+            filteredProducts: filteredProductsByCategory,
+          };
+
     case SET_FILTER_PRODUCTS:
       return {
         ...state,
@@ -85,6 +195,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         items: updatedItems,
       };
+
     case REMOVE_FROM_CART:
       const updatedItemsAfterRemoval = state.items.filter(
         (item) => item.cartItemId !== action.payload
@@ -94,6 +205,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         items: updatedItemsAfterRemoval,
       };
+
     case UPDATE_CART_ITEM_QUANTITY:
       const updatedItemsAfterQuantityChange = state.items.map((item) =>
         item.cartItemId === action.payload.itemId
@@ -105,6 +217,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         items: updatedItemsAfterQuantityChange,
       };
+
     case SET_FILTER:
       return {
         ...state,
@@ -116,12 +229,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         productDetail: {},
       };
+
     case GET_BY_NAME:
       return {
         ...state,
         copyProducts: action.payload,
       };
-
 
     case ORDER_NAME:
       if (action.payload === "a-z") {
@@ -141,6 +254,14 @@ function rootReducer(state = initialState, action) {
           copyProducts: orderByName,
         };
       }
+      case RESET_FILTERS:
+      return {
+        ...state,
+        brandFilter: '',
+        categoryFilter: '',
+        filteredProducts: state.allProducts,
+      };
+
     case DELETE_PRODUCT:
       return {
         ...state,
@@ -151,6 +272,7 @@ function rootReducer(state = initialState, action) {
           (product) => product.id !== action.payload
         ),
       };
+
     default:
       return { ...state };
   }

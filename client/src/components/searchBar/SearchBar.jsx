@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setFilterProducts } from '../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchProductsByName, setFilterProducts } from '../../redux/actions/actions';
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState('');
   const dispatch = useDispatch();
+  const filteredProducts = useSelector((state) => state.filteredProducts);
+  const allProducts = useSelector((state) => state.allProducts);
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setError('');
-    try {
-      const response = await fetch(`http://localhost:3001/products/name?name=${searchQuery}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch search results');
-      }
-      const data = await response.json();
-      console.log(data);
-      dispatch(setFilterProducts(data)); // Despacha la acción para actualizar el estado de Redux
-    } catch (error) {
-      setError('Error searching products. Please try again.');
-      console.error('Error searching products:', error);
-    }
+    dispatch(searchProductsByName(searchQuery));
+    dispatch(getProducts());
+    dispatch(filterByBrand(''));
+    dispatch(filterByCategory(''))
+    setBrand('');  // Reset brand filter
+    setCategory('');  // Reset category filter
   };
+
+
+  
 
   const handleReset = () => {
     setSearchQuery('');
-    dispatch(setFilterProducts([])); // Resetea los productos filtrados en el estado de Redux
+    setError('');
+    dispatch(setFilterProducts(allProducts)); // Resetea los productos filtrados en el estado de Redux a todos los productos
   };
 
   return (
