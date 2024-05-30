@@ -1,11 +1,11 @@
 import React from 'react';
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from 'sweetalert2';
-import { useUser } from '../context/useUser'
+
 
 const PayPalButton = ({ total, items, handleOrderComplete }) => {
-    const { userData, updateUserData } = useUser();
-    console.log('userData desde paypal button:',userData.shoppingCart)
+
+
 
     return (
         <PayPalButtons
