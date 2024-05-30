@@ -15,7 +15,7 @@ router.use("/brands", brandsRouter);
 router.use("/categories", categoriesRouter);
 router.use("/reviews", reviewsRouter);
 router.use("/create_preference", preferebceRouter);
-router.use("/pp/", paypalRouter);
+router.use("/api", paypalRouter);
 
 
 module.exports = router;
