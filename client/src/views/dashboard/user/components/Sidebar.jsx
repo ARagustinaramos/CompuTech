@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useState, useEffect } from "react";
 
-import { BsPersonSquare } from 'react-icons/bs';
-import { RiHome3Line, RiWalletLine, RiPieChartLine, RiCloseFill, RiMore2Fill } from 'react-icons/ri';
-import { IoCart } from 'react-icons/io5';
-import { FaRegGrinBeamSweat } from 'react-icons/fa';
-import Cargando from './Cargando';
-import Perfil from './Perfil'
-
+import { useFirebase } from '../../../../firebase/firebase'; // Importa el hook useFirebase
+import {RiHome3Line, RiWalletLine, RiPieChartLine, RiMore2Fill, RiCloseFill} from "react-icons/ri";
+import { IoCart } from "react-icons/io5";
+import { FaRegGrinBeamSweat } from "react-icons/fa";
+import { BsPersonSquare } from "react-icons/bs";
 
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
-  
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setIsLoading(false);
+      }
+    });
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+    return () => unsubscribe();
+  }, [auth]);
 
-
+  if (isLoading) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <>

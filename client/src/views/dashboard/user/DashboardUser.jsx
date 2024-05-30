@@ -1,9 +1,7 @@
-//REACT-REDUX
-import { useState ,useSelector} from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useFirebase } from "../../../firebase/firebase"; // Importa el hook useFirebase
 
-import { useAuth0 } from '@auth0/auth0-react';
-
-//COMPONENTES
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import HistorialDePedidos from "./components/HistorialDePedidos";
@@ -14,10 +12,28 @@ import Cargando from './components/Cargando'
 
 
 const DashboardUser = () => {
+  const { auth } = useFirebase();
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate(); 
+  
 
-  const { loginWithRedirect, logout, user, isAuthenticated, isLoading, error } = useAuth0();
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setIsLoading(false);
+      } else {
+        navigate('/login'); // Utiliza navigate en lugar de history.push
+      }
+    });
 
-  console.log('user', user)
+    return () => unsubscribe();
+  }, [auth, navigate]);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Puedes mostrar un spinner de carga mientras se verifica la autenticación
+  }
 
   return(
     <div className="pt-16">

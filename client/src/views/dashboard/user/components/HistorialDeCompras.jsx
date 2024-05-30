@@ -1,16 +1,27 @@
-//Auth 0
-import { useAuth0 } from '@auth0/auth0-react';
-
-import ComponenteProducto from './ComponenteProducto';
-import Cargando from '../components/Cargando'
-
+import { useEffect, useState } from "react";
+import { useFirebase } from "../../../../firebase/firebase"; // Importa el hook useFirebase
+import ComponenteProducto from "./ComponenteProducto";
 
 const HistorialDeCompras = () => {
-  const { user , isLoading} = useAuth0();
-    
-  if(isLoading){
-    <Cargando />
+  const { auth } = useFirebase();
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setIsLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
+
+  if (isLoading) {
+    return <div>Cargando...</div>;
   }
+  
   return (
     <div className="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-600">
     <div className="flex items-center justify-between mb-4">
