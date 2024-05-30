@@ -7,29 +7,23 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
   const next = () => {
     if (currentPage < totalPages) {
       setIsLoading(true);
-      setTimeout(() => {
-        setCurrentPage(currentPage + 1);
-        setIsLoading(false);
-      }, 500); // Simula un tiempo de carga
+      setCurrentPage(currentPage + 1);
+      setIsLoading(false);
     }
   };
 
   const prev = () => {
     if (currentPage > 1) {
       setIsLoading(true);
-      setTimeout(() => {
-        setCurrentPage(currentPage - 1);
-        setIsLoading(false);
-      }, 500); // Simula un tiempo de carga
+      setCurrentPage(currentPage - 1);
+      setIsLoading(false);
     }
   };
 
   const goToPage = (page) => {
     setIsLoading(true);
-    setTimeout(() => {
-      setCurrentPage(page);
-      setIsLoading(false);
-    }, 500); // Simula un tiempo de carga
+    setCurrentPage(page);
+    setIsLoading(false);
   };
 
   const renderPageNumbers = () => {

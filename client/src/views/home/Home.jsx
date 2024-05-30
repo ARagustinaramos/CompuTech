@@ -7,7 +7,6 @@ import CarouselComponent from '../../components/carousel/carousel';
 import ByName from '../../components/filters/ByName';
 import ByPrice from '../../components/filters/ByPrice';
 import Spinner from '../../components/spinner/Spinner';
-import Pagination from '../../components/pagination/Pagination';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -17,7 +16,7 @@ const Home = () => {
   const categories = useSelector(state => state.categories);
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [filterApplied, setFilterApplied] = useState(0);
 
   const toShow = filteredProducts.length > 0 ? filteredProducts : allProducts;
 
@@ -31,29 +30,37 @@ const Home = () => {
     const selectedValue = e.target.value;
     dispatch(filterByBrand(selectedValue));
     setBrand(selectedValue);
+    setFilterApplied(prev => prev + 1);
   };
 
   const handleCategoriesFilter = (e) => {
     const selectedValue = e.target.value;
     dispatch(filterByCategory(selectedValue));
     setCategory(selectedValue);
+    setFilterApplied(prev => prev + 1);
   };
 
   const handleSearch = (searchQuery) => {
     dispatch(searchProductsByName(searchQuery));
     dispatch(filterByBrand(''));
     dispatch(filterByCategory(''));
-    setBrand('');  // Reset brand filter
-    setCategory('');  // Reset category filter
+    setBrand('');
+    setCategory('');
+    setFilterApplied(prev => prev + 1);
   };
 
   const handleResetSearch = () => {
     dispatch(getProducts());
     dispatch(filterByBrand(''));
     dispatch(filterByCategory(''));
-    setBrand('');  // Reset brand filter
-    setCategory('');  // Reset category filter
+    setBrand('');
+    setCategory('');
+    setFilterApplied(prev => prev + 1);
   };
+
+  if (!Array.isArray(allProducts) || allProducts.length === 0) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -106,10 +113,8 @@ const Home = () => {
             </div>
             <Cards
               products={toShow}
-              setCurrentPage={setCurrentPage}
+              filterApplied={filterApplied}
             />
-            <div className="flex overflow-x-auto sm:justify-center bg-white antialiased dark:bg-gray-900 md:py-5">
-            </div>
           </div>
         </div>
       </Flowbite>

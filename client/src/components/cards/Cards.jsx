@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
 import Pagination from '../pagination/Pagination';
 
-const Cards = ({ products }) => {
+const Cards = ({ products, filterApplied }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const dataQt = 12;
+
+  useEffect(() => {
+    // Reset current page to 1 whenever filterApplied changes
+    setCurrentPage(1);
+  }, [filterApplied]);
 
   const totalPages = Math.ceil(products.length / dataQt);
   const indexFinal = currentPage * dataQt;
