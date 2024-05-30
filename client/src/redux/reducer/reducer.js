@@ -1,3 +1,4 @@
+// src/redux/reducers/rootReducer.js
 import {
   ADD_TO_CART,
   GET_PRODUCTS,
@@ -18,7 +19,9 @@ import {
   SET_CATEGORIES,
   SEARCH_PRODUCTS_BY_NAME,
   FILTER_BY_CATEGORY,
-  RESET_FILTERS
+  RESET_FILTERS,
+  SET_NAME_ORDER,
+  SET_PRICE_ORDER,
 } from "../actions/types";
 
 import {
@@ -71,6 +74,18 @@ const applyFilters = (products, filters) => {
   return filtered;
 };
 
+const compareByName = (a, b, order) => {
+  if (order === 'a-z') return a.name.localeCompare(b.name);
+  if (order === 'z-a') return b.name.localeCompare(a.name);
+  return 0;
+};
+
+const compareByPrice = (a, b, order) => {
+  if (order === 'asc') return a.price - b.price;
+  if (order === 'desc') return b.price - a.price;
+  return 0;
+};
+
 function rootReducer(state = initialState, action) {
   switch (action.type) {
     case GET_PRODUCTS:
@@ -80,23 +95,19 @@ function rootReducer(state = initialState, action) {
         copyProducts: [...action.payload],
       };
 
-      case SEARCH_PRODUCTS_BY_NAME:
+    case SEARCH_PRODUCTS_BY_NAME:
       const { payload: searchResults } = action;
-
-      // Restablecer los filtros a sus valores predeterminados
       const resetFiltersState = {
         ...state,
         categoryFilter: "",
         brandFilter: "",
         searchResults,
       };
-        // Aplicar todos los filtros (que ahora están restablecidos) a los resultados de búsqueda
-        const filteredResultsAfterSearch = applyFilters(state.allProducts, resetFiltersState);
-
-        return {
-          ...resetFiltersState,
-          filteredProducts: searchResults,
-        };
+      const filteredResultsAfterSearch = applyFilters(state.allProducts, resetFiltersState);
+      return {
+        ...resetFiltersState,
+        filteredProducts: searchResults,
+      };
 
     case GET_DETAIL:
       return {
@@ -122,53 +133,43 @@ function rootReducer(state = initialState, action) {
         categoryFilter: action.payload,
       };
 
-      case FILTER_BY_BRAND:
-        const { payload: brandPayload } = action;
-        const normalizedBrandPayload = String(brandPayload).toLowerCase();
-  
-        // Aplicar todos los filtros, incluyendo el de marca recién recibido
-        const newStateAfterBrandFilter = {
-          ...state,
-          brandFilter: normalizedBrandPayload,
-        };
-  
-        const filteredResultsByBrand = applyFilters(
-          state.searchResults.length > 0 ? state.searchResults : state.allProducts, 
-          newStateAfterBrandFilter
-        );
-  
-        if (filteredResultsByBrand.length === 0) {
-          alert("No se encontraron productos con esa marca");
-        }
-  
-        return {
-          ...newStateAfterBrandFilter,
-          filteredProducts: filteredResultsByBrand,
-        };
+    case FILTER_BY_BRAND:
+      const { payload: brandPayload } = action;
+      const normalizedBrandPayload = String(brandPayload).toLowerCase();
+      const newStateAfterBrandFilter = {
+        ...state,
+        brandFilter: normalizedBrandPayload,
+      };
+      const filteredResultsByBrand = applyFilters(
+        state.searchResults.length > 0 ? state.searchResults : state.allProducts,
+        newStateAfterBrandFilter
+      );
+      if (filteredResultsByBrand.length === 0) {
+        alert("No se encontraron productos con esa marca");
+      }
+      return {
+        ...newStateAfterBrandFilter,
+        filteredProducts: filteredResultsByBrand,
+      };
 
-        case FILTER_BY_CATEGORY:
-          const { payload: categoryPayload } = action;
-          const normalizedCategoryPayload = String(categoryPayload).toLowerCase();
-    
-          // Aplicar todos los filtros, incluyendo el de categoría recién recibido
-          const newStateAfterCategoryFilter = {
-            ...state,
-            categoryFilter: normalizedCategoryPayload,
-          };
-    
-          const filteredProductsByCategory = applyFilters(
-            state.searchResults.length > 0 ? state.searchResults : state.allProducts, 
-            newStateAfterCategoryFilter
-          );
-    
-          if (filteredProductsByCategory.length === 0) {
-            alert("No se encontraron productos en esa categoría");
-          }
-    
-          return {
-            ...newStateAfterCategoryFilter,
-            filteredProducts: filteredProductsByCategory,
-          };
+    case FILTER_BY_CATEGORY:
+      const { payload: categoryPayload } = action;
+      const normalizedCategoryPayload = String(categoryPayload).toLowerCase();
+      const newStateAfterCategoryFilter = {
+        ...state,
+        categoryFilter: normalizedCategoryPayload,
+      };
+      const filteredProductsByCategory = applyFilters(
+        state.searchResults.length > 0 ? state.searchResults : state.allProducts,
+        newStateAfterCategoryFilter
+      );
+      if (filteredProductsByCategory.length === 0) {
+        alert("No se encontraron productos en esa categoría");
+      }
+      return {
+        ...newStateAfterCategoryFilter,
+        filteredProducts: filteredProductsByCategory,
+      };
 
     case SET_FILTER_PRODUCTS:
       return {
@@ -254,7 +255,8 @@ function rootReducer(state = initialState, action) {
           copyProducts: orderByName,
         };
       }
-      case RESET_FILTERS:
+
+    case RESET_FILTERS:
       return {
         ...state,
         brandFilter: '',
@@ -272,6 +274,30 @@ function rootReducer(state = initialState, action) {
           (product) => product.id !== action.payload
         ),
       };
+
+    case SET_NAME_ORDER: {
+      const nameOrder = action.payload;
+      const productsToSort = state.filteredProducts.length ? state.filteredProducts : state.allProducts;
+      const sortedProducts = [...productsToSort].sort((a, b) => compareByName(a, b, nameOrder));
+      return {
+        ...state,
+        nameOrder,
+        filteredProducts: state.filteredProducts.length ? sortedProducts : [],
+        allProducts: state.filteredProducts.length ? state.allProducts : sortedProducts,
+      };
+    }
+
+    case SET_PRICE_ORDER: {
+      const priceOrder = action.payload;
+      const productsToSort = state.filteredProducts.length ? state.filteredProducts : state.allProducts;
+      const sortedProducts = [...productsToSort].sort((a, b) => compareByPrice(a, b, priceOrder));
+      return {
+        ...state,
+        priceOrder,
+        filteredProducts: state.filteredProducts.length ? sortedProducts : [],
+        allProducts: state.filteredProducts.length ? state.allProducts : sortedProducts,
+      };
+    }
 
     default:
       return { ...state };

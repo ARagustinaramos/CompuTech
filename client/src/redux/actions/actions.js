@@ -2,7 +2,6 @@ import axios from "axios";
 import {
   GET_DETAIL,
   GET_PRODUCTS,
-  ORDER_NAME,
   CLEAN_DETAIL,
   SET_FILTER,
   ADD_TO_CART,
@@ -14,10 +13,11 @@ import {
   SET_CATEGORY_FILTER,
   FILTER_BY_BRAND,
   FILTER_BY_CATEGORY,
-  FETCH_BRANDS,
   SET_BRANDS,
   SEARCH_PRODUCTS_BY_NAME,
-  SET_CATEGORIES
+  SET_CATEGORIES,
+  SET_NAME_ORDER, 
+  SET_PRICE_ORDER
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -29,6 +29,15 @@ export const getProducts = () => async (dispatch) => {
     console.error("Error fetching products:", error);
   }
 };
+export const setNameOrder = (order) => ({
+  type: SET_NAME_ORDER,
+  payload: order,
+});
+
+export const setPriceOrder = (order) => ({
+  type: SET_PRICE_ORDER,
+  payload: order,
+});
 
 export const getBrands = () => async (dispatch) => {
   try {
@@ -152,12 +161,7 @@ export const getDetail = (id) => {
   };
 };
 
-export const orderName = (order) => {
-  return {
-    type: ORDER_NAME,
-    payload: order,
-  };
-};
+
 
 export const cleanDetail = () => {
   return {
