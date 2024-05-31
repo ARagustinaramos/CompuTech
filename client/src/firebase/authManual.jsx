@@ -67,7 +67,7 @@ const SignUpForm = () => {
         onChange={(e) => setDisplayName(e.target.value)}
         placeholder="Nombre de usuario"
         required
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-300"
       />
       <input
         type="email"
@@ -75,15 +75,15 @@ const SignUpForm = () => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
         required
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-300"
       />
       <input
-        type="Contraseña"
+        type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder="Contraseña"
         required
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-300"
       />
       <button
         type="submit"
@@ -91,9 +91,7 @@ const SignUpForm = () => {
       >
         Registrarse
       </button>
-      
     </form>
-    
   );
 };
 
@@ -114,7 +112,7 @@ const SignInForm = () => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
         required
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-300"
       />
       <input
         type="password"
@@ -122,7 +120,7 @@ const SignInForm = () => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Contraseña"
         required
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-300"
       />
       <button
         type="submit"
@@ -130,7 +128,6 @@ const SignInForm = () => {
       >
         Iniciar sesión
       </button>
-      
     </form>
   );
 };

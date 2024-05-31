@@ -21,56 +21,48 @@ const LoginLogout = () => {
     <li className="relative content-center">
       {!user ? (
         <div>
-           <button
+          <button
             type="button"
-            className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            className="block py-2 px-3 text-gray-900 dark:text-white rounded hover:bg-gray-100 dark:hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:md:hover:text-blue-500 md:p-0"
             onClick={openModal}
           >
             Iniciar Sesión
-           
-              <path
-                fillRule="evenodd"
-                d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 111.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
-                clipRule="evenodd"
-              />
-           
           </button>
           {modalOpen && (
             <div className="fixed z-10 inset-0 overflow-y-auto">
               <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                  <div className="absolute inset-0 bg-gray-500 dark:bg-gray-800 opacity-75"></div>
                 </div>
                 <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                <div className="inline-block align-bottom bg-white dark:bg-gray-900 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
                   <div>
                     <div className="mt-3 text-center sm:mt-5">
-                      <h3 className="text-lg leading-6 font-medium text-gray-900">
+                      <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                         Iniciar Sesión
                       </h3>
                       <div className="mt-2">
                         {!isRegistering ? (
                           <>
                             <SignInForm />
-                            
-                            <p className="mt-2">
+                            <p className="mt-2 text-gray-600 dark:text-gray-300">
                               ¿No tienes una cuenta?{" "}
-                              <button onClick={() => setIsRegistering(true)} className="text-blue-500 hover:underline">
+                              <button onClick={() => setIsRegistering(true)} className="text-blue-500 dark:text-blue-400 hover:underline">
                                 Regístrate
                               </button>
-                              <SignInButton />
                             </p>
+                            <SignInButton />
                           </>
                         ) : (
                           <>
                             <SignUpForm />
-                            <p className="mt-2">
+                            <p className="mt-2 text-gray-600 dark:text-gray-300">
                               ¿Ya tienes una cuenta?{" "}
-                              <button onClick={() => setIsRegistering(false)} className="text-blue-500 hover:underline">
+                              <button onClick={() => setIsRegistering(false)} className="text-blue-500 dark:text-blue-400 hover:underline">
                                 Inicia Sesión
                               </button>
-                              <SignInButton/>
                             </p>
+                            <SignInButton />
                           </>
                         )}
                       </div>
@@ -95,7 +87,7 @@ const LoginLogout = () => {
           <div>
             <button
               type="button"
-              className="flex items-center justify-center w-full rounded-md px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+              className="flex items-center justify-center w-full rounded-md px-4 py-2 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
               onClick={toggleDropdown}
             >
               <img
@@ -121,7 +113,7 @@ const LoginLogout = () => {
           </div>
 
           {dropdownOpen && (
-            <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+            <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
               <div
                 className="py-1"
                 role="menu"
@@ -130,36 +122,36 @@ const LoginLogout = () => {
               >
                 <a
                   href="/dashboardadmin/manage/products"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   role="menuitem"
                 >
                   Administrador
                 </a>
                 <a
                   href="/profile"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   role="menuitem"
                 >
                   Perfil
                 </a>
                 <a
                   href="/account-settings"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   role="menuitem"
                 >
                   Configuración de Cuenta
                 </a>
                 <a
                   href="/order-history"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   role="menuitem"
                 >
                   Historial de Pedidos
                 </a>
-                <div className="border-t border-gray-100"></div>
+                <div className="border-t border-gray-100 dark:border-gray-700"></div>
                 <button
                   onClick={() => auth.signOut()}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   role="menuitem"
                 >
                   Cerrar sesión
