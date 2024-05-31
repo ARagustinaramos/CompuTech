@@ -6,7 +6,7 @@ import { DarkThemeToggle } from 'flowbite-react';
 import SearchBar from '../searchBar/SearchBar';
 import { useAuth0 } from '@auth0/auth0-react';
 
-export default function Navbar() {
+export default function Navbar(onSearch) {
 	const [searchResults, setSearchResults] = useState([]);
 	const { user, isAuthenticated } = useAuth0();
 	const location = useLocation(); // Obtener la ubicación actual

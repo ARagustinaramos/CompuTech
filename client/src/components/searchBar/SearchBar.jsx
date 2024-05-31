@@ -20,10 +20,14 @@ const SearchBar = () => {
     dispatch(getProducts());
     dispatch(filterByBrand(''));
     dispatch(filterByCategory(''))
+  };
+  const handleResetSearch = () => {
+    dispatch(getProducts());
+    dispatch(filterByBrand(''));
+    dispatch(filterByCategory(''))
     setBrand('');  // Reset brand filter
     setCategory('');  // Reset category filter
   };
-
 
   
 
