@@ -7,6 +7,7 @@ import App from './App.jsx';
 import './index.css';
 import store from "./redux/store/store.js";
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+import { LoadingProvider } from './context/LoadingContext.jsx'
 
 const firebaseConfig = {
   apiKey: "AIzaSyARKII_-ZRbbhXP3--TdeH4JIgRErz9F3U",
@@ -28,8 +29,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <React.StrictMode>
         <FirebaseAppProvider firebaseConfig={firebaseConfig}>
           <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <LoadingProvider>
+          <App />
+            </LoadingProvider>
+        </BrowserRouter>
         </FirebaseAppProvider>
       </React.StrictMode>
     </PayPalScriptProvider>

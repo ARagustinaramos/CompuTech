@@ -7,7 +7,7 @@ import SearchBar from '../searchBar/SearchBar';
 import { useFirebase } from '../../firebase/firebase';
 import { useNavigate } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar(onSearch) {
     const [searchResults, setSearchResults] = useState([]);
     const { auth } = useFirebase();
     const navigate = useNavigate();
