@@ -9,7 +9,7 @@ const sendCorreo = async (user, html) => {
 		from: `${myCorreo}`, // Change to your verified sender
 		subject: "Equipo de Computech",
 		text: "and easy to do anywhere, even with Node.js",
-		html: html
+		html: `${html}`
 	};
 
 	sgMail
