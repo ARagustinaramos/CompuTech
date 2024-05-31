@@ -5,12 +5,27 @@ import {RiHome3Line, RiWalletLine, RiPieChartLine, RiMore2Fill, RiCloseFill} fro
 import { IoCart } from "react-icons/io5";
 import { FaRegGrinBeamSweat } from "react-icons/fa";
 import { BsPersonSquare } from "react-icons/bs";
+import Perfil from '../../user/components/Perfil'
 
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
