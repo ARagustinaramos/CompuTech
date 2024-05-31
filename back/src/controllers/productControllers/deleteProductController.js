@@ -8,9 +8,17 @@ const deleteProductsControllers = async (idProduct, exterminateProduct) => {
 		Product.destroy({ where: { id_Product: idProduct } });
 		return "Product successfully removed!";
 	}
-	productData.active = false;
-	await productData.save();
-	return "Product successfully marked as inactive!";
+
+	if (productData.active === true) {
+		productData.active = false;
+		await productData.save();
+		return "Product successfully marked as inactive!";
+	}
+	if (productData.active === false) {
+		productData.active = true;
+		await productData.save();
+		return "Product successfully marked as active!";
+	}
 };
 
 module.exports = deleteProductsControllers;

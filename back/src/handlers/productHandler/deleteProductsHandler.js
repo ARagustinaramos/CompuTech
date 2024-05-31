@@ -1,6 +1,6 @@
 const deleteProductsControllers = require("../../controllers/productControllers/deleteProductController");
 
-const deleteProducts = async (req, res) => {
+const deleteProductsHandler = async (req, res) => {
 	try {
 		const idProduct = req.params.id;
 		const { exterminateProduct } = req.body;
@@ -14,4 +14,4 @@ const deleteProducts = async (req, res) => {
 	}
 };
 
-module.exports = deleteProducts;
+module.exports = deleteProductsHandler;
