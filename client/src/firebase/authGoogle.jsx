@@ -8,9 +8,9 @@ const signInWithGoogle = async () => {
     const user = result.user;
     const token = await user.getIdToken();
     const userInfo = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
+      mail: user.email,
+      name: user.displayName,
+      rol: true
     };
     await sendUserInfoToBackend(userInfo, token);
   } catch (error) {

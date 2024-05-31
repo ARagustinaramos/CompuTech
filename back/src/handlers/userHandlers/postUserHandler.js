@@ -1,11 +1,11 @@
-const postUserController = require('../../controllers/userControllers/postUserController');
+const postUserController = require('../../controllers/userControllers/PostUserController');
 
 const postUserHandler = async (req, res) => {
   try {
-    const newUser = await postUserController(req.userInfo);
-    res.status(201).json(newUser);
+    await postUserController(req, res);
   } catch (error) {
-    res.status(500).json({ message: 'Error creating user', error });
+    console.error("Error in postUserHandler:", error);
+    res.status(500).json({ message: "Error interno del servidor." });
   }
 };
 
