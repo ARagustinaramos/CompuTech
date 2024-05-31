@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useFirebase } from "./firebase"; // Importa el hook useFirebase
 
 import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
@@ -7,20 +6,10 @@ import {  RiHashtag } from "react-icons/ri";
 import Cargando from '../components/Cargando'
 
 const Novedades = () => {
-  const { auth } = useFirebase();
+  //const { auth } = useFirebase();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-        setIsLoading(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [auth]);
 
     if(isLoading){
       return <Cargando />
@@ -58,5 +47,5 @@ const Novedades = () => {
                   </div>
        </div>
     )
-
+  }
 export default Novedades;
