@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDetail, cleanDetail, addToCart } from '../../redux/actions/actions';
 import Swal from 'sweetalert2';
 import Spinner from '../../../src/components/spinner/Spinner';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase/firebase';
 
 const Detail = () => {
   const { id } = useParams();
@@ -12,8 +14,14 @@ const Detail = () => {
   const producto = useSelector((state) => state.productDetail);
   const isLoading = useSelector((state) => state.isLoading);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [user] = useAuthState(auth);
 
   const handleAddToCart = () => {
+    if (!user) {
+      Swal.fire("Por favor inicia sesión para agregar productos al carrito");
+       // Ajusta la ruta según tu configuración de rutas
+      return;
+    }
     dispatch(addToCart(producto));
     Swal.fire("Producto agregado al carrito!");
   };
