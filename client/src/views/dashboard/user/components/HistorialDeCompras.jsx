@@ -32,17 +32,12 @@ const HistorialDeCompras = () => {
     </div>
     <div className="flow-root">
         <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
-        <ComponenteProducto />
-        <ComponenteProducto />
-</ul>
+          <ComponenteProducto />
+          <ComponenteProducto />
+        </ul>
+      </div>
     </div>
-</div>
-
   );
 };
 
-export default HistorialDeCompras
-         
-         
-         
-         
+export default HistorialDeCompras;

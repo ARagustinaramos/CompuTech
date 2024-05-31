@@ -34,10 +34,9 @@ const HistorialDePedidos = () => {
                 <ComponentePedido />
                 <ComponentePedido />
         </ul>
-            </div>
-        </div>
-    )
-
-}
+      </div>
+    </div>
+  );
+};
 
 export default HistorialDePedidos;

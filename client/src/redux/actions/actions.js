@@ -123,6 +123,8 @@ export const filterByCategory = (category) => {
   return {
       type: FILTER_BY_CATEGORY,
       payload: category,
+
+
   }
 }
 
@@ -182,9 +184,3 @@ export const setCartItems = (items) => ({
   type: SET_CART_ITEMS,
   payload: items
 });
-export const updateProductStatus = (productId, status) => {
-  return {
-      type: 'UPDATE_PRODUCT_STATUS',
-      payload: { productId, status }
-  };
-};

@@ -1,6 +1,6 @@
-const  getUserById  = require('../../controllers/userControllers/getIdUser');
+const  getUserId  = require('../../controllers/userControllers/getIdUser');
 
-const getUserByIdHandler = async (req, res) => {
+const getUserIdHandler = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await getUserById(id);
@@ -15,4 +15,4 @@ const getUserByIdHandler = async (req, res) => {
   }
 };
 
-module.exports = getUserByIdHandler;
+module.exports = getUserIdHandler;
