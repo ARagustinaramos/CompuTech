@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/Spinner'; // Asegúrate de importar Spinner
 
+
 export default function ProductForm() {
   // Cloudinary 
   const preset = 'presetComputech'; 
@@ -13,11 +14,8 @@ export default function ProductForm() {
   const [url_img, setUrl_img] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log('url de la imagen cloudinary', url_img);
-
   const changeUploadImage = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
 
     const data = new FormData();
     data.append('file', file);
@@ -46,6 +44,7 @@ export default function ProductForm() {
     brand: "",
     category: ""
   });
+  
   const [errors, setErrors] = useState({});
   const [nameLengthError, setNameLengthError] = useState(false);
   const navigate = useNavigate();
@@ -153,7 +152,7 @@ export default function ProductForm() {
       };
 
       try {
-        const response = await fetch('https://computechback.onrender.com/products', {
+        const response = await fetch('http://localhost:3001/products', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -217,6 +216,7 @@ export default function ProductForm() {
   }
 
   return (
+    <div className="pt-16">
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 antialiased md:py-5">
       <div className="max-w-md w-full p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
         <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">Añade un producto</h1>
@@ -327,6 +327,7 @@ export default function ProductForm() {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }
