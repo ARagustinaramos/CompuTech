@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/Spinner'; // Asegúrate de importar Spinner
 
+
 export default function ProductForm() {
   // Cloudinary 
   const preset = 'presetComputech'; 
@@ -217,6 +218,7 @@ export default function ProductForm() {
   }
 
   return (
+    <div className="pt-16">
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 antialiased md:py-5">
       <div className="max-w-md w-full p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
         <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">Añade un producto</h1>
@@ -327,6 +329,7 @@ export default function ProductForm() {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }
