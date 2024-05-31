@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import {
   GET_DETAIL,
   GET_PRODUCTS,
@@ -22,159 +23,143 @@ import {
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
-  try {
-    const response = await fetch("http://localhost:3001/products");
-    const data = await response.json();
-    dispatch(setAllProducts(data));
-  } catch (error) {
-    console.error("Error fetching products:", error);
-  }
-};
-export const setNameOrder = (order) => ({
-  type: SET_NAME_ORDER,
-  payload: order,
-});
-
-export const setPriceOrder = (order) => ({
-  type: SET_PRICE_ORDER,
-  payload: order,
-});
-
-export const getBrands = () => async (dispatch) => {
-  try {
-    const response = await fetch("http://localhost:3001/brands");
-    const data = await response.json();
-    dispatch({ type: SET_BRANDS, payload: data });
-  } catch (error) {
-    console.error("Error fetching brands:", error);
-  }
-};
-
-export const getCategories = () => async (dispatch) => {
     try {
-      const response = await fetch("http://localhost:3001/categories");
-      const data = await response.json();
-      dispatch({ type: SET_CATEGORIES, payload: data });
+        const response = await fetch('http://localhost:3001/products');
+        const data = await response.json();
+        dispatch(setAllProducts(data));
     } catch (error) {
-      console.error("Error fetching brands:", error);
+        console.error('Error fetching products:', error);
     }
-  };
+};
 
-  export const searchProductsByName = (name) => {
-    return async (dispatch, getState) => {
-      try {
-        let response;
-        if (name.trim() === "") {
-          // Si el nombre está vacío, obtiene todos los productos
-          response = await axios.get('http://localhost:3001/products');
-        } else {
-          // Busca productos por nombre
-          response = await axios.get(`http://localhost:3001/products/name?name=${name}`);
-        }
-        
-        if (response.data.length === 0) {
-          // Si el resultado de la búsqueda está vacío, muestra un mensaje de alerta
-          alert("No se encontraron productos con ese nombre");
-        }
-        
-        const searchResults = response.data;
-    
-        dispatch({
-          type: SEARCH_PRODUCTS_BY_NAME,
-          payload: searchResults,
-        });
-      } catch (error) {
-        console.error('Error searching products:', error);
-      }
-    };
-  };
 export const setAllProducts = (products) => ({
-  type: SET_ALL_PRODUCTS,
-  payload: products,
+    type: SET_ALL_PRODUCTS,
+    payload: products,
 });
 
 export const setCategoryFilter = (category) => ({
-  type: SET_CATEGORY_FILTER,
-  payload: category,
-});
-
-export const resetFilters = () => ({
-  type: RESET_FILTERS,
+    type: SET_CATEGORY_FILTER,
+    payload: category,
 });
 
 export const setFilterProducts = (products) => ({
-  type: SET_FILTER_PRODUCTS,
-  payload: products,
+    type: SET_FILTER_PRODUCTS,
+    payload: products,
 });
 
 export const setBrandFilter = (brand) => ({
-  type: FILTER_BY_BRAND,
-  payload: brand,
+    type: SET_BRAND_FILTER,
+    payload: brand,
 });
 
-export const filterByBrand = (brand) => {
-  return {
-    type: FILTER_BY_BRAND,
-    payload: brand,
-  };
-};
-
-export const filterByCategory = (category) => {
-  return {
-      type: FILTER_BY_CATEGORY,
-      payload: category,
-
-
-  }
-}
-
 export const addToCart = (product) => {
-  return {
-    type: ADD_TO_CART,
-    payload: {
-      ...product,
-      cartItemId: Math.random().toString(36).substr(2, 9), // Genera un ID único para el cartItemId
-    },
-  };
+    return {
+        type: ADD_TO_CART,
+        payload: {
+            ...product,
+            cartItemId: Math.random().toString(36).substr(2, 9) // Generates a unique ID for the cartItemId
+        }
+    };
 };
 
 export const updateCartItemQuantity = (itemId, quantity) => ({
-  type: UPDATE_CART_ITEM_QUANTITY,
-  payload: { itemId, quantity },
+    type: UPDATE_CART_ITEM_QUANTITY,
+    payload: { itemId, quantity },
 });
 
-export const removeFromCart = (cartitemId) => ({
-  type: REMOVE_FROM_CART,
-  payload: cartitemId,
+export const removeFromCart = (cartItemId) => ({
+    type: REMOVE_FROM_CART,
+    payload: cartItemId
+});
+
+export const setCartItems = (items) => ({
+    type: SET_CART_ITEMS,
+    payload: items
 });
 
 export const getDetail = (id) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.get(`http://localhost:3001/products/${id}`);
-      return dispatch({
-        type: GET_DETAIL,
-        payload: data,
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get(`http://localhost:3001/products/${id}`);
+            return dispatch({
+                type: GET_DETAIL,
+                payload: data
+            });
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
 };
 
+export const getByName = (nombre) => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get(`http://localhost:3001/pokemons?nombre=${nombre}`);
+            return dispatch({
+                type: GET_BY_NAME,
+                payload: data
+            });
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+};
 
+export const getTypes = () => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.get('http://localhost:3001/types/', {});
+            return dispatch({
+                type: GET_TYPES,
+                payload: data
+            });
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+};
+
+export const filterDbApi = (value) => {
+    return {
+        type: FILTERDBAPI,
+        payload: value
+    };
+};
+
+export const filterType = (payload) => {
+    return {
+        type: FILTER_TYPE,
+        payload
+    };
+};
+
+export const orderName = (order) => {
+    return {
+        type: ORDER_NAME,
+        payload: order
+    };
+};
+
+export const orderAttack = (payload) => {
+    return {
+        type: ORDER_ATTACK,
+        payload
+    };
+};
 
 export const cleanDetail = () => {
-  return {
-    type: CLEAN_DETAIL,
-  };
-};
+    return {
+        type: CLEAN_DETAIL,
+    }
+}
+
 export const setFilter = (filter) => ({
-  type: SET_FILTER,
-  payload: filter,
+    type: SET_FILTER,
+    payload: filter,
 });
 
 export const deleteProduct = (id) => {
+
   return {
     type: DELETE_PRODUCT,
     payload: id,
@@ -184,3 +169,4 @@ export const setCartItems = (items) => ({
   type: SET_CART_ITEMS,
   payload: items
 });
+

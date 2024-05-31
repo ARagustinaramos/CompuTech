@@ -34,7 +34,7 @@ const Cards = ({ products, filterApplied }) => {
               />
             ))
           ) : (
-            <Spinner />
+            <Spinner className='w-full' />
           )}
         </div>
       </div>
