@@ -1,8 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { setNameOrder } from '../../redux/actions/actions';
 
-const ByName = ({ setNameOrder, resetPriceOrder }) => {
+const ByName = ({ resetPriceOrder }) => {
+  const dispatch = useDispatch();
+
   const handleOrderByName = (event) => {
-    setNameOrder(event.target.value);
+    dispatch(setNameOrder(event.target.value));
     resetPriceOrder(); // Resetear el orden de precio
   };
 

@@ -1,60 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
+import Pagination from '../pagination/Pagination';
 
 
-const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, setCurrentPage, filterProducts }) => {
-  const [filteredProducts, setFilteredProducts] = useState([]);
+const Cards = ({ products, filterApplied }) => {
+  const [currentPage, setCurrentPage] = useState(1);
   const dataQt = 12;
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        let url = 'http://localhost:3001/products';
-        const params = new URLSearchParams();
+    // Reset current page to 1 whenever filterApplied changes
+    setCurrentPage(1);
+  }, [filterApplied]);
 
-        if (brandFilter) params.append('brand', brandFilter);
-        if (categoryFilter) params.append('category', categoryFilter);
-        if (nameFilter) params.append('name', nameFilter);
-
-        if (params.toString()) url += `?${params.toString()}`;
-
-        const response = await fetch(url);
-        let data = await response.json();
-
-        let sortedData = [...data];
-
-        if (nameOrder) {
-          if (nameOrder === 'a-z') {
-            sortedData.sort((a, b) => a.name.localeCompare(b.name));
-          } else if (nameOrder === 'z-a') {
-            sortedData.sort((a, b) => b.name.localeCompare(a.name));
-          }
-        } else if (priceOrder) {
-          if (priceOrder === 'asc') {
-            sortedData.sort((a, b) => a.price - b.price);
-          } else if (priceOrder === 'desc') {
-            sortedData.sort((a, b) => b.price - a.price);
-          }
-        }
-
-        setFilteredProducts(sortedData);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
-    if (!filterProducts.length) {
-      fetchProducts();
-    } else {
-      setFilteredProducts(filterProducts);
-    }
-  }, [brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder, currentPage, filterProducts]);
-
-  const totalPages = Math.ceil(filteredProducts.length / dataQt);
+  const totalPages = Math.ceil(products.length / dataQt);
   const indexFinal = currentPage * dataQt;
   const indexInicial = indexFinal - dataQt;
-  const productsToDisplay = filteredProducts.slice(indexInicial, indexFinal);
+  const productsToDisplay = products.slice(indexInicial, indexFinal);
 
   return (
     <div>
@@ -75,6 +37,13 @@ const Cards = ({ brandFilter, categoryFilter, nameFilter, nameOrder, priceOrder,
             <Spinner />
           )}
         </div>
+      </div>
+      <div className="flex justify-center mt-4">
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );

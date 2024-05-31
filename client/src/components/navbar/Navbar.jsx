@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import CartIcon from '../carticon/CartIcon';
 import LoginLogout from '../loginLogout/LoginLogout';
@@ -7,12 +7,20 @@ import SearchBar from '../searchBar/SearchBar';
 import { useFirebase } from '../../firebase/firebase';
 import { useNavigate } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar(onSearch) {
     const [searchResults, setSearchResults] = useState([]);
     const { auth } = useFirebase();
     const navigate = useNavigate();
     const location = useLocation();
     const [currentPage, setCurrentPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            setIsLoading(false);
+        });
+        return () => unsubscribe();
+    }, [auth]);
 
     const isAuthenticated = auth.currentUser !== null;
 
@@ -24,6 +32,10 @@ export default function Navbar() {
             console.error('Error al cerrar sesión:', error);
         }
     };
+
+    if (isLoading) {
+        return null; // O puedes mostrar un spinner o algo similar mientras carga
+    }
 
     return (
         <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 fixed top-0 left-0 w-full z-50">
@@ -72,12 +84,7 @@ export default function Navbar() {
                                     </Link>
                                 </li>
                                 <li className="content-center">
-                                    <button
-                                        onClick={handleLogout}
-                                        className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                                    >
-                                        Cerrar sesión
-                                    </button>
+                                    <LoginLogout/>
                                 </li>
                             </>
                         )}
