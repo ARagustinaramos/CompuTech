@@ -242,7 +242,7 @@ const Cart = () => {
     }
 
       try {
-        const response = await fetch('http://localhost:3001/orders', {
+        const response = await fetch('http://localhost:3001/api/create-order', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
