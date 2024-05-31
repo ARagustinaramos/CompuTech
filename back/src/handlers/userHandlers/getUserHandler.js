@@ -1,6 +1,6 @@
-const { getAllUsers } = require('../../controllers/userController');
+const  getAllUsers  = require('../../controllers/userControllers/getUsersController');
 
-const getUserHandlers = async (req, res) => {
+const getUserHandler = async (req, res) => {
   try {
     const users = await getAllUsers();
     res.status(200).json(users);
@@ -9,4 +9,4 @@ const getUserHandlers = async (req, res) => {
   }
 };
 
-module.exports = getUserHandlers;
+module.exports = getUserHandler;
