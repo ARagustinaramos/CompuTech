@@ -1,3 +1,4 @@
+import { Select, SelectItem } from '@tremor/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../../redux/actions/actions';
 import React, { useEffect, useState } from 'react';
@@ -15,14 +16,14 @@ import {
 } from '@tremor/react';
 
 export function TableUsageExample() {
-    
+
     const dispatch = useDispatch();
     const allProducts = useSelector((state) => state.allProducts);
-    
+
     useEffect(() => {
         dispatch(getProducts());
     }, [dispatch]);
-    
+
     console.log(allProducts)
     return (
         <Card>
@@ -48,15 +49,16 @@ export function TableUsageExample() {
                             </TableCell>
                             <TableCell>
                                 {item.CategoryIdCategory
-}
+                                }
                             </TableCell>
                             <TableCell>
                                 {item.price}
                             </TableCell>
                             <TableCell>
-                                <Badge color="emerald" icon={RiFlag2Line} onClick={true}>
-                                    {item.status}
-                                </Badge>
+                                <Select defaultValue="activo">
+                                    <SelectItem value="activo">Activo</SelectItem>
+                                    <SelectItem value="inactivo">Inactivo</SelectItem>
+                                </Select>
                             </TableCell>
                             <TableCell>
                                 {item.stock}
