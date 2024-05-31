@@ -1,23 +1,19 @@
-const { User } = require("../../config/db");
-//const sendEmail = require("../../config/sendEmail");
+const { User } = require("../../config/db"); // Asegúrate de que este path sea correcto
 
-const postUserController = async (userInfo) => {
-  console.log('User Info:', userInfo);
-	const { name, email, phone, image, address, roles } = userInfo;
-
-	const user = await User.create({
-		name,
-    mail: email,
-    phone,
-    image,
-    address,
-    active: true,
-    rol: roles.includes('admin'),
-    shoppingCart: [],
-    recurringPayment: {}
-	});
-	//sendEmail(email, name);
-	return user;
+const postUserController = async (req, res) => {
+  try {
+    const { name, mail, rol } = req.body;
+    const newUser = await User.create({
+      mail,
+      name,
+      rol: true,
+      // Aquí puedes añadir más campos si es necesario
+    });
+    res.status(201).json(newUser);
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ message: "Error interno del servidor." });
+  }
 };
 
 module.exports = postUserController;
