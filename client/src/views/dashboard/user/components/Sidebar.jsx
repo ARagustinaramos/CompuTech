@@ -1,21 +1,47 @@
-import { useState } from "react";
-//Auth0
-import { useAuth0 } from '@auth0/auth0-react';
-// Icons
+import { useState, useEffect } from "react";
+
+import { useFirebase } from '../../../../firebase/firebase'; // Importa el hook useFirebase
 import {RiHome3Line, RiWalletLine, RiPieChartLine, RiMore2Fill, RiCloseFill} from "react-icons/ri";
 import { IoCart } from "react-icons/io5";
 import { FaRegGrinBeamSweat } from "react-icons/fa";
 import { BsPersonSquare } from "react-icons/bs";
-
-
+import Perfil from '../../user/components/Perfil'
 
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const { user , isLoading} = useAuth0();
+  const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+
+
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setIsLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
 
   if (isLoading) {
     return <div>Cargando...</div>;
   }
+
   return (
     <>
     <div
@@ -23,31 +49,35 @@ const Sidebar = () => {
         showMenu ? "left-0" : "-left-full"
       }`}
     >
-      <div className="bg-gradient-to-r from-blue-600 to-sky-500 rounded-tr-[100px]  h-[40vh] border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center p-8 gap-2 h-[30vh]">
+      <div className="bg-gradient-to-r from-blue-600 to-green-600 1 rounded-tr-[100px] dark:border-gray-700 flex flex-col items-center justify-center h-[30vh]">
         <img
-          src={user.picture}
+          src={user?.picture||'https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg'}
           className="w-20 h-20 object-cover rounded-full ring-2 ring-gray-300"
         />
-        <h1 className="text-xl text-white font-bold">{user.given_name}</h1>
+        <h1 className="text-xl text-white font-bold">{user?.given_name||'usuario'}</h1>
         <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
-          {user.email}
+          {user?.email|| 'No se encuentra email'}
+        </p>
+        <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
+          {user?.adress|| 'Dirección de usuario'}
         </p>
       </div>
-      <div className="bg-gradient-to-r from-blue-600 to-sky-500 p-2 rounded-br-[100px] flex flex-col justify-between ">
+      <div className="bg-gradient-to-r from-blue-600 to-green-600  rounded-br-[100px] flex flex-col justify-between ">
         <nav className="flex flex-col gap-8 pb-8 pt-0">
-        <a
-            href="/perfil"
-            className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
-            data-modal-target="crud-modal" data-modal-toggle="crud-modal"
-          >
-            <BsPersonSquare /> Perfil
-          </a>
           <a
             href="/"
             className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
           >
             <RiHome3Line /> Home
           </a>
+        <a
+            onClick={openModal}
+            className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
+            data-modal-target="crud-modal" data-modal-toggle="crud-modal"
+          >
+            <BsPersonSquare /> Perfil
+          </a>
+            <Perfil isOpen={isModalOpen} onClose={closeModal}/>
           <a
             href="/cart"
             className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"

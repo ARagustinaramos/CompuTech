@@ -1,14 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/actions/actions';
 import Swal from 'sweetalert2';
-
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase/firebase';
 
 const Card = ({ id_Product, name, image, price }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [user] = useAuthState(auth);
 
   const handleAddToCart = () => {
+    if (!user) {
+      Swal.fire("Por favor inicia sesión para agregar productos al carrito");
+      ; // Ajusta la ruta según tu configuración de rutas
+      return;
+    }
     const productToAdd = {
       id_Product,
       name,

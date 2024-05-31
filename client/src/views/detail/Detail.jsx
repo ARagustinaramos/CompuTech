@@ -1,18 +1,28 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetail, cleanDetail, addToCart } from '../../redux/actions/actions';
 import Swal from 'sweetalert2';
 import Spinner from '../../../src/components/spinner/Spinner';
 import { ReviewsDetailProduct } from '../../components/reviews/ReviewsDetailProduct';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase/firebase';
 
 const Detail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const producto = useSelector((state) => state.productDetail);
   const isLoading = useSelector((state) => state.isLoading);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const [user] = useAuthState(auth);
 
   const handleAddToCart = () => {
+    if (!user) {
+      Swal.fire("Por favor inicia sesión para agregar productos al carrito");
+       // Ajusta la ruta según tu configuración de rutas
+      return;
+    }
     dispatch(addToCart(producto));
     Swal.fire("Producto agregado al carrito!");
   };
@@ -27,14 +37,21 @@ const Detail = () => {
     };
 
     fetchProducto();
-    window.scrollTo(0, 0); // Asegura que la página se desplace hacia la parte superior
+    window.scrollTo(0, 0);
 
     return () => {
       dispatch(cleanDetail());
     };
   }, [dispatch, id]);
 
-  if (isLoading || !producto) {
+  const handleGoBack = () => {
+    setIsNavigating(true);
+    setTimeout(() => {
+      navigate('/');
+    }, 1000); // Simula un tiempo de carga
+  };
+
+  if (isLoading || !producto || isNavigating) {
     return <Spinner />;
   }
 
@@ -42,6 +59,11 @@ const Detail = () => {
 
   return (
     <section className=" text-gray-700 body-font overflow-hidden bg-white py-8 antialiased dark:bg-gray-900 dark:text-gray-200 md:py-16">
+      <button onClick={handleGoBack} className="mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <div className="lg:w-1/2 w-full aspect-w-1 aspect-h-1">
@@ -59,7 +81,6 @@ const Detail = () => {
                 <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 text-red-500" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                 </svg>
-                {/* más SVGs para las estrellas */}
                 <span className="text-gray-600 dark:text-gray-400 ml-3">4 Reviews</span>
               </span>
               <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 dark:border-gray-700 space-x-2">

@@ -1,64 +1,63 @@
 import axios from "axios";
+
 import {
-    GET_DETAIL,
-    GET_PRODUCTS,
-    GET_BY_NAME,
-    GET_TYPES,
-    FILTERDBAPI,
-    FILTER_TYPE,
-    ORDER_NAME,
-    ORDER_ATTACK,
-    CLEAN_DETAIL,
-    SET_FILTER,
-    ADD_TO_CART,
-    REMOVE_FROM_CART,
-    UPDATE_CART_ITEM_QUANTITY,
-    SET_FILTER_PRODUCTS,
-    DELETE_PRODUCT,
-    SET_ALL_PRODUCTS,
-    SET_CATEGORY_FILTER,
-    SET_BRAND_FILTER
-    
-    
+  GET_DETAIL,
+  GET_PRODUCTS,
+  CLEAN_DETAIL,
+  SET_FILTER,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  UPDATE_CART_ITEM_QUANTITY,
+  SET_FILTER_PRODUCTS,
+  DELETE_PRODUCT,
+  SET_ALL_PRODUCTS,
+  SET_CATEGORY_FILTER,
+  FILTER_BY_BRAND,
+  FILTER_BY_CATEGORY,
+  SET_BRANDS,
+  SEARCH_PRODUCTS_BY_NAME,
+  SET_CATEGORIES,
+  SET_NAME_ORDER, 
+  SET_PRICE_ORDER,
+  SET_CART_ITEMS
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
     try {
-      const response = await fetch('https://computechback.onrender.com/products');
-      const data = await response.json();
-      dispatch(setAllProducts(data));
+        const response = await fetch('http://localhost:3001/products');
+        const data = await response.json();
+        dispatch(setAllProducts(data));
     } catch (error) {
-      console.error('Error fetching products:', error);
+        console.error('Error fetching products:', error);
     }
 };
 
 export const setAllProducts = (products) => ({
     type: SET_ALL_PRODUCTS,
     payload: products,
-  });
+});
 
-  export const setCategoryFilter = (category) => ({
+export const setCategoryFilter = (category) => ({
     type: SET_CATEGORY_FILTER,
     payload: category,
-  });
+});
 
 export const setFilterProducts = (products) => ({
     type: SET_FILTER_PRODUCTS,
     payload: products,
-  });
+});
 
-  export const setBrandFilter = (brand) => ({
+export const setBrandFilter = (brand) => ({
     type: SET_BRAND_FILTER,
     payload: brand,
-  });
-
+});
 
 export const addToCart = (product) => {
     return {
         type: ADD_TO_CART,
         payload: {
             ...product,
-            cartItemId: Math.random().toString(36).substr(2, 9) // Genera un ID único para el cartItemId
+            cartItemId: Math.random().toString(36).substr(2, 9) // Generates a unique ID for the cartItemId
         }
     };
 };
@@ -68,15 +67,20 @@ export const updateCartItemQuantity = (itemId, quantity) => ({
     payload: { itemId, quantity },
 });
 
-export const removeFromCart = (cartitemId) => ({
+export const removeFromCart = (cartItemId) => ({
     type: REMOVE_FROM_CART,
-    payload: cartitemId
+    payload: cartItemId
+});
+
+export const setCartItems = (items) => ({
+    type: SET_CART_ITEMS,
+    payload: items
 });
 
 export const getDetail = (id) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`https://computechback.onrender.com/products/${id}`);
+            const { data } = await axios.get(`http://localhost:3001/products/${id}`);
             return dispatch({
                 type: GET_DETAIL,
                 payload: data
@@ -90,7 +94,7 @@ export const getDetail = (id) => {
 export const getByName = (nombre) => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get(`https://computechback.onrender.com/pokemons?nombre=${nombre}`);
+            const { data } = await axios.get(`http://localhost:3001/pokemons?nombre=${nombre}`);
             return dispatch({
                 type: GET_BY_NAME,
                 payload: data
@@ -104,7 +108,7 @@ export const getByName = (nombre) => {
 export const getTypes = () => {
     return async (dispatch) => {
         try {
-            const { data } = await axios.get('https://computechback.onrender.com/types/', {});
+            const { data } = await axios.get('http://localhost:3001/types/', {});
             return dispatch({
                 type: GET_TYPES,
                 payload: data
@@ -146,17 +150,23 @@ export const orderAttack = (payload) => {
 export const cleanDetail = () => {
     return {
         type: CLEAN_DETAIL,
-
     }
 }
+
 export const setFilter = (filter) => ({
     type: SET_FILTER,
     payload: filter,
 });
 
 export const deleteProduct = (id) => {
-    return {
-        type: DELETE_PRODUCT,
-        payload: id
-    };
+
+  return {
+    type: DELETE_PRODUCT,
+    payload: id,
+  };
 };
+export const setCartItems = (items) => ({
+  type: SET_CART_ITEMS,
+  payload: items
+});
+
