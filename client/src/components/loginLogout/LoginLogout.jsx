@@ -8,68 +8,85 @@ const LoginLogout = () => {
   const [user] = useAuthState(auth);
   const [isRegistering, setIsRegistering] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   return (
     <li className="relative content-center">
       {!user ? (
         <div>
-          {!isRegistering ? (
-            <div>
-              <SignInButton />
-              <div className="relative inline-block text-left">
-                <button
-                  type="button"
-                  className="flex items-center justify-center w-full rounded-md px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-                  onClick={toggleDropdown}
-                >
-                  Iniciar Sesión
-                  <svg
-                    className="ml-2 -mr-1 h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 111.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-                {dropdownOpen && (
-                  <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-                    <div
-                      className="py-1"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="options-menu"
-                    >
-                      <SignInForm />
+           <button
+            type="button"
+            className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            onClick={openModal}
+          >
+            Iniciar Sesión
+           
+              <path
+                fillRule="evenodd"
+                d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 111.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+                clipRule="evenodd"
+              />
+           
+          </button>
+          {modalOpen && (
+            <div className="fixed z-10 inset-0 overflow-y-auto">
+              <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                  <div>
+                    <div className="mt-3 text-center sm:mt-5">
+                      <h3 className="text-lg leading-6 font-medium text-gray-900">
+                        Iniciar Sesión
+                      </h3>
+                      <div className="mt-2">
+                        {!isRegistering ? (
+                          <>
+                            <SignInForm />
+                            
+                            <p className="mt-2">
+                              ¿No tienes una cuenta?{" "}
+                              <button onClick={() => setIsRegistering(true)} className="text-blue-500 hover:underline">
+                                Regístrate
+                              </button>
+                              <SignInButton />
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <SignUpForm />
+                            <p className="mt-2">
+                              ¿Ya tienes una cuenta?{" "}
+                              <button onClick={() => setIsRegistering(false)} className="text-blue-500 hover:underline">
+                                Inicia Sesión
+                              </button>
+                              <SignInButton/>
+                            </p>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
-                )}
+                  <div className="mt-5 sm:mt-6">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm"
+                      onClick={closeModal}
+                    >
+                      Cerrar
+                    </button>
+                  </div>
+                </div>
               </div>
-              <p className="mt-2">
-                ¿No tienes una cuenta?{" "}
-                <button onClick={() => setIsRegistering(true)} className="text-blue-500">
-                  Regístrate
-                </button>
-              </p>
-            </div>
-          ) : (
-            <div>
-              <SignUpForm />
-              <p className="mt-2">
-                ¿Ya tienes una cuenta?{" "}
-                <button onClick={() => setIsRegistering(false)} className="text-blue-500">
-                  Inicia Sesión
-                </button>
-              </p>
             </div>
           )}
         </div>

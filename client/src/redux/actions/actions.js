@@ -17,7 +17,8 @@ import {
   SEARCH_PRODUCTS_BY_NAME,
   SET_CATEGORIES,
   SET_NAME_ORDER, 
-  SET_PRICE_ORDER
+  SET_PRICE_ORDER,
+  SET_CART_ITEMS
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -179,3 +180,7 @@ export const deleteProduct = (id) => {
     payload: id,
   };
 };
+export const setCartItems = (items) => ({
+  type: SET_CART_ITEMS,
+  payload: items
+});

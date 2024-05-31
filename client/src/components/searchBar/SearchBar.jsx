@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchProductsByName, setFilterProducts } from '../../redux/actions/actions';
+import { searchProductsByName, setFilterProducts,getProducts , filterByBrand, filterByCategory    } from '../../redux/actions/actions';
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -28,8 +28,7 @@ const SearchBar = () => {
     setBrand('');  // Reset brand filter
     setCategory('');  // Reset category filter
   };
-
-  
+ 
 
   const handleReset = () => {
     setSearchQuery('');

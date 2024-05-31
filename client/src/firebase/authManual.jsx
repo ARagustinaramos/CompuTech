@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../firebase/firebase';
+import SignInButton from './authGoogle';
 
 const signUpWithEmail = async (email, password, displayName) => {
   try {
@@ -59,13 +60,14 @@ const SignUpForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-4">
       <input
         type="text"
         value={displayName}
         onChange={(e) => setDisplayName(e.target.value)}
-        placeholder="Display Name"
+        placeholder="Nombre de usuario"
         required
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
         type="email"
@@ -73,16 +75,25 @@ const SignUpForm = () => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
         required
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
-        type="password"
+        type="Contraseña"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         required
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-      <button type="submit">Sign Up</button>
+      <button
+        type="submit"
+        className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Registrarse
+      </button>
+      
     </form>
+    
   );
 };
 
@@ -96,22 +107,30 @@ const SignInForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-4">
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
         required
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder="Contraseña"
         required
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-      <button type="submit">Sign In</button>
+      <button
+        type="submit"
+        className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Iniciar sesión
+      </button>
+      
     </form>
   );
 };

@@ -56,6 +56,7 @@ const Home = () => {
     setBrand('');
     setCategory('');
     setFilterApplied(prev => prev + 1);
+    dispatch(searchProductsByName(''));
   };
 
   if (!Array.isArray(allProducts) || allProducts.length === 0) {
