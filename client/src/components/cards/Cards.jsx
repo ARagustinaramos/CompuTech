@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
-import Pagination from '../pagination/Pagination';
+
 
 const Cards = ({ products, filterApplied }) => {
   const [currentPage, setCurrentPage] = useState(1);

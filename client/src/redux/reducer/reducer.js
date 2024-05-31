@@ -22,6 +22,7 @@ import {
   RESET_FILTERS,
   SET_NAME_ORDER,
   SET_PRICE_ORDER,
+  SET_CART_ITEMS,
 } from "../actions/types";
 
 import {
@@ -218,7 +219,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         items: updatedItemsAfterQuantityChange,
       };
-
+      
+      case SET_CART_ITEMS:
+        return {
+          ...state,
+          items: action.payload,
+        };
+        
     case SET_FILTER:
       return {
         ...state,

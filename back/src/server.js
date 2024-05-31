@@ -15,7 +15,7 @@ server.use((req, res, next) => {
 	res.header("Access-Control-Allow-Credentials", "true");
 	res.header(
 		"Access-Control-Allow-Headers",
-		"Origin, X-Requested-With, Content-Type, Accept"
+		"Origin, X-Requested-With, Content-Type, Accept, Authorization"
 	);
 	res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
 	next();
@@ -25,6 +25,7 @@ server.use(
 		origin: "*" // Reemplaza esto con el dominio de tu frontend
 	})
 );
+
 server.use("/", router);
 
 server.use((err, req, res, next) => {
@@ -34,4 +35,4 @@ server.use((err, req, res, next) => {
 	res.status(status).send(message);
 });
 
-module.exports = server;
+module.exports = { server };
