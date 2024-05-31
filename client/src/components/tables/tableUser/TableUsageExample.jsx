@@ -1,7 +1,7 @@
 import { Select, SelectItem } from '@tremor/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../../../redux/actions/actions';
-import React, { useEffect, useState } from 'react';
+import { getProducts, updateProductStatus } from '../../../redux/actions/actions';
+import React, { useEffect } from 'react';
 
 import { RiFlag2Line } from '@remixicon/react';
 import {
@@ -24,6 +24,10 @@ export function TableUsageExample() {
         dispatch(getProducts());
     }, [dispatch]);
 
+    const handleStatusChange = (productId, status) => {
+        dispatch(updateProductStatus(productId, status));
+    };
+
     console.log(allProducts)
     return (
         <Card>
@@ -42,30 +46,22 @@ export function TableUsageExample() {
                 </TableHead>
                 <TableBody>
                     {allProducts.map((item) => (
-                        <TableRow key={item.name}>
+                        <TableRow key={item.id_Product}>
                             <TableCell>{item.name}</TableCell>
+                            <TableCell>{item.BrandIdBrand}</TableCell>
+                            <TableCell>{item.CategoryIdCategory}</TableCell>
+                            <TableCell>{item.price}</TableCell>
                             <TableCell>
-                                {item.BrandIdBrand}
-                            </TableCell>
-                            <TableCell>
-                                {item.CategoryIdCategory
-                                }
-                            </TableCell>
-                            <TableCell>
-                                {item.price}
-                            </TableCell>
-                            <TableCell>
-                                <Select defaultValue="activo">
-                                    <SelectItem value="activo">Activo</SelectItem>
-                                    <SelectItem value="inactivo">Inactivo</SelectItem>
+                                <Select
+                                    defaultValue={item.active ? "1" : "2"}
+                                    onValueChange={(value) => handleStatusChange(item.id_Product, value === "1")}
+                                >
+                                    <SelectItem value="1">Activo</SelectItem>
+                                    <SelectItem value="2">Inactivo</SelectItem>
                                 </Select>
                             </TableCell>
-                            <TableCell>
-                                {item.stock}
-                            </TableCell>
-                            <TableCell>
-                                {item.id_Product}
-                            </TableCell>
+                            <TableCell>{item.stock}</TableCell>
+                            <TableCell>{item.id_Product}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
