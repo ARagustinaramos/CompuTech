@@ -40,5 +40,3 @@ const HistorialDePedidos = () => {
 };
 
 export default HistorialDePedidos;
-
-export default HistorialDePedidos;

@@ -1,5 +1,4 @@
 const  deactivateUser  = require('../../controllers/userControllers/deactivateUser');
-const  deactivateUser  = require('../../controllers/userControllers/deactivateUser');
 
 const deactivateUserHandler = async (req, res) => {
   try {

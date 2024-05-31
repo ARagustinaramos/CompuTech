@@ -1,7 +1,6 @@
 const postUserController = require('../../controllers/userControllers/PostUserController');
 
 const postUserHandler = async (req, res) => {
-const postUserHandler = async (req, res) => {
   try {
     await postUserController(req, res);
   } catch (error) {
