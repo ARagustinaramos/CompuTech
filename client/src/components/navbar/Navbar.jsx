@@ -1,29 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import CartIcon from '../carticon/CartIcon';
 import LoginLogout from '../loginLogout/LoginLogout';
 import { DarkThemeToggle } from 'flowbite-react';
 import SearchBar from '../searchBar/SearchBar';
-import { useFirebase } from '../../firebase/firebase'; // Importa el hook useFirebase
+import { useFirebase } from '../../firebase/firebase';
 import { useNavigate } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar(onSearch) {
     const [searchResults, setSearchResults] = useState([]);
     const { auth } = useFirebase();
     const navigate = useNavigate();
-    const location = useLocation(); // Obtener la ubicación actual
+    const location = useLocation();
     const [currentPage, setCurrentPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            setIsLoading(false);
+        });
+        return () => unsubscribe();
+    }, [auth]);
 
     const isAuthenticated = auth.currentUser !== null;
 
     const handleLogout = async () => {
         try {
-            await auth.signOut(); // Utiliza la función de cierre de sesión de Firebase
-            navigate.push('/'); // Redirige a la página de inicio después de cerrar sesión
+            await auth.signOut();
+            navigate('/');
         } catch (error) {
             console.error('Error al cerrar sesión:', error);
         }
     };
+
+    if (isLoading) {
+        return null; // O puedes mostrar un spinner o algo similar mientras carga
+    }
 
     return (
         <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 fixed top-0 left-0 w-full z-50">
@@ -60,15 +72,7 @@ export default function Navbar() {
                 </button>
                 <div className="hidden w-full md:block md:w-auto" id="navbar-dropdown">
                     <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 content-center">
-                        <li className="content-center">
-                            <Link
-                                to="/about"
-                                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                            >
-                                Sobre nosotros
-                            </Link>
-                        </li>
-                        {isAuthenticated ? (
+                        {isAuthenticated && (
                             <>
                                 <li className="content-center">
                                     <Link
@@ -80,17 +84,29 @@ export default function Navbar() {
                                     </Link>
                                 </li>
                                 <li className="content-center">
-                                    <button
-                                        onClick={handleLogout}
-                                        className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                                    >
-                                        Cerrar sesión
-                                    </button>
+                                    <LoginLogout/>
                                 </li>
                             </>
-                        ) : (
-                            <LoginLogout />
                         )}
+                        <li className="content-center">
+                            {auth.currentUser?.email === 'eltodopoderoso@gmail.com' && (
+                                <Link
+                                    to="/form"
+                                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                >
+                                    Añadir
+                                </Link>
+                            )}
+                        </li>
+                        <li className="content-center">
+                            <Link
+                                to="/about"
+                                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                            >
+                                Sobre nosotros
+                            </Link>
+                        </li>
+                        {!isAuthenticated && <LoginLogout />}
                         <CartIcon />
                     </ul>
                 </div>

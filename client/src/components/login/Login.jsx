@@ -1,20 +1,65 @@
-import React from "react";
-import { useAuth } from "react-firebase-hooks/auth";
-import { auth } from "./firebase";
+import React, { useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { setCartItems } from '../../redux/actions/actions';
+import { useFirebase } from '../../firebase/firebase.jsx'; 
+import { signInWithPopup, onAuthStateChanged } from "firebase/auth";
 
-const LogoutButton = () => {
-  const [, , logout] = useAuth(auth);
+const LoginButton = () => {
+    const { auth, googleProvider } = useFirebase();
+    const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    localStorage.removeItem('auth_token');
-    logout();
-  };
+    useEffect(() => {
+        const restoreCartItems = () => {
+            const storedSessionCartItems = JSON.parse(sessionStorage.getItem('cartItems'));
+            if (storedSessionCartItems) {
+                dispatch(setCartItems(storedSessionCartItems));
+            } else {
+                const storedLocalCartItems = JSON.parse(localStorage.getItem('cartItems'));
+                if (storedLocalCartItems) {
+                    dispatch(setCartItems(storedLocalCartItems));
+                    sessionStorage.setItem('cartItems', JSON.stringify(storedLocalCartItems));
+                }
+            }
+        };
 
-  return (
-    <button onClick={handleLogout}>
-      LogOut
-    </button>
-  );
+        restoreCartItems();
+    }, [dispatch]);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, user => {
+            if (user) {
+                const storedLocalCartItems = JSON.parse(localStorage.getItem('cartItems'));
+                if (storedLocalCartItems) {
+                    dispatch(setCartItems(storedLocalCartItems));
+                    sessionStorage.setItem('cartItems', JSON.stringify(storedLocalCartItems));
+                }
+            }
+        });
+
+        return () => unsubscribe();
+    }, [auth, dispatch]);
+
+    const handleLogin = async () => {
+        try {
+            await signInWithPopup(auth, googleProvider);
+        } catch (error) {
+            console.error("Error during login: ", error);
+        }
+    };
+
+    return <button onClick={handleLogin}>Log In</button>;
 };
 
-export default LogoutButton;
+export default LoginButton;
+
+
+
+
+
+
+
+
+
+
+
+

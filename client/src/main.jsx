@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { FirebaseAppProvider } from 'reactfire';
+import { FirebaseAppProvider } from 'reactfire';
 import App from './App.jsx';
 import './index.css';
 import store from "./redux/store/store.js";

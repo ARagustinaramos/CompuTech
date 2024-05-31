@@ -9,4 +9,4 @@ import React from 'react';
     );
 };
 
-export default Success;
+export default Success
