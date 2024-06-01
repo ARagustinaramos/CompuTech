@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../redux/actions/actions';
+import Swal from 'sweetalert2';
 import React, { useEffect, useState } from 'react';
 import { RiAlarmWarningLine, RiCheckboxCircleLine } from '@remixicon/react';
 import { Callout, Card } from '@tremor/react';
@@ -21,7 +22,8 @@ export function DangerCard() {
     
 
     const handlerSubmit =()=>{
-        dispatch(deleteProduct(value,true));  
+        dispatch(deleteProduct(value,true));
+        Swal.fire("Producto eliminado de la Base de datos");  
     }
     return (
         <div className="space-y-6">

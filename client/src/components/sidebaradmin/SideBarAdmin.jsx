@@ -12,6 +12,9 @@ const SideBarAdmin = () => {
           <Sidebar.Item href="/dashboardadmin/manage/products" icon={HiShoppingBag}>
             Gestionar Productos
           </Sidebar.Item>
+          <Sidebar.Item href="/form" icon={HiShoppingBag}>
+            Agregar Productos
+          </Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
