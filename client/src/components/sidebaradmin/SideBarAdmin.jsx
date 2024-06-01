@@ -5,15 +5,13 @@ const SideBarAdmin = () => {
   return (
     <Sidebar aria-label="Default sidebar example">
       <Sidebar.Items>
-        <Sidebar.ItemGroup>
-          
+        <Sidebar.ItemGroup>  
           <Sidebar.Item href="/dashboardadmin/manage/users" icon={HiUser}>
-            Gestionar Ususarios
+            Gestionar Usuarios
           </Sidebar.Item>
           <Sidebar.Item href="/dashboardadmin/manage/products" icon={HiShoppingBag}>
             Gestionar Productos
           </Sidebar.Item>
-
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>

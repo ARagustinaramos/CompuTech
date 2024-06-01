@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { removeFromCart, updateCartItemQuantity, setCartItems } from '../../redux/actions/actions';
+import { removeFromCart, updateCartItemQuantity, setCartItems } from '../../redux/actions/actions.js';
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
 import PayPalButton from '../../components/PayPalButton';
 import { useFirebase } from '../../firebase/firebase.jsx'
