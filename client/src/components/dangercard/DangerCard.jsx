@@ -8,15 +8,21 @@ import { Button } from '@tremor/react';
 
 import { deleteProduct } from '../../redux/actions/actions';
 
+
 export function DangerCard() {
-
-    const dispatch = useDispatch();
-    const allProducts = useSelector((state) => state.allProducts);
+    const[value, setValue] = useState('')
     
-    useEffect(() => {
-        dispatch(getProducts());
-    }, [dispatch]);
+    const dispatch = useDispatch();
+    
+    const handlerValue = (event)=>{
+        
+        setValue(event.target.value)
+    } 
+    
 
+    const handlerSubmit =()=>{
+        dispatch(deleteProduct(value,true));  
+    }
     return (
         <div className="space-y-6">
             <Card className="mx-auto max-w-md">
@@ -30,8 +36,8 @@ export function DangerCard() {
                     En esta zona puede borrar de manera permanente cualquier producto del stock.
                 </Callout>
                 <div className='flex mt-5'>
-                    <TextInput className="mx-auto max-w-xs" placeholder="Ingrese id de producto..." />
-                    <Button variant="primary" color='red' onClick={deleteProduct}>Eliminar producto</Button>
+                    <TextInput className="mx-auto max-w-xs" placeholder="Ingrese id de producto..." onChange={handlerValue} value= {value}/>
+                    <Button variant="primary" color='red' onClick={handlerSubmit}>Eliminar producto</Button>
                 </div>
             </Card>
         </div>

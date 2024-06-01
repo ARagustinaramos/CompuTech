@@ -1,7 +1,7 @@
 import { Select, SelectItem } from '@tremor/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts, updateProductStatus } from '../../../redux/actions/actions';
-import React, { useEffect } from 'react';
+import { getProducts,deleteProduct } from '../../../redux/actions/actions';
+import { useEffect } from 'react';
 
 import { RiFlag2Line } from '@remixicon/react';
 import {
@@ -16,7 +16,8 @@ import {
 } from '@tremor/react';
 
 export function TableUsageExample() {
-
+    
+    
     const dispatch = useDispatch();
     const allProducts = useSelector((state) => state.allProducts);
 
@@ -24,9 +25,13 @@ export function TableUsageExample() {
         dispatch(getProducts());
     }, [dispatch]);
 
-    const handleStatusChange = (productId, status) => {
-        dispatch(updateProductStatus(productId, status));
-    };
+
+    const handlerSubmit =(product)=>{
+        dispatch(deleteProduct(product,false));
+        console.log("Entró!")
+    }
+ 
+
 
     console.log(allProducts)
     return (
@@ -54,7 +59,7 @@ export function TableUsageExample() {
                             <TableCell>
                                 <Select
                                     defaultValue={item.active ? "1" : "2"}
-                                    onValueChange={(value) => handleStatusChange(item.id_Product, value === "1")}
+                                    onValueChange={() => handlerSubmit(item.id_Product,false)}
                                 >
                                     <SelectItem value="1">Activo</SelectItem>
                                     <SelectItem value="2">Inactivo</SelectItem>

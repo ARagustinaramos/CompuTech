@@ -4,6 +4,7 @@ const deleteProducts = async (req, res) => {
     try {
         const idProduct = req.params.id;
         const { exterminateProduct } = req.body;
+        console.log("deleteHandler"+exterminateProduct)
         const result = await deleteProductsControllers(
             idProduct,
             exterminateProduct
