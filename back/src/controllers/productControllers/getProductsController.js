@@ -1,11 +1,15 @@
 const { Product, Brand, Categories, Review } = require("../../config/db");
 const { filterByBrand, filterByCategory } = require("../Utils/filtering");
-const { sortByPrice, sortByRanking, calculateAverageRating } = require("../Utils/sorting");
+const {
+	sortByPrice,
+	sortByRanking,
+	calculateAverageRating
+} = require("../Utils/sorting");
 
 const getProducts = async (filters, sort) => {
 	try {
 		let queryOptions = {
-			where: {active: true},
+			where: { active: true }
 		};
 
 		// Obtener todos los productos
@@ -27,12 +31,22 @@ const getProducts = async (filters, sort) => {
 					category?.dataValues.name.charAt(0).toUpperCase() +
 					category?.dataValues.name.slice(1).toLowerCase();
 
-
 				// Obtener comentarios y calcular el promedio de ranking
 				const reviews = await Review.findAll({
 					where: { ProductIdProduct: product.dataValues.id_Product }
-				  });
-				//const averageRating = calculateAverageRating(reviews);
+				});
+				//guardo en rankigTotal todos los rankig
+				const rankingTotal = [];
+				reviews.map((review) => {
+					rankingTotal.push(review.ranking);
+				});
+				//sumo todo los rankig
+				const sumaRanking = rankingTotal.reduce(
+					(acumulador, ranking) => acumulador + ranking,
+					0
+				);
+				// Calcular el promedio de los rankig
+				const promedioRanking = sumaRanking / rankingTotal.length;
 
 				const newProduct = {
 					id_Product: product.dataValues.id_Product,
@@ -44,11 +58,7 @@ const getProducts = async (filters, sort) => {
 					active: product.dataValues.active,
 					BrandIdBrand: brandMayuscula,
 					CategoryIdCategory: categoryMayuscula,
-					reviews: reviews.map(review => ({
-						ranking: review.dataValues.ranking,
-						comment: review.dataValues.comment
-					  })),
-					
+					reviews: Math.floor(promedioRanking)
 				};
 
 				allProduct.push(newProduct);
@@ -64,16 +74,16 @@ const getProducts = async (filters, sort) => {
 			filteredProducts = filterByCategory(filteredProducts, filters.category);
 		}
 
-		 // Aplicar ordenación
-        if (sort.field && sort.order) {
-            if (sort.field === "price") {
-                filteredProducts = sortByPrice(filteredProducts, sort.order);
-            } else if (sort.field === "ranking") {
-                filteredProducts = sortByRanking(filteredProducts, sort.order);
-            }
-        }
+		// Aplicar ordenación
+		if (sort.field && sort.order) {
+			if (sort.field === "price") {
+				filteredProducts = sortByPrice(filteredProducts, sort.order);
+			} else if (sort.field === "ranking") {
+				filteredProducts = sortByRanking(filteredProducts, sort.order);
+			}
+		}
 
-        return filteredProducts;
+		return filteredProducts;
 	} catch (error) {
 		console.error("Hubo un error al obtener los productos:", error);
 		throw new Error("Hubo un error interno del servidor.");
