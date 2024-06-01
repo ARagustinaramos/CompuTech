@@ -14,7 +14,6 @@ import {
   SET_ALL_PRODUCTS,
   SET_CATEGORY_FILTER,
   FILTER_BY_BRAND,
-  FETCH_BRANDS,
   SET_BRANDS,
   SET_CATEGORIES,
   SEARCH_PRODUCTS_BY_NAME,
@@ -100,8 +99,8 @@ function rootReducer(state = initialState, action) {
       const { payload: searchResults } = action;
       const resetFiltersState = {
         ...state,
-        categoryFilter: "",
-        brandFilter: "",
+        brandFilter: '',
+        categoryFilter: '',
         searchResults,
       };
       const filteredResultsAfterSearch = applyFilters(state.allProducts, resetFiltersState);
@@ -263,13 +262,13 @@ function rootReducer(state = initialState, action) {
         };
       }
 
-    case RESET_FILTERS:
-      return {
-        ...state,
-        brandFilter: '',
-        categoryFilter: '',
-        filteredProducts: state.allProducts,
-      };
+      case RESET_FILTERS:
+        return {
+          ...state,
+          brandFilter: '',
+          categoryFilter: '',
+          filteredProducts: state.allProducts,
+        };
 
     case DELETE_PRODUCT:
       return {

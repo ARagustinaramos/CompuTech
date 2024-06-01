@@ -36,7 +36,7 @@ const Sidebar = () => {
     >
       <div className="bg-gradient-to-r from-blue-600 to-sky-500 rounded-tr-[100px]  h-[40vh] border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center p-8 gap-2 ">
         <img
-          src={user.picture}
+          src={user.photoURL}
           className="w-20 h-20 object-cover rounded-full ring-2 ring-gray-300"
         />
         <h1 className="text-xl text-white font-bold">{user.given_name}</h1>

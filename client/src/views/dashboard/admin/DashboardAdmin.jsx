@@ -4,6 +4,7 @@ import { DangerCard } from '../../../components/dangercard/DangerCard';
 import SideBarAdmin from '../../../components/sidebaradmin/SideBarAdmin';
 import { TableUsageExample } from '../../../components/tables/tableUser/TableUsageExample'
 import { Card } from '@tremor/react';
+import CardSoldProducts from '../../../components/cardstat/CardOrderStat';
 
 const DashboardAdmin = () => {
   return (
@@ -14,7 +15,7 @@ const DashboardAdmin = () => {
 
       <div>
         <div className='grid grid-cols-4 gap-2'>
-          <CardStat />
+          <CardSoldProducts />
           <CardStat />
           <CardStat />
           <CardStat />

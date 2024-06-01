@@ -18,7 +18,9 @@ import {
   SET_CATEGORIES,
   SET_NAME_ORDER, 
   SET_PRICE_ORDER,
-  SET_CART_ITEMS
+  SET_CART_ITEMS,
+  RESET_FILTERS
+  
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
