@@ -4,12 +4,13 @@ const getProductsHandler = require("../handlers/productHandler/getProductsHandle
 const putProductsHandles = require("../handlers/productHandler/putProductsHandler");
 const getIdProductHandler = require("../handlers/productHandler/getIdProductHandler");
 const getNameProductHandler = require("../handlers/productHandler/getNameProductHandler");
-const { getAllHandler } = require("../handlers/productHandler/getAllHandler");
+const getAllProductsHandler = require("../handlers/productHandler/getAllProductsHandler");
 const deleteProductsHandler = require("../handlers/productHandler/deleteProductsHandler");
+
 const productRouter = Router();
 
 productRouter.get("/", getProductsHandler);
-productRouter.get("/all", getAllHandler);
+productRouter.get("/all", getAllProductsHandler);
 productRouter.get("/name", getNameProductHandler);
 productRouter.get("/:id", getIdProductHandler);
 productRouter.post("/", postProductsHandler);
