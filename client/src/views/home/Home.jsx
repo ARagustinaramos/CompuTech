@@ -18,8 +18,6 @@ const Home = () => {
   const [category, setCategory] = useState('');
   const [filterApplied, setFilterApplied] = useState(0);
 
-  const toShow = filteredProducts.length > 0 ? filteredProducts : allProducts;
-
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getBrands());
@@ -63,6 +61,9 @@ const Home = () => {
     return <Spinner />;
   }
 
+  const activeProducts = allProducts.filter(product => product.active);
+  const toShow = filteredProducts.length > 0 ? filteredProducts.filter(product => product.active) : activeProducts;
+console.log(allProducts)
   return (
     <>
       <Flowbite>

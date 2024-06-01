@@ -1,4 +1,4 @@
-const { User } = require('../../config/db');
+/*const { User } = require('../../config/db');
 const { auth } = require('../../middlewares/firebaseAdmin');
 
 const syncUsersFromFirebase = async () => {
@@ -41,4 +41,4 @@ const syncUsersFromFirebase = async () => {
   }
 };
 
-module.exports = syncUsersFromFirebase;
+module.exports = syncUsersFromFirebase;*/

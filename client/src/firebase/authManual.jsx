@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../firebase/firebase';
+import { updateProfile } from 'firebase/auth';
 import SignInButton from './authGoogle';
 
 const signUpWithEmail = async (email, password, displayName) => {
   try {
     const result = await createUserWithEmailAndPassword(auth, email, password);
     const user = result.user;
-    await user.updateProfile({ displayName });
+
+    // Actualizar el perfil del usuario
+    await updateProfile(user, { displayName });
+
     const token = await user.getIdToken();
     const userInfo = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
+      mail: user.email,
+      name: user.displayName,
+      rol: true, // Puedes cambiar este valor si necesitas un rol específico
     };
     await sendUserInfoToBackend(userInfo, token);
   } catch (error) {
@@ -26,9 +30,9 @@ const signInWithEmail = async (email, password) => {
     const user = result.user;
     const token = await user.getIdToken();
     const userInfo = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
+      mail: user.email,
+      name: user.displayName,
+      rol: true, // Puedes cambiar este valor si necesitas un rol específico
     };
     await sendUserInfoToBackend(userInfo, token);
   } catch (error) {
@@ -38,6 +42,8 @@ const signInWithEmail = async (email, password) => {
 
 const sendUserInfoToBackend = async (userInfo, token) => {
   try {
+    console.log('User Info:', userInfo); // Agregar un console.log para verificar userInfo
+    console.log('Token:', token); // Agregar un console.log para verificar el token
     await axios.post('http://localhost:3001/users', userInfo, {
       headers: {
         'Content-Type': 'application/json',

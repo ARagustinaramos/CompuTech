@@ -7,7 +7,7 @@ import { BarChart } from '@tremor/react';
 
 
 
-export function Chart() {
+export function ChartCategories() {
     const dataFormatter = (number) =>
         Intl.NumberFormat('us').format(number).toString();
 
@@ -30,7 +30,7 @@ export function Chart() {
     return (
         <>
             <h3 className="text-lg font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
-                Stock de productos
+                Productos más vendidos
             </h3>
             <BarChart
                 className="mt-6"
