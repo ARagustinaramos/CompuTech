@@ -4,39 +4,38 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/Spinner'; // Asegúrate de importar Spinner
 
-
 export default function ProductForm() {
   // Cloudinary 
   const preset = 'presetComputech'; 
   const cloudName = 'damfsltm2';
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
-  const [url_img, setUrl_img] = useState('');
+  const [url_imgs, setUrl_imgs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log('url de la imagen cloudinary', url_img);
-
   const changeUploadImage = async (e) => {
-    const file = e.target.files[0];
-    console.log(file);
-
-    const data = new FormData();
-    data.append('file', file);
-    data.append('upload_preset', preset);
+    const files = Array.from(e.target.files);
+    const urls = [...url_imgs]; 
 
     try {
-      const response = await axios.post(url, data);
-      console.log(response.data);
-      setUrl_img(response.data.secure_url);
+      for (const file of files) {
+        const data = new FormData();
+        data.append('file', file);
+        data.append('upload_preset', preset);
+
+        const response = await axios.post(url, data);
+        urls.push(response.data.secure_url);
+      }
+      setUrl_imgs(urls);
     } catch (error) {
       Swal.fire('Error al subir la imagen');
       console.error(error);
     }
   };
 
-  // Reset image
-  const deleteImage = () => {
-    setUrl_img('');
+  // Reset images
+  const deleteImage = (index) => {
+    setUrl_imgs(url_imgs.filter((_, i) => i !== index));
   };
 
   const [product, setProduct] = useState({
@@ -54,19 +53,15 @@ export default function ProductForm() {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === 'name') {
-      if (value.length > 50) {
-        setNameLengthError(true);
-        return;
-      } else {
-        setNameLengthError(false);
-      }
+    if (name === 'name' && value.length > 50) {
+      setNameLengthError(true);
+      return;
+    } else {
+      setNameLengthError(false);
     }
 
-    if (name === 'price') {
-      if (!/^\d*\.?\d*$/.test(value)) {
-        return;
-      }
+    if (name === 'price' && !/^\d*\.?\d*$/.test(value)) {
+      return;
     }
 
     setProduct({
@@ -104,7 +99,7 @@ export default function ProductForm() {
       isValid = false;
       missingFields.push("Precio válido");
     }
-    if (!url_img) {
+    if (url_imgs.length === 0) {
       newErrors.image = "La imagen es obligatoria.";
       isValid = false;
       missingFields.push("Imagen");
@@ -150,9 +145,9 @@ export default function ProductForm() {
         ...product,
         price: parseFloat(product.price),
         stock: parseInt(product.stock, 10),
-        image: url_img.split(',').map(img => img.trim())
+        image: url_imgs 
       };
-
+  
       try {
         const response = await fetch('http://localhost:3001/products', {
           method: 'POST',
@@ -161,7 +156,7 @@ export default function ProductForm() {
           },
           body: JSON.stringify(parsedProduct),
         });
-
+  
         if (response.ok) {
           Swal.fire({
             position: "center",
@@ -182,7 +177,7 @@ export default function ProductForm() {
                 brand: "",
                 category: ""
               });
-              setUrl_img('');
+              setUrl_imgs([]);
               setErrors({});
             } else {
               // Volver al Home
@@ -193,7 +188,12 @@ export default function ProductForm() {
             }
           });
         } else {
-          const errorData = await response.json();
+          let errorData;
+          try {
+            errorData = await response.json();
+          } catch (error) {
+            errorData = { message: 'Error desconocido' };
+          }
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -259,25 +259,30 @@ export default function ProductForm() {
             {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="image" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Imagen</label>
+            <label htmlFor="images" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Imágenes</label>
             <input
               type="file"
               accept="image/*"
-              id="image"
-              name="image"
+              id="images"
+              name="images"
+              multiple
               onChange={changeUploadImage}
               className="mt-1 p-2 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
             />
-            {url_img && (
-              <div>
-                <img src={url_img} alt="Uploaded" className="mt-2" />
-                <button
-                  type="button"
-                  className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded mt-2"
-                  onClick={deleteImage}
-                >
-                  Eliminar imagen
-                </button>
+            {url_imgs.length > 0 && (
+              <div className="flex flex-wrap mt-2">
+                {url_imgs.map((img, index) => (
+                  <div key={index} className="relative mr-2 mb-2">
+                    <img src={img} alt={`Uploaded ${index}`} className="w-20 h-20 object-cover" />
+                    <button
+                      type="button"
+                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                      onClick={() => deleteImage(index)}
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
               </div>
             )}
             {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image}</p>}
