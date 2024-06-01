@@ -12,7 +12,6 @@ export default function Navbar(onSearch) {
     const { auth } = useFirebase();
     const navigate = useNavigate();
     const location = useLocation();
-    const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -84,7 +83,7 @@ export default function Navbar(onSearch) {
                                     </Link>
                                 </li>
                                 <li className="content-center">
-                                    <LoginLogout/>
+                                    <LoginLogout />
                                 </li>
                             </>
                         )}
@@ -106,8 +105,14 @@ export default function Navbar(onSearch) {
                                 Sobre nosotros
                             </Link>
                         </li>
-                        {!isAuthenticated && <LoginLogout />}
-                        <CartIcon />
+                        {!isAuthenticated && (
+                            <li className="content-center">
+                                <LoginLogout />
+                            </li>
+                        )}
+                        <li className="content-center">
+                            <CartIcon />
+                        </li>
                     </ul>
                 </div>
                 <DarkThemeToggle />

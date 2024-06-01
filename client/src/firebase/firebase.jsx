@@ -20,9 +20,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-// Exporta auth, googleProvider, signInWithEmailAndPassword y createUserWithEmailAndPassword
-export { auth, googleProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword };
-
 // Crea un contexto para Firebase
 const FirebaseContext = createContext({ app, auth, googleProvider });
 
@@ -37,3 +34,6 @@ export const FirebaseProvider = ({ children }) => {
     </FirebaseContext.Provider>
   );
 };
+
+// Exporta auth, googleProvider, signInWithEmailAndPassword y createUserWithEmailAndPassword
+export { auth, googleProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword };

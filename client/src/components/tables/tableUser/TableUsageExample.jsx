@@ -1,4 +1,3 @@
-import { Select, SelectItem } from '@tremor/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts,deleteProduct } from '../../../redux/actions/actions';
 import { useEffect } from 'react';
@@ -18,9 +17,10 @@ import {
 export function TableUsageExample() {
     
     
+    
     const dispatch = useDispatch();
     const allProducts = useSelector((state) => state.allProducts);
-
+    
     useEffect(() => {
         dispatch(getProducts());
     }, [dispatch]);
@@ -51,11 +51,26 @@ export function TableUsageExample() {
                 </TableHead>
                 <TableBody>
                     {allProducts.map((item) => (
-                        <TableRow key={item.id_Product}>
+                        <TableRow key={item.name}>
                             <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.BrandIdBrand}</TableCell>
-                            <TableCell>{item.CategoryIdCategory}</TableCell>
-                            <TableCell>{item.price}</TableCell>
+                            <TableCell>
+                                {item.BrandIdBrand}
+                            </TableCell>
+                            <TableCell>
+                                {item.CategoryIdCategory
+}
+                            </TableCell>
+                            <TableCell>
+                                {item.price}
+                            </TableCell>
+                            <TableCell>
+                                <Badge color="emerald" icon={RiFlag2Line}>
+                                    {item.status}
+                                </Badge>
+                            </TableCell>
+                            <TableCell>
+                                {item.stock}
+                            </TableCell>
                             <TableCell>
                                 <Select
                                     defaultValue={item.active ? "1" : "2"}
@@ -65,8 +80,6 @@ export function TableUsageExample() {
                                     <SelectItem value="2">Inactivo</SelectItem>
                                 </Select>
                             </TableCell>
-                            <TableCell>{item.stock}</TableCell>
-                            <TableCell>{item.id_Product}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
