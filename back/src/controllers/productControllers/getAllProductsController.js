@@ -27,12 +27,22 @@ const getAllProductsController = async (filters, sort) => {
 					category?.dataValues.name.charAt(0).toUpperCase() +
 					category?.dataValues.name.slice(1).toLowerCase();
 
-				// Obtener comentarios y calcular el promedio de ranking
+				// Obtener review
 				const reviews = await Review.findAll({
 					where: { ProductIdProduct: product.dataValues.id_Product }
 				});
-				//const averageRating = calculateAverageRating(reviews);
-
+				//guardo en rankigTotal todos los rankig
+				const rankingTotal = [];
+				reviews.map((review) => {
+					rankingTotal.push(review.ranking);
+				});
+				//sumo todo los rankig
+				const sumaRanking = rankingTotal.reduce(
+					(acumulador, ranking) => acumulador + ranking,
+					0
+				);
+				// Calcular el promedio de los rankig
+				const promedioRanking = sumaRanking / rankingTotal.length;
 				const newProduct = {
 					id_Product: product.dataValues.id_Product,
 					name: product.dataValues.name,
@@ -43,10 +53,7 @@ const getAllProductsController = async (filters, sort) => {
 					active: product.dataValues.active,
 					BrandIdBrand: brandMayuscula,
 					CategoryIdCategory: categoryMayuscula,
-					reviews: reviews.map((review) => ({
-						ranking: review.dataValues.ranking,
-						comment: review.dataValues.comment
-					}))
+					reviews: Math.floor(promedioRanking)
 				};
 
 				allProduct.push(newProduct);
