@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import { removeFromCart, updateCartItemQuantity, setCartItems } from '../../redux/actions/actions.js';
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
 import PayPalButton from '../../components/PayPalButton';
-import { useFirebase } from '../../firebase/firebase.jsx'
+import { useFirebase } from '../../firebase/firebase.jsx';
+import { useAuthState } from "react-firebase-hooks/auth";
+
 
 const Cart = () => {
     const [showPayPalButton, setShowPayPalButton] = useState(false);
@@ -12,6 +14,25 @@ const Cart = () => {
     const dispatch = useDispatch();
     const { auth } = useFirebase();
     const isAuthenticated = !!auth.currentUser;
+    const [user] = useAuthState(auth);
+    const [userId, setUserId] = useState(null);
+    
+
+    useEffect(() => {
+      if (user && user.email) {
+          fetch('http://localhost:3001/users')
+              .then(response => response.json())
+              .then(data => {
+                  const matchingUser = data.find(u => u.mail === user.email);
+                  if (matchingUser) {
+                      setUserId(matchingUser.id_User);
+                  }
+              })
+              .catch(error => console.error('Error fetching users:', error));
+      }
+  }, [user]);
+  console.log(userId)
+    
 
     const items = cartItems.map(item => ({
         id_Product: item.id_Product,
@@ -89,87 +110,57 @@ const Cart = () => {
         .map(item => parseFloat(item.price) * parseInt(item.quantity, 10))
         .reduce((acc, curr) => acc + curr, 0);
 
-    const handleProceedToCheckout = () => {
+    const handleProceedToCheckout = async () => {
         setShowPayPalButton(true);
+
+        if (isAuthenticated && userId) {
+            try {
+                // Actualizar ítems del carrito del usuario en la base de datos
+                const updateCartResponse = await fetch(`http://localhost:3001/users/put/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ cartItems }),
+                });
+
+                if (!updateCartResponse.ok) {
+                    throw new Error('No se pudo actualizar los ítems del carrito del usuario');
+                }
+
+                // Actualizar cantidades de los productos en la base de datos
+                const updateProductsResponse = await fetch(`http://localhost:3001/products/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ products: cartItems.map(item => ({ id_Product: item.id_Product, quantity: item.quantity })) }),
+                });
+
+                if (!updateProductsResponse.ok) {
+                    throw new Error('No se pudo actualizar las cantidades de los productos');
+                }
+
+                // Crear una nueva orden en la base de datos
+                const createOrderResponse = await fetch(`http://localhost:3001/order/create-order/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ items, total }),
+                });
+
+                if (!createOrderResponse.ok) {
+                    throw new Error('No se pudo crear la orden');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Ocurrió un error durante el proceso de compra');
+            }
+        }
     };
-    //registro de ordenes
 
     const [order, setOrder] = useState({
-            id: '',
-            intent: '',
-            status: '',
-            create_time: '',
-            update_time: '',
-            links: [
-              {
-                href: '',
-                method: '',
-                rel: ''
-              }
-            ],
-            payer: {
-              address: {
-                country_code: ''
-              },
-              email_address: '',
-              name: {
-                given_name: '',
-                surname: ''
-              },
-              payer_id: ''
-            },
-            purchase_units: [
-              {
-                amount: {
-                  currency_code: '',
-                  value: ''
-                },
-                payee: {
-                  email_address: '',
-                  merchant_id: ''
-                },
-                payments: {
-                  captures: [
-                    {
-                      amount: {
-                        currency_code: '',
-                        value: ''
-                      },
-                      create_time: '',
-                      final_capture: true,
-                      id: '',
-                      seller_protection: {
-                        status: '',
-                        dispute_categories: ['']
-                      },
-                      status: '',
-                      update_time: ''
-                    }
-                  ]
-                },
-                reference_id: '',
-                shipping: {
-                  address: {
-                    address_line_1: '',
-                    admin_area_1: '',
-                    admin_area_2: '',
-                    country_code: '',
-                    postal_code: ''
-                  },
-                  name: {
-                    full_name: ''
-                  }
-                },
-                soft_descriptor: ''
-              }
-            ]
-          })
-
-    const handleSaveOrder = async (e) => {
-    e.preventDefault();
-    if (order.status === 'COMPLETED') {
-      const parsedOrder = {
-        ...order,
         id: '',
         intent: '',
         status: '',
@@ -238,56 +229,130 @@ const Cart = () => {
             soft_descriptor: ''
           }
         ]
-      };
-    }
+      });
 
-      try {
-        const response = await fetch('http://localhost:3001/api/create-order', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(parsedOrder),
-        });
+    const handleSaveOrder = async (e) => {
+        e.preventDefault();
+        if (order.status === 'COMPLETED') {
+          const parsedOrder = {
+            ...order,
+            id: '',
+            intent: '',
+            status: '',
+            create_time: '',
+            update_time: '',
+            links: [
+              {
+                href: '',
+                method: '',
+                rel: ''
+              }
+            ],
+            payer: {
+              address: {
+                country_code: ''
+              },
+              email_address: '',
+              name: {
+                given_name: '',
+                surname: ''
+              },
+              payer_id: ''
+            },
+            purchase_units: [
+              {
+                amount: {
+                  currency_code: '',
+                  value: ''
+                },
+                payee: {
+                  email_address: '',
+                  merchant_id: ''
+                },
+                payments: {
+                  captures: [
+                    {
+                      amount: {
+                        currency_code: '',
+                        value: ''
+                      },
+                      create_time: '',
+                      final_capture: true,
+                      id: '',
+                      seller_protection: {
+                        status: '',
+                        dispute_categories: ['']
+                      },
+                      status: '',
+                      update_time: ''
+                    }
+                  ]
+                },
+                reference_id: '',
+                shipping: {
+                  address: {
+                    address_line_1: '',
+                    admin_area_1: '',
+                    admin_area_2: '',
+                    country_code: '',
+                    postal_code: ''
+                  },
+                  name: {
+                    full_name: ''
+                  }
+                },
+                soft_descriptor: ''
+              }
+            ]
+          };
+        }
 
-        if (response.ok) {
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Puedes ver el estado de tu orden en la sección pedidos",
-                showConfirmButton: true,
-                confirmButtonText: "Seguir comprando",
-                cancelButtonText: "Volver al Home",
-                showCancelButton: true,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Seguir comprando
-                } else {
-                    // Volver al Home
-                    setIsLoading(true);
-                    setTimeout(() => {
-                        navigate('/');
-                    }, 1500);
-                }
+          try {
+            const response = await fetch('http://localhost:3001/api/create-order', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(parsedOrder),
             });
-        } else {
-            const errorData = await response.json();
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: errorData.message || "Ooops algo no salió bien",
-            });
-        }
-        } catch (error) {
-            console.error('Error:', error);
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Error al guardar la orden",
-            });
-        }
+
+            if (response.ok) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Puedes ver el estado de tu orden en la sección pedidos",
+                    showConfirmButton: true,
+                    confirmButtonText: "Seguir comprando",
+                    cancelButtonText: "Volver al Home",
+                    showCancelButton: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Seguir comprando
+                    } else {
+                        // Volver al Home
+                        setIsLoading(true);
+                        setTimeout(() => {
+                            navigate('/');
+                        }, 1500);
+                    }
+                });
+            } else {
+                const errorData = await response.json();
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: errorData.message || "Ooops algo no salió bien",
+                });
+            }
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Error al guardar la orden",
+                });
+            }
     }
-      
 
     return (
         <div className="pt-16">
@@ -311,22 +376,22 @@ const Cart = () => {
                                         {cartItems.map((item, index) => (
                                             <li key={index} className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                                                 <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                                                <Link to={`/detail/${item.id_Product}`} className="shrink-0 md:order-1">
-    {item.image && (
-        <>
-            <img 
-                className="h-20 w-20 object-cover object-center" // Ajusta el tamaño de la imagen y la posición
-                src={item.image[0]} // Accede a la primera imagen del arreglo
-                alt={item.name} 
-            />
-            <img 
-                className="h-20 w-20 hidden" 
-                src={item.darkImage && item.darkImage[0]} // Accede a la primera imagen del arreglo darkImage
-                alt={item.name} 
-            />
-        </>
-    )}
-</Link>
+                                                    <Link to={`/detail/${item.id_Product}`} className="shrink-0 md:order-1">
+                                                        {item.image && (
+                                                            <>
+                                                                <img
+                                                                    className="h-20 w-20 object-cover object-center" // Ajusta el tamaño de la imagen y la posición
+                                                                    src={item.image[0]} // Accede a la primera imagen del arreglo
+                                                                    alt={item.name}
+                                                                />
+                                                                <img
+                                                                    className="h-20 w-20 hidden"
+                                                                    src={item.darkImage && item.darkImage[0]} // Accede a la primera imagen del arreglo darkImage
+                                                                    alt={item.name}
+                                                                />
+                                                            </>
+                                                        )}
+                                                    </Link>
 
                                                     <div className="flex items-center justify-between md:order-3 md:justify-end">
                                                         <div className="flex items-center">
@@ -376,7 +441,7 @@ const Cart = () => {
                                                                 <svg className="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 21l6.218-7.999C23 8 17.5 1 12.01 6.001Z" />
                                                                 </svg>
-                                                                Save for later
+                                                                Guardar para después
                                                             </button>
                                                             <div className="flex h-4 items-center border-l border-gray-300 dark:border-gray-600">
                                                                 <button
@@ -384,7 +449,7 @@ const Cart = () => {
                                                                     className="inline-flex items-center ps-4 text-sm font-medium text-red-600 hover:underline dark:text-red-500"
                                                                     onClick={() => handleRemoveItemClick(item?.cartItemId)}
                                                                 >
-                                                                    Remove
+                                                                    Eliminar
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -411,17 +476,17 @@ const Cart = () => {
                                         </div>
 
                                         <button 
-                                    onClick={handleProceedToCheckout} 
-                                    className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 sm:text-base"
-                                >
-                                    Proceder con la compra
-                                </button>
+                                            onClick={handleProceedToCheckout} 
+                                            className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 sm:text-base"
+                                        >
+                                            Proceder con la compra
+                                        </button>
 
-                                {showPayPalButton && (
-                                    <div className="mt-6">
-                                        <PayPalButton total={total} items={items} />
-                                    </div>
-                                )}
+                                        {showPayPalButton && (
+                                            <div className="mt-6">
+                                                <PayPalButton total={total} items={items} />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -433,4 +498,4 @@ const Cart = () => {
     );
 };
 
-export default Cart
+export default Cart;

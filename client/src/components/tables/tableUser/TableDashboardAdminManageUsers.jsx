@@ -114,7 +114,7 @@ export function TableDashboardAdminManageUsers() {
                 <img className="w-10 h-10 rounded-full" src={user.image} alt={`${user.name} image`} />
                 <div className="ps-3">
                   <div className="text-base font-semibold">{user.name}</div>
-                  <div className="font-normal text-gray-500">{user.email}</div>
+                  <div className="font-normal text-gray-500">{user.mail}</div>
                 </div>
               </th>
               <td className="px-6 py-4">
@@ -146,37 +146,3 @@ export function TableDashboardAdminManageUsers() {
 
 
 
-{/* <Card>
-
-<h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">List de usuarios registrados</h3>
-<Table className="mt-5">
-  <TableHead>
-    <TableRow>
-      <TableHeaderCell>Nombre</TableHeaderCell>
-      <TableHeaderCell>Correo</TableHeaderCell>
-      <TableHeaderCell>Rol</TableHeaderCell>
-      <TableHeaderCell>Estatus</TableHeaderCell>
-    </TableRow>
-  </TableHead>
-  <TableBody>
-    {allUsers.map((item) => (
-      <TableRow key={item.name}>
-        <TableCell>{item.name}</TableCell>
-        <TableCell>{item.mail}</TableCell>
-        <TableCell>
-          <Select defaultValue="1">
-            <SelectItem value="1">Usuario</SelectItem>
-            <SelectItem value="2">Administrador</SelectItem>
-          </Select>
-        </TableCell>
-        <TableCell>
-          <Select defaultValue="activo">
-            <SelectItem value="activo">Activo</SelectItem>
-            <SelectItem value="inactivo">Inactivo</SelectItem>
-          </Select>
-        </TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-</Table>
-</Card> */}

@@ -9,6 +9,7 @@ const LoginLogout = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
