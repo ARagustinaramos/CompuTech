@@ -61,15 +61,7 @@ const Detail = () => {
 
   return (
     <section className=" text-gray-700 body-font overflow-hidden bg-white py-8 antialiased dark:bg-gray-900 dark:text-gray-200 md:py-16">
-
-      <button onClick={handleGoBack} className="mb-4">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
       <div className="container px-5 py-24 mx-auto">
-      <div className="h-70 sm:h-64 xl:h-80 2xl:h-96">
-        </div>
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <div className="lg:w-1/2 w-full aspect-w-1 aspect-h-1">
             <img

@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_DETAIL,
   GET_PRODUCTS,
+  GET_USERS,
   CLEAN_DETAIL,
   SET_FILTER,
   ADD_TO_CART,
@@ -190,3 +191,17 @@ export const setCartItems = (items) => ({
   type: SET_CART_ITEMS,
   payload: items
 });
+
+export const getUsers = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get('http://localhost:3001/users/');
+      return dispatch({
+        type: GET_USERS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};

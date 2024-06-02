@@ -3,6 +3,7 @@ import {
   ADD_TO_CART,
   GET_PRODUCTS,
   GET_DETAIL,
+  GET_USERS,
   REMOVE_FROM_CART,
   UPDATE_CART_ITEM_QUANTITY,
   CLEAN_DETAIL,
@@ -42,6 +43,8 @@ const initialState = {
   brands: [],
   categories: [],
   searchResults: [],
+  allUsers:[],
+  copyUsers:[]
 };
 
 const applyFilters = (products, filters) => {
@@ -95,6 +98,14 @@ function rootReducer(state = initialState, action) {
         allProducts: action.payload,
         copyProducts: [...action.payload],
       };
+
+      case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+        copyUsers: [...action.payload],
+      };
+
 
     case SEARCH_PRODUCTS_BY_NAME:
       const { payload: searchResults } = action;
