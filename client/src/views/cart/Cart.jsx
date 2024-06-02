@@ -12,6 +12,9 @@ const Cart = () => {
     const [showPayPalButton, setShowPayPalButton] = useState(false);
     const cartItems = useSelector(getMemoizedCartItems);
     const dispatch = useDispatch();
+
+
+    //firebase
     const { auth } = useFirebase();
     const isAuthenticated = !!auth.currentUser;
     const [user] = useAuthState(auth);
