@@ -1,4 +1,3 @@
-// src/redux/reducers/rootReducer.js
 import {
   ADD_TO_CART,
   GET_PRODUCTS,
@@ -24,7 +23,9 @@ import {
   SET_PRICE_ORDER,
   SET_CART_ITEMS,
   UPDATE_PRODUCT_STATUS,
-
+  ADMIN_REVIEW,
+  GET_PRODUCT_REVIEW,
+  GET_USER_BY_ID,
 } from "../actions/types";
 
 import {
@@ -44,6 +45,9 @@ const initialState = {
   brands: [],
   categories: [],
   searchResults: [],
+  adminReviews: [],
+  getProductReviews: [],
+  allUsers:[]
 };
 
 const applyFilters = (products, filters) => {
@@ -109,7 +113,7 @@ function rootReducer(state = initialState, action) {
       const filteredResultsAfterSearch = applyFilters(state.allProducts, resetFiltersState);
       return {
         ...resetFiltersState,
-        filteredProducts: searchResults,
+        filteredProducts: filteredResultsAfterSearch,
       };
 
     case GET_DETAIL:
@@ -222,11 +226,11 @@ function rootReducer(state = initialState, action) {
         items: updatedItemsAfterQuantityChange,
       };
       
-      case SET_CART_ITEMS:
-        return {
-          ...state,
-          items: action.payload,
-        };
+    case SET_CART_ITEMS:
+      return {
+        ...state,
+        items: action.payload,
+      };
         
     case SET_FILTER:
       return {
@@ -264,7 +268,7 @@ function rootReducer(state = initialState, action) {
           copyProducts: orderByName,
         };
       }
-
+      
     case RESET_FILTERS:
       return {
         ...state,
@@ -307,21 +311,39 @@ function rootReducer(state = initialState, action) {
         allProducts: state.filteredProducts.length ? state.allProducts : sortedProducts,
       };
     }
-    case UPDATE_PRODUCT_STATUS:
-            return {
-                ...state,
-                allProducts: state.allProducts.map(product =>
-                    product.id_Product === action.payload.productId
-                        ? { ...product, active: action.payload.status }
-                        : product
-                )
-            };
-            
-    case GET_REVIEW_USER:
 
+    case UPDATE_PRODUCT_STATUS:
+      return {
+        ...state,
+        allProducts: state.allProducts.map(product =>
+          product.id_Product === action.payload.productId
+            ? { ...product, active: action.payload.status }
+            : product
+        )
+      };
+    
+    case ADMIN_REVIEW:
+      return {
+        ...state,
+        adminReviews: action.payload
+      };
+
+    case GET_PRODUCT_REVIEW:
+      return {
+        ...state,
+        getProductReviews: action.payload
+      };
+    
+    case GET_USER_BY_ID:
+      return {
+        ...state,
+        allUsers: action.payload
+
+      }
+      
     default:
       return { ...state };
   }
 }
 
-export default rootReducer;
+export default rootReducer

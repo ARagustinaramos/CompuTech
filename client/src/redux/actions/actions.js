@@ -18,7 +18,19 @@ import {
   SET_CATEGORIES,
   SET_NAME_ORDER, 
   SET_PRICE_ORDER,
-  SET_CART_ITEMS
+  SET_CART_ITEMS,
+  REVIEW_SENT_SUCCESS,
+  REVIEW_SENT_ERROR,
+  UPDATE_REVIEW_REQUEST,
+  UPDATE_REVIEW_SUCCESS,
+  UPDATE_REVIEW_ERROR,
+  DELETE_REVIEW_REQUEST,
+  DELETE_REVIEW_SUCCESS,
+  DELETE_REVIEW_FAILURE,
+  GET_ALL_REVIEW_USER,
+  ADMIN_REVIEW,
+  GET_PRODUCT_REVIEW,
+  GET_USER_BY_ID,
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -34,12 +46,10 @@ export const setNameOrder = (order) => ({
   type: SET_NAME_ORDER,
   payload: order,
 });
-
 export const setPriceOrder = (order) => ({
   type: SET_PRICE_ORDER,
   payload: order,
 });
-
 export const getBrands = () => async (dispatch) => {
   try {
     const response = await fetch("http://localhost:3001/brands");
@@ -49,7 +59,6 @@ export const getBrands = () => async (dispatch) => {
     console.error("Error fetching brands:", error);
   }
 };
-
 export const getCategories = () => async (dispatch) => {
     try {
       const response = await fetch("http://localhost:3001/categories");
@@ -58,9 +67,8 @@ export const getCategories = () => async (dispatch) => {
     } catch (error) {
       console.error("Error fetching brands:", error);
     }
-  };
-
-  export const searchProductsByName = (name) => {
+};
+export const searchProductsByName = (name) => {
     return async (dispatch, getState) => {
       try {
         let response;
@@ -87,38 +95,32 @@ export const getCategories = () => async (dispatch) => {
         console.error('Error searching products:', error);
       }
     };
-  };
+};
 export const setAllProducts = (products) => ({
   type: SET_ALL_PRODUCTS,
   payload: products,
 });
-
 export const setCategoryFilter = (category) => ({
   type: SET_CATEGORY_FILTER,
   payload: category,
 });
-
 export const resetFilters = () => ({
   type: RESET_FILTERS,
 });
-
 export const setFilterProducts = (products) => ({
   type: SET_FILTER_PRODUCTS,
   payload: products,
 });
-
 export const setBrandFilter = (brand) => ({
   type: FILTER_BY_BRAND,
   payload: brand,
 });
-
 export const filterByBrand = (brand) => {
   return {
     type: FILTER_BY_BRAND,
     payload: brand,
   };
 };
-
 export const filterByCategory = (category) => {
   return {
       type: FILTER_BY_CATEGORY,
@@ -127,7 +129,6 @@ export const filterByCategory = (category) => {
 
   }
 }
-
 export const addToCart = (product) => {
   return {
     type: ADD_TO_CART,
@@ -137,17 +138,14 @@ export const addToCart = (product) => {
     },
   };
 };
-
 export const updateCartItemQuantity = (itemId, quantity) => ({
   type: UPDATE_CART_ITEM_QUANTITY,
   payload: { itemId, quantity },
 });
-
 export const removeFromCart = (cartitemId) => ({
   type: REMOVE_FROM_CART,
   payload: cartitemId,
 });
-
 export const getDetail = (id) => {
   return async (dispatch) => {
     try {
@@ -161,9 +159,6 @@ export const getDetail = (id) => {
     }
   };
 };
-
-
-
 export const cleanDetail = () => {
   return {
     type: CLEAN_DETAIL,
@@ -173,7 +168,6 @@ export const setFilter = (filter) => ({
   type: SET_FILTER,
   payload: filter,
 });
-
 export const deleteProduct = (id) => {
   return {
     type: DELETE_PRODUCT,
@@ -184,3 +178,97 @@ export const setCartItems = (items) => ({
   type: SET_CART_ITEMS,
   payload: items
 });
+
+//**********************USERS***************************
+export const getUserById = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`http://localhost:3001/users/${id}`);
+      return dispatch({
+        type: GET_USER_BY_ID,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+}
+//**********************REVIEWS***************************
+
+export const createReview = (formData) => {
+  return async (dispatch) => {
+    try {
+      console.log("ESTO RECIBE ACTION FORMDATA:", formData);
+      const response = await axios.post(`http://localhost:3001/reviews`, formData);
+      console.log("Reseña guardada exitosamente:", response);
+
+      dispatch(reviewPostSuccess(response));
+
+      return response;
+    } catch (error) {
+      console.error("Error al guardar la reseña:", error);
+
+      dispatch(reviewPostError(error));
+      throw error;
+    }
+  };
+};
+
+const reviewPostSuccess = (data) => ({
+  type: REVIEW_SENT_SUCCESS,
+  payload: data,
+});
+
+const reviewPostError = (error) => ({
+  type: REVIEW_SENT_ERROR,
+  payload: error,
+});
+
+export const updateReview = (id, updatedBody) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_REVIEW_REQUEST });
+
+      console.log("ID recibido en la acción:", id);
+      console.log("Cuerpo actualizado recibido en la acción:", updatedBody);
+
+      const response = await axios.put(`http://localhost:3001/reviews/${id}`, {
+        body: updatedBody,
+      });
+
+      console.log("Respuesta del servidor:", response.data);
+
+      dispatch({ type: UPDATE_REVIEW_SUCCESS, payload: response.data });
+      console.log("Review updated:", response.data);
+    } catch (error) {
+      dispatch({ type: UPDATE_REVIEW_ERROR, payload: error.message });
+      console.error("Error updating review:", error);
+    }
+  };
+};
+
+export const deleteReview = (id) => {
+  return async (dispatch) => {
+    dispatch({ type: DELETE_REVIEW_REQUEST });
+
+    try {
+      await axios.delete(`http://localhost:3001/reviews/${id}`);
+
+      dispatch({ type: DELETE_REVIEW_SUCCESS, payload: id });
+    } catch (error) {
+      dispatch({ type: DELETE_REVIEW_FAILURE, payload: error.message });
+    }
+  };
+};
+export function getAllReviewUser(data) {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: GET_ALL_REVIEW_USER,
+        payload: data,
+      });
+    } catch (error) {}
+  };
+}
+

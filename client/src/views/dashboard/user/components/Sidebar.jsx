@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
 import { useFirebase } from '../../../../firebase/firebase'; // Importa el hook useFirebase
-import {RiHome3Line, RiWalletLine, RiPieChartLine, RiMore2Fill, RiCloseFill} from "react-icons/ri";
+import {RiHome3Line, RiPieChartLine, RiMore2Fill, RiCloseFill} from "react-icons/ri";
+import { FaRegStar } from "react-icons/fa";
 import { IoCart } from "react-icons/io5";
 import { FaRegGrinBeamSweat } from "react-icons/fa";
 import { BsPersonSquare } from "react-icons/bs";
@@ -83,10 +84,10 @@ const Sidebar = () => {
             <IoCart /> Carrito de compras
           </a>
           <a
-            href="#"
+            href="/reviews"
             className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
           >
-            <RiWalletLine /> Reviews
+            <FaRegStar /> Reviews
           </a>
           <a
             href="#"
