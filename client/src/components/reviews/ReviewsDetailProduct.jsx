@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Avatar, Blockquote, Rating } from "flowbite-react";

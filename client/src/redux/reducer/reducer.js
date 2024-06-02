@@ -2,6 +2,7 @@ import {
   ADD_TO_CART,
   GET_PRODUCTS,
   GET_DETAIL,
+  GET_USERS,
   REMOVE_FROM_CART,
   UPDATE_CART_ITEM_QUANTITY,
   CLEAN_DETAIL,
@@ -13,7 +14,6 @@ import {
   SET_ALL_PRODUCTS,
   SET_CATEGORY_FILTER,
   FILTER_BY_BRAND,
-  FETCH_BRANDS,
   SET_BRANDS,
   SET_CATEGORIES,
   SEARCH_PRODUCTS_BY_NAME,
@@ -45,9 +45,11 @@ const initialState = {
   brands: [],
   categories: [],
   searchResults: [],
+  allUsers:[],
+  copyUsers:[]
   adminReviews: [],
   getProductReviews: [],
-  allUsers:[]
+
 };
 
 const applyFilters = (products, filters) => {
@@ -102,12 +104,20 @@ function rootReducer(state = initialState, action) {
         copyProducts: [...action.payload],
       };
 
+      case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+        copyUsers: [...action.payload],
+      };
+
+
     case SEARCH_PRODUCTS_BY_NAME:
       const { payload: searchResults } = action;
       const resetFiltersState = {
         ...state,
-        categoryFilter: "",
-        brandFilter: "",
+        brandFilter: '',
+        categoryFilter: '',
         searchResults,
       };
       const filteredResultsAfterSearch = applyFilters(state.allProducts, resetFiltersState);
@@ -268,14 +278,14 @@ function rootReducer(state = initialState, action) {
           copyProducts: orderByName,
         };
       }
-      
-    case RESET_FILTERS:
-      return {
-        ...state,
-        brandFilter: '',
-        categoryFilter: '',
-        filteredProducts: state.allProducts,
-      };
+
+      case RESET_FILTERS:
+        return {
+          ...state,
+          brandFilter: '',
+          categoryFilter: '',
+          filteredProducts: state.allProducts,
+        };
 
     case DELETE_PRODUCT:
       return {
