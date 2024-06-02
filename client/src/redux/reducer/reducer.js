@@ -3,6 +3,7 @@ import {
   ADD_TO_CART,
   GET_PRODUCTS,
   GET_DETAIL,
+  GET_USERS,
   REMOVE_FROM_CART,
   UPDATE_CART_ITEM_QUANTITY,
   CLEAN_DETAIL,
@@ -22,7 +23,6 @@ import {
   SET_NAME_ORDER,
   SET_PRICE_ORDER,
   SET_CART_ITEMS,
-  UPDATE_PRODUCT_STATUS,
 } from "../actions/types";
 
 import {
@@ -42,6 +42,8 @@ const initialState = {
   brands: [],
   categories: [],
   searchResults: [],
+  allUsers:[],
+  copyUsers:[]
 };
 
 const applyFilters = (products, filters) => {
@@ -95,6 +97,14 @@ function rootReducer(state = initialState, action) {
         allProducts: action.payload,
         copyProducts: [...action.payload],
       };
+
+      case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+        copyUsers: [...action.payload],
+      };
+
 
     case SEARCH_PRODUCTS_BY_NAME:
       const { payload: searchResults } = action;
@@ -305,16 +315,6 @@ function rootReducer(state = initialState, action) {
         allProducts: state.filteredProducts.length ? state.allProducts : sortedProducts,
       };
     }
-    case UPDATE_PRODUCT_STATUS:
-            return {
-                ...state,
-                allProducts: state.allProducts.map(product =>
-                    product.id_Product === action.payload.productId
-                        ? { ...product, active: action.payload.status }
-                        : product
-                )
-            };
-
     default:
       return { ...state };
   }

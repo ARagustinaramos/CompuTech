@@ -27,12 +27,17 @@ const Card = ({ id_Product, name, image, price }) => {
     dispatch(addToCart(productToAdd));
     Swal.fire("Producto agregado al carrito");
   };
+   
+ 
+
 
   return (
     <div key={id_Product} className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
       <Link to={`/detail/${id_Product}`}>
         <div className="h-60 overflow-hidden rounded-t-lg flex items-center justify-center">
-          <img className="max-h-full max-w-full object-contain" src={image} alt={name} />
+        {image && image.length > 0 && (
+            <img className="max-h-full max-w-full object-contain" src={image[0]} alt={name} />
+          )}
         </div>
       </Link>
       <div className="px-5 pb-5">
