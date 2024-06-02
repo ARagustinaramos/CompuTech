@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDetail, cleanDetail, addToCart } from '../../redux/actions/actions';
 import Swal from 'sweetalert2';
 import Spinner from '../../../src/components/spinner/Spinner';
+import { ReviewsDetailProduct } from '../../components/reviews/ReviewsDetailProduct';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase/firebase';
 
@@ -57,7 +58,7 @@ const Detail = () => {
   const hasObjectWithName = producto.tipos && producto.tipos.some((item) => typeof item === 'object' && item.hasOwnProperty('name'));
 
   return (
-    <section className="text-gray-700 body-font overflow-hidden bg-white py-8 antialiased dark:bg-gray-900 dark:text-gray-200 md:py-16">
+    <section className=" text-gray-700 body-font overflow-hidden bg-white py-8 antialiased dark:bg-gray-900 dark:text-gray-200 md:py-16">
       <button onClick={handleGoBack} className="mb-4">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -66,10 +67,10 @@ const Detail = () => {
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <div className="lg:w-1/2 w-full aspect-w-1 aspect-h-1">
-            <img 
-              alt="ecommerce" 
-              className="object-contain object-center w-full h-full rounded border border-gray-200 dark:border-gray-700" 
-              src={producto.image} 
+            <img
+              alt="ecommerce"
+              className="object-contain object-center w-full h-full rounded border border-gray-200 dark:border-gray-700"
+              src={producto.image}
             />
           </div>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
@@ -117,6 +118,18 @@ const Detail = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className='w-1/2 flex-col flex justify-center w-00 mx-auto'>
+        <div className='mb-5'>
+          <ReviewsDetailProduct />
+        </div>
+        <div className='mb-5'>
+          <ReviewsDetailProduct />
+        </div>
+        <div className='mb-5'>
+          <ReviewsDetailProduct />
+        </div>
+        
       </div>
     </section>
   );
