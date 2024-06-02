@@ -2,10 +2,11 @@ const { User } = require("../../config/db"); // Asegúrate de que este path sea 
 
 const postUserController = async (req, res) => {
   try {
-    const { name, mail, rol } = req.body;
+    const { name, mail, image, rol } = req.body;
     const newUser = await User.create({
       mail,
       name,
+      image: image || null,
       rol: true,
       // Aquí puedes añadir más campos si es necesario
     });
