@@ -14,4 +14,5 @@ userRouter.post("/", postUserHandler);
 userRouter.delete("/:id", deactivateUserHandler);
 userRouter.post('/sync', syncUsersHandler);
 
+
 module.exports = userRouter;
