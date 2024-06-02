@@ -21,7 +21,7 @@ const Cards = ({ products, filterApplied }) => {
   return (
     <div>
       <div className="flex justify-center items-center">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="sm:grid-cols-1 grid md:grid-cols-2 lg:grid-cols-3 gap-4 xl:grid-cols-4">
           {productsToDisplay.length > 0 ? (
             productsToDisplay.map((product) => (
               <Card
@@ -34,7 +34,7 @@ const Cards = ({ products, filterApplied }) => {
               />
             ))
           ) : (
-            <Spinner />
+            <Spinner className='w-full' />
           )}
         </div>
       </div>

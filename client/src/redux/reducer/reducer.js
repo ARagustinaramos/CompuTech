@@ -22,6 +22,7 @@ import {
   SET_NAME_ORDER,
   SET_PRICE_ORDER,
   SET_CART_ITEMS,
+  UPDATE_PRODUCT_STATUS,
 } from "../actions/types";
 
 import {
@@ -304,6 +305,15 @@ function rootReducer(state = initialState, action) {
         allProducts: state.filteredProducts.length ? state.allProducts : sortedProducts,
       };
     }
+    case UPDATE_PRODUCT_STATUS:
+            return {
+                ...state,
+                allProducts: state.allProducts.map(product =>
+                    product.id_Product === action.payload.productId
+                        ? { ...product, active: action.payload.status }
+                        : product
+                )
+            };
 
     default:
       return { ...state };

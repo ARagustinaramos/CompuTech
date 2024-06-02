@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { removeFromCart, updateCartItemQuantity, setCartItems } from '../../redux/actions/actions';
+import { removeFromCart, updateCartItemQuantity, setCartItems } from '../../redux/actions/actions.js';
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
 import PayPalButton from '../../components/PayPalButton';
 import { useFirebase } from '../../firebase/firebase.jsx'
@@ -92,6 +92,202 @@ const Cart = () => {
     const handleProceedToCheckout = () => {
         setShowPayPalButton(true);
     };
+    //registro de ordenes
+
+    const [order, setOrder] = useState({
+            id: '',
+            intent: '',
+            status: '',
+            create_time: '',
+            update_time: '',
+            links: [
+              {
+                href: '',
+                method: '',
+                rel: ''
+              }
+            ],
+            payer: {
+              address: {
+                country_code: ''
+              },
+              email_address: '',
+              name: {
+                given_name: '',
+                surname: ''
+              },
+              payer_id: ''
+            },
+            purchase_units: [
+              {
+                amount: {
+                  currency_code: '',
+                  value: ''
+                },
+                payee: {
+                  email_address: '',
+                  merchant_id: ''
+                },
+                payments: {
+                  captures: [
+                    {
+                      amount: {
+                        currency_code: '',
+                        value: ''
+                      },
+                      create_time: '',
+                      final_capture: true,
+                      id: '',
+                      seller_protection: {
+                        status: '',
+                        dispute_categories: ['']
+                      },
+                      status: '',
+                      update_time: ''
+                    }
+                  ]
+                },
+                reference_id: '',
+                shipping: {
+                  address: {
+                    address_line_1: '',
+                    admin_area_1: '',
+                    admin_area_2: '',
+                    country_code: '',
+                    postal_code: ''
+                  },
+                  name: {
+                    full_name: ''
+                  }
+                },
+                soft_descriptor: ''
+              }
+            ]
+          })
+
+    const handleSaveOrder = async (e) => {
+    e.preventDefault();
+    if (order.status === 'COMPLETED') {
+      const parsedOrder = {
+        ...order,
+        id: '',
+        intent: '',
+        status: '',
+        create_time: '',
+        update_time: '',
+        links: [
+          {
+            href: '',
+            method: '',
+            rel: ''
+          }
+        ],
+        payer: {
+          address: {
+            country_code: ''
+          },
+          email_address: '',
+          name: {
+            given_name: '',
+            surname: ''
+          },
+          payer_id: ''
+        },
+        purchase_units: [
+          {
+            amount: {
+              currency_code: '',
+              value: ''
+            },
+            payee: {
+              email_address: '',
+              merchant_id: ''
+            },
+            payments: {
+              captures: [
+                {
+                  amount: {
+                    currency_code: '',
+                    value: ''
+                  },
+                  create_time: '',
+                  final_capture: true,
+                  id: '',
+                  seller_protection: {
+                    status: '',
+                    dispute_categories: ['']
+                  },
+                  status: '',
+                  update_time: ''
+                }
+              ]
+            },
+            reference_id: '',
+            shipping: {
+              address: {
+                address_line_1: '',
+                admin_area_1: '',
+                admin_area_2: '',
+                country_code: '',
+                postal_code: ''
+              },
+              name: {
+                full_name: ''
+              }
+            },
+            soft_descriptor: ''
+          }
+        ]
+      };
+    }
+
+      try {
+        const response = await fetch('http://localhost:3001/api/create-order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(parsedOrder),
+        });
+
+        if (response.ok) {
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Puedes ver el estado de tu orden en la sección pedidos",
+                showConfirmButton: true,
+                confirmButtonText: "Seguir comprando",
+                cancelButtonText: "Volver al Home",
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Seguir comprando
+                } else {
+                    // Volver al Home
+                    setIsLoading(true);
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 1500);
+                }
+            });
+        } else {
+            const errorData = await response.json();
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: errorData.message || "Ooops algo no salió bien",
+            });
+        }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Error al guardar la orden",
+            });
+        }
+    }
+      
 
     return (
         <div className="pt-16">
@@ -233,4 +429,4 @@ const Cart = () => {
     );
 };
 
-export default Cart;
+export default Cart

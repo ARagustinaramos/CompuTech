@@ -14,11 +14,8 @@ export default function ProductForm() {
   const [url_img, setUrl_img] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log('url de la imagen cloudinary', url_img);
-
   const changeUploadImage = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
 
     const data = new FormData();
     data.append('file', file);
@@ -47,6 +44,7 @@ export default function ProductForm() {
     brand: "",
     category: ""
   });
+  
   const [errors, setErrors] = useState({});
   const [nameLengthError, setNameLengthError] = useState(false);
   const navigate = useNavigate();

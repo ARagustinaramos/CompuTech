@@ -1,18 +1,18 @@
-const  getUserById  = require('../../controllers/userControllers/getIdUser');
+const getUserId = require('../../controllers/userControllers/getIdUser');
 
-const getUserByIdHandler = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await getUserById(id);
+const getUserIdHandler = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await getUserId(id);
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching user', error });
     }
-
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching user', error });
-  }
 };
 
-module.exports = getUserByIdHandler;
+module.exports = getUserIdHandler;
