@@ -24,7 +24,7 @@ const Detail = () => {
       Swal.fire("Por favor inicia sesión para agregar productos al carrito");
       return;
     }
-    dispatch(addToCart(producto));
+    dispatch(addToCart(producto.product));
     Swal.fire("Producto agregado al carrito!");
   };
 
@@ -61,13 +61,13 @@ const Detail = () => {
     setActiveIndex(index);
   };
 
-  const reviews = producto.review || []; 
-  console.log(producto.product?.price);
+  const reviews = producto.review || [];
+
   return (
-    <section className="text-gray-700 body-font overflow-hidden bg-white py-8 antialiased dark:bg-gray-900 dark:text-gray-200 md:py-16">
-      <div className="container px-5 mx-auto flex flex-wrap">
-        { <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6">
-        {producto.product && producto.product?.image.length > 1 &&  (
+    <section className="  text-gray-700 body-font overflow-hidden bg-white py-8  antialiased dark:bg-gray-900  dark:text-gray-200 md:py-16 ">
+        <div className="container px-5 mx-auto flex flex-wrap mt-40">
+            <div className='w-full lg:w-1/2 lg:pr-10 lg:py-6 mb-8 md:mb-0 '>
+          {producto.product && producto.product?.image.length > 1 && (
             <div id="default-carousel" className="relative w-full" data-carousel="slide">
               <div className="relative h-56 overflow-hidden rounded-lg md:h-72 w-full">
                 {producto.product?.image && producto.product?.image.map((imageUrl, index) => (
@@ -77,7 +77,7 @@ const Detail = () => {
                     data-carousel-item={index === activeIndex}
                   >
                     <img
-                       src={imageUrl}
+                      src={imageUrl}
                       className="w-full h-full object-cover"
                       alt={`Product Image ${index + 1}`}
                       style={{ objectFit: 'contain', height: '100%' }}
@@ -103,7 +103,7 @@ const Detail = () => {
                 data-carousel-prev
                 onClick={handlePrev}
               >
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 group-hover:bg-white group-focus:ring-4 group-focus:ring-white focus:outline-none">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 group-hover:bg-gray-700 group-focus:ring-4 group-focus:ring-white focus:outline-none">
                   <svg className="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1L1 5l4 4" />
                   </svg>
@@ -116,7 +116,7 @@ const Detail = () => {
                 data-carousel-next
                 onClick={handleNext}
               >
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 group-hover:bg-white group-focus:ring-4 group-focus:ring-white focus:outline-none">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 group-hover:bg-gray-700 group-focus:ring-4 group-focus:ring-white focus:outline-none">
                   <svg className="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4" />
                   </svg>
@@ -128,12 +128,13 @@ const Detail = () => {
           {producto.product?.image && producto.product?.image.length === 1 && (
             <img
               src={producto.product?.image[0]}
-              className="w-full h-auto object-cover"
+              className="single-image"
               alt="Product"
+              style={{ width: '50%', maxWidth: 'none', margin: '0 auto' }}
             />
           )}
-        </div> }
-        { <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+        </div>
+        <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 className="text-sm title-font text-gray-500 dark:text-gray-400 tracking-widest">{producto.product?.brand}</h2>
           <h1 className="text-gray-900 dark:text-white text-3xl title-font font-medium mb-1">{producto.product?.name}</h1>
           <div className="flex mb-4">
@@ -147,7 +148,7 @@ const Detail = () => {
           <p className="leading-relaxed text-gray-500 dark:text-gray-400">{producto.product?.description}</p>
           <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 dark:border-gray-700 mb-5">
             <div className="flex">
-              
+
             </div>
           </div>
           <div className="flex">
@@ -159,11 +160,23 @@ const Detail = () => {
               </svg>
             </button>
           </div>
-        </div> }
+        </div>
       </div>
-      <div className="mt-8">
-        <ReviewsDetailProduct reviews={reviews} />
+      <div className='w-1/2 flex-col flex justify-center w-00 mx-auto'>
+
+      <div className="mt-8 lg:mt-0">
+          <div className="mb-5 mt-16">
+            <ReviewsDetailProduct />
+          </div>
+          <div className="mb-5 mt-16">
+            <ReviewsDetailProduct />
+          </div>
+          <div className="mb-5 mt-16">
+            <ReviewsDetailProduct />
+          </div>
+        </div>
       </div>
+    
     </section>
   );
 };
