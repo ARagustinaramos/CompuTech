@@ -112,19 +112,21 @@ const Cart = () => {
     const total = cartItems
         .map(item => parseFloat(item.price) * parseInt(item.quantity, 10))
         .reduce((acc, curr) => acc + curr, 0);
+        
 
     const handleProceedToCheckout = async () => {
         setShowPayPalButton(true);
 
         if (isAuthenticated && userId) {
             try {
+              const shoppingCart = cartItems;
                 // Actualizar ítems del carrito del usuario en la base de datos
                 const updateCartResponse = await fetch(`http://localhost:3001/users/put/${userId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ cartItems }),
+                    body: JSON.stringify({ shoppingCart }),
                 });
 
                 if (!updateCartResponse.ok) {
@@ -132,30 +134,30 @@ const Cart = () => {
                 }
 
                 // Actualizar cantidades de los productos en la base de datos
-                const updateProductsResponse = await fetch(`http://localhost:3001/products/${userId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ products: cartItems.map(item => ({ id_Product: item.id_Product, quantity: item.quantity })) }),
-                });
+                // const updateProductsResponse = await fetch(`http://localhost:3001/products/${userId}`, {
+                //     method: 'PUT',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({ products: cartItems.map(item => ({ id_Product: item.id_Product, quantity: item.quantity })) }),
+                // });
 
-                if (!updateProductsResponse.ok) {
-                    throw new Error('No se pudo actualizar las cantidades de los productos');
-                }
+                // if (!updateProductsResponse.ok) {
+                //     throw new Error('No se pudo actualizar las cantidades de los productos');
+                // }
 
                 // Crear una nueva orden en la base de datos
-                const createOrderResponse = await fetch(`http://localhost:3001/order/create-order/${userId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ items, total }),
-                });
+                // const createOrderResponse = await fetch(`http://localhost:3001/order/create-order/${userId}`, {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({ items, total }),
+                // });
 
-                if (!createOrderResponse.ok) {
-                    throw new Error('No se pudo crear la orden');
-                }
+                // if (!createOrderResponse.ok) {
+                //     throw new Error('No se pudo crear la orden');
+                // }
             } catch (error) {
                 console.error('Error:', error);
                 alert('Ocurrió un error durante el proceso de compra');
