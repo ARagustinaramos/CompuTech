@@ -6,14 +6,10 @@ const {
 	calculateAverageRating
 } = require("../Utils/sorting");
 
-const getProducts = async (filters, sort) => {
+const getAllProductsController = async (filters, sort) => {
 	try {
-		let queryOptions = {
-			where: { active: true }
-		};
-
 		// Obtener todos los productos
-		const products = await Product.findAll(queryOptions);
+		const products = await Product.findAll();
 
 		const allProduct = [];
 		await Promise.all(
@@ -31,7 +27,7 @@ const getProducts = async (filters, sort) => {
 					category?.dataValues.name.charAt(0).toUpperCase() +
 					category?.dataValues.name.slice(1).toLowerCase();
 
-				// Obtener comentarios y calcular el promedio de ranking
+				// Obtener review
 				const reviews = await Review.findAll({
 					where: { ProductIdProduct: product.dataValues.id_Product }
 				});
@@ -47,7 +43,6 @@ const getProducts = async (filters, sort) => {
 				);
 				// Calcular el promedio de los rankig
 				const promedioRanking = sumaRanking / rankingTotal.length;
-
 				const newProduct = {
 					id_Product: product.dataValues.id_Product,
 					name: product.dataValues.name,
@@ -90,4 +85,4 @@ const getProducts = async (filters, sort) => {
 	}
 };
 
-module.exports = getProducts;
+module.exports = getAllProductsController;
