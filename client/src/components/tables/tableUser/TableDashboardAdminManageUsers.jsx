@@ -1,3 +1,4 @@
+import { Select, SelectItem } from '@tremor/react';
 import { RiFlag2Line } from '@remixicon/react';
 import {
   Badge,
@@ -46,9 +47,9 @@ const data = [
 
 export function TableDashboardAdminManageUsers() {
   return (
-    
+
     <Card>
-     
+
       <h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">List de usuarios registrados</h3>
       <Table className="mt-5">
         <TableHead>
@@ -65,21 +66,22 @@ export function TableDashboardAdminManageUsers() {
               <TableCell>{item.name}</TableCell>
               <TableCell>{item.correo}</TableCell>
               <TableCell>
-                {item.Role}
+                <Select defaultValue="1">
+                  <SelectItem value="1">Usuario</SelectItem>
+                  <SelectItem value="2">Administrador</SelectItem>
+                </Select>
               </TableCell>
               <TableCell>
-                {item.departement}
-              </TableCell>
-              <TableCell>
-                <Badge color="emerald" icon={RiFlag2Line}>
-                  {item.status}
-                </Badge>
+                <Select defaultValue="activo">
+                  <SelectItem value="activo">Activo</SelectItem>
+                  <SelectItem value="inactivo">Inactivo</SelectItem>
+                </Select>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      
+
     </Card>
   );
 }

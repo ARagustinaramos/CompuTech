@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDetail, cleanDetail, addToCart } from '../../redux/actions/actions';
 import Swal from 'sweetalert2';
 import Spinner from '../../../src/components/spinner/Spinner';
+import { ReviewsDetailProduct } from '../../components/reviews/ReviewsDetailProduct';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase/firebase';
 
 const Detail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const producto = useSelector((state) => state.productDetail);
@@ -36,6 +42,7 @@ const Detail = () => {
     };
 
     fetchProducto();
+    window.scrollTo(0, 0);
     window.scrollTo(0, 0);
 
     return () => {
@@ -170,3 +177,4 @@ const Detail = () => {
 };
 
 export default Detail;
+

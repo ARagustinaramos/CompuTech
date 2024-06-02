@@ -1,9 +1,9 @@
 
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-gray-900">
-      <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-              <hr className="my-6 border-gray-200 sm:mx-auto dark:border-white-400 lg:my-8" />
+    <footer className="pl-10 pr-10 bg-white dark:bg-gray-900">
+      <div className="py-6 lg:py-8">
+              <hr className="my-6 border-gray200 sm:mx-auto dark:border-white-400 border-gray400 lg:my-8" />
         <div className="md:flex md:justify-between">
             {/*LOGO Y LINK A HOME O A HENRY??*/}
           <div className="mb-6 md:mb-0">
@@ -20,7 +20,7 @@ export default function Footer() {
           </div>
             
             {/*COLUMNAS DEL LADO DERECHO*/}
-          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-2 sm:gap-6 sm:grid-cols-3">
             <div>
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 CATEGORIAS
@@ -90,7 +90,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-white-400 lg:my-8" />
+        <hr className="border-gray-200 sm:mx-auto dark:border-white-400 border-gray-400 lg:my-4" />
         <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
             © 2023 - Hecho con ❤️ por "The migrant's company ". All Rights
             Reserved.
