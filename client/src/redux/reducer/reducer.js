@@ -24,6 +24,7 @@ import {
   SET_PRICE_ORDER,
   SET_CART_ITEMS,
   UPDATE_PRODUCT_STATUS,
+
 } from "../actions/types";
 
 import {
@@ -315,6 +316,8 @@ function rootReducer(state = initialState, action) {
                         : product
                 )
             };
+            
+    case GET_REVIEW_USER:
 
     default:
       return { ...state };

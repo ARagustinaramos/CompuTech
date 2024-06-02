@@ -22,8 +22,6 @@ const LoginLogout = () => {
     setIsModalProfileOpen(false);
   };
 
-
-
   useEffect(() => {
     if (user) {
       saveUserData(user);
@@ -70,7 +68,7 @@ const LoginLogout = () => {
   const closeModal = () => setModalOpen(false);
 
   return (
-    <li className="relative content-center">
+    <div className="relative content-center">
       {!user ? (
         <div>
           <button
@@ -225,7 +223,7 @@ const LoginLogout = () => {
           )}
         </div>
       )}
-    </li>
+    </div>
   );
 };
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useFirebase } from "../../../../firebase/firebase"; // Importa el hook useFirebase
-import ComponentePedido from "./ComponentePedido";
+import Order from "./Order";
 
-const HistorialDePedidos = () => {
+const OrderHistory = () => {
   const { auth } = useFirebase();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,13 +30,18 @@ const HistorialDePedidos = () => {
             </a>
             </div>
             <div className="flow-root">
-                <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
-                <ComponentePedido />
-                <ComponentePedido />
-        </ul>
+                  {
+                 ( user.shoppingCart?.length > 0 ) ? 
+                 user.shoppingCart.map(
+                  <ul key={user?.id} role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
+                    <Order user={user}/>
+                  </ul>
+                 ) : 
+                 (<h1 className='text-bold dark:text-white'>...Aun no has hecho ningún pedido 😠</h1>)
+                  }
       </div>
     </div>
   );
 };
 
-export default HistorialDePedidos;
+export default OrderHistory;

@@ -10,6 +10,7 @@ import About from "./views/about/About";
 import DashboardUser from "./views/dashboard/user/DashboardUser";
 import DashboardAdmin from "./views/dashboard/admin/DashboardAdmin";
 import DashboardAdminManageUsers from "./views/dashboard/admin/DashboardAdminManageUsers";
+import ReviewForm from "./views/dashboard/user/components/reviewForm/revValidation";
 import { FirebaseProvider } from "./firebase/firebase"; // Asegúrate de importar correctamente FirebaseProvider
 
 function App() {
@@ -26,6 +27,9 @@ function App() {
           <Route path="/dashboardadmin/manage/products" element={<DashboardAdmin />} />
           <Route path="/dashboardadmin/manage/users" element={<DashboardAdminManageUsers />} />
           <Route path="/dashboarduser" element={<DashboardUser />} />
+
+          <Route path="/reviews" element={<ReviewForm />} />
+
         </Routes>
         <Footer />
       </>

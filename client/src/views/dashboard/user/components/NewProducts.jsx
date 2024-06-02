@@ -1,4 +1,4 @@
-const ComponentePedido = () => {
+const ComponentePedido = (user={user}) => {
     return (
         <li className="py-3 sm:py-4">
         <div className="flex items-center">

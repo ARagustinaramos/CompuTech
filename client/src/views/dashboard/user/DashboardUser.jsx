@@ -4,9 +4,8 @@ import { useFirebase } from "../../../firebase/firebase";
 
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-import HistorialDePedidos from "./components/HistorialDePedidos";
-import HistorialDeCompras from './components/HistorialDeCompras'
-import Novedades from './components/Novedades'
+import OrderHistory from "./components/OrderHistory";
+import NewProducts from './components/NewProducts'
 import Cargando from './components/Cargando'
 
 
@@ -48,12 +47,11 @@ const DashboardUser = () => {
         {/* Section 1 */}
         <section className="grid sm:grid-cols-1 sm:col-span-1 lg:col-span-3 xl:col-span-5 dark:bg-gray-900 p-4 md:p-8 gap-4 py-2 flex-grow">
           {/* Historial de pedidos */}
-          <HistorialDePedidos className="sm:col-span-1 lg:cols-span-3"/>
-          <HistorialDeCompras className="sm:col-span-1 lg:cols-span-3 cols-span-6" />
+          <OrderHistory user={user} className="sm:col-span-1 lg:cols-span-3"/>
+          <NewProducts user={user} className="sm:col-span-1 lg:cols-span-3 cols-span-6" />
 
         </section>
       </main>
-          {<Novedades className="sm:col-span-1 lg:cols-span-3" />}
     </div>
     </div>
   );

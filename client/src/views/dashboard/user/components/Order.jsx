@@ -1,4 +1,4 @@
-const ComponenteProducto = () => {
+const OrderHistoryOrder = () => {
     return (
         <div>
         <div className="bg-white p-8 rounded-xl shadow-2xl mb-8 flex flex-col gap-8">
@@ -25,4 +25,4 @@ const ComponenteProducto = () => {
     )
 }
 
-export default ComponenteProducto
+export default OrderHistoryOrder
