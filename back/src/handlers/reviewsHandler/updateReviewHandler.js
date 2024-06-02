@@ -1,4 +1,4 @@
-const { updateReview } = require("../../controllers/reviewsControllers/updateReview");
+const  updateReview  = require("../../controllers/reviewsControllers/updateReview");
 
 const updateReviewHandler = async (req, res) => {
     try {

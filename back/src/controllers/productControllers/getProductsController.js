@@ -32,7 +32,20 @@ const getProducts = async (filters, sort) => {
 				const reviews = await Review.findAll({
 					where: { ProductIdProduct: product.dataValues.id_Product }
 				  });
-				//const averageRating = calculateAverageRating(reviews);
+
+				  const rankingTotal = [];
+				reviews.map((review) => {
+					rankingTotal.push(review.ranking);
+				});
+				//sumo todo los rankig
+				const sumaRanking = rankingTotal.reduce(
+					(acumulador, ranking) => acumulador + ranking,
+					0
+				);
+
+				// Calcular el promedio de los rankig
+				const promedioRanking = sumaRanking / rankingTotal.length;
+				
 
 				const newProduct = {
 					id_Product: product.dataValues.id_Product,
@@ -45,7 +58,7 @@ const getProducts = async (filters, sort) => {
 					BrandIdBrand: brandMayuscula,
 					CategoryIdCategory: categoryMayuscula,
 					reviews: reviews.map(review => ({
-						ranking: review.dataValues.ranking,
+						ranking: Math.floor(promedioRanking),
 						comment: review.dataValues.comment
 					  })),
 					
