@@ -10,11 +10,11 @@ import { useDispatch } from 'react-redux';
 
 
 const Perfil = ({ isOpen, onClose , currentUser}) => {
+    const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
+    const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch()
     const [editMode, setEditMode] = useState(false);
-    const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
     const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
 
       // Cloudinary 
   const preset = 'presetComputech'; 
@@ -50,10 +50,10 @@ const Perfil = ({ isOpen, onClose , currentUser}) => {
         image: [url_imgs],
     });
 
-console.log('perfilInfo', perfilInfo)
-console.log('currentUseer', currentUser)
+//console.log('perfilInfo', perfilInfo)
+//console.log('currentUseer', currentUser)
 
-const id_User = currentUser.id_User
+const id_User = currentUser?.id_User
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((userData) => {

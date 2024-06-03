@@ -63,7 +63,7 @@ const Home = () => {
 
   const activeProducts = allProducts.filter(product => product.active);
   const toShow = filteredProducts.length > 0 ? filteredProducts.filter(product => product.active) : activeProducts;
-console.log(allProducts)
+
   return (
     <>
       <Flowbite>

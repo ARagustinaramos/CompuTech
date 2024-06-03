@@ -11,7 +11,7 @@ const PayPalButton = ({ total, items }) => {
     const [details, setDetails] = useState(null);
 
     useEffect(() => {
-        if (user && user.email) {
+        if (user) {
             fetch('http://localhost:3001/users')
                 .then(response => response.json())
                 .then(data => {
