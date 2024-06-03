@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import axios from "axios";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/firebase";
 import SignInButton from '../../firebase/authGoogle';
 import { SignUpForm, SignInForm } from '../../firebase/authManual';
-import Perfil from '../../views/dashboard/user/components/Perfil'
+import Perfil from '../../views/dashboard/user/components/Perfil';
+import { setUserData } from '../../redux/actions/actions';
 
 const LoginLogout = () => {
   const [user] = useAuthState(auth);
   const [isRegistering, setIsRegistering] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [userData, setUserData] = useState(null); // Inicializado como null
   const [isModalProfileOpen, setIsModalProfileOpen] = useState(false);
+  
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.currentUserData);
 
   const openProfileModal = () => {
     setIsModalProfileOpen(true);
@@ -25,22 +29,12 @@ const LoginLogout = () => {
   useEffect(() => {
     if (user) {
       saveUserData(user);
-      fetchUserData(user.email); // Llama a fetchUserData con el correo electrónico del usuario
     }
   }, [user]);
 
-  const fetchUserData = async (email) => {
-    try {
-      const response = await axios.get(`http://localhost:3001/users/${email}`);
-      setUserData(response.data);
-      console.log('Datos de usuario cargados correctamente:', response.data);
-    } catch (error) {
-      console.error('Error al cargar datos de usuario:', error.response?.data || error.message);
-    }
-  };
-
   const saveUserData = async (user) => {
     const userData = {
+      id_User: user.uid,
       name: user.displayName,
       mail: user.email,
       image: user.photoURL
@@ -55,6 +49,7 @@ const LoginLogout = () => {
     try {
       const response = await axios.post('http://localhost:3001/users', userData);
       console.log('Datos de usuario guardados correctamente:', response.data);
+      dispatch(setUserData(response.data)); // Guarda los datos en el estado de Redux
     } catch (error) {
       console.error('Error al guardar datos de usuario:', error.response?.data || error.message);
     }

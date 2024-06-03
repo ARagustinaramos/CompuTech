@@ -26,6 +26,7 @@ import {
   ADMIN_REVIEW,
   GET_PRODUCT_REVIEW,
   GET_USER_BY_ID,
+  SET_USER_DATA
 } from "../actions/types";
 
 import {
@@ -49,6 +50,7 @@ const initialState = {
   copyUsers:[],
   adminReview: [],
   getProductReviews: [],
+  currentUserData: [],
 
 };
 
@@ -82,6 +84,7 @@ const applyFilters = (products, filters) => {
 
   return filtered;
 };
+
 
 const compareByName = (a, b, order) => {
   if (order === 'a-z') return a.name.localeCompare(b.name);
@@ -130,6 +133,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         productDetail: action.payload,
+      };
+
+      case SET_USER_DATA:
+      return {
+        ...state,
+        currentUserData: action.payload,
       };
 
     case SET_BRANDS:
@@ -350,6 +359,7 @@ function rootReducer(state = initialState, action) {
         allUsers: action.payload
 
       }
+
       
     default:
       return { ...state };

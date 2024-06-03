@@ -32,6 +32,7 @@ import {
   ADMIN_REVIEW,
   GET_PRODUCT_REVIEW,
   GET_USER_BY_ID,
+  SET_USER_DATA
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -238,6 +239,13 @@ export const createReview = (formData) => {
     }
   };
 };
+
+
+
+export const setUserData = (userData) => ({
+  type: SET_USER_DATA,
+  payload: userData,
+});
 
 const reviewPostSuccess = (data) => ({
   type: REVIEW_SENT_SUCCESS,

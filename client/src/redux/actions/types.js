@@ -21,6 +21,7 @@ export const SET_NAME_ORDER = 'SET_NAME_ORDER';
 export const SET_PRICE_ORDER = 'SET_PRICE_ORDER';
 export const SET_CART_ITEMS = 'SET_CART_ITEMS';
 export const GET_USERS = 'GET_USERS';
+export const SET_USER_DATA ='SET_USER_DATA'
 
 
 export const UPDATE_PRODUCT_STATUS = 'UPDATE_PRODUCT_STATUS';
