@@ -25,13 +25,13 @@ const LoginLogout = () => {
   useEffect(() => {
     if (user) {
       saveUserData(user);
-      fetchUserData(user.email); // Llama a fetchUserData con el correo electrónico del usuario
+      fetchUserData(user.id_User); // Llama a fetchUserData con el correo electrónico del usuario
     }
   }, [user]);
 
-  const fetchUserData = async (email) => {
+  const fetchUserData = async (user) => {
     try {
-      const response = await axios.get(`http://localhost:3001/users/${email}`);
+      const response = await axios.post(`http://localhost:3001/users/${user.id_User}`);
       setUserData(response.data);
       console.log('Datos de usuario cargados correctamente:', response.data);
     } catch (error) {
@@ -195,7 +195,7 @@ const LoginLogout = () => {
                 >
                   Perfil
                 </a>
-                  <Perfil isOpen={isModalProfileOpen} onClose={closeProfileModal}/>
+                  <Perfil userData={userData} isOpen={isModalProfileOpen} onClose={closeProfileModal}/>
                 <a
                   href="/account-settings"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"

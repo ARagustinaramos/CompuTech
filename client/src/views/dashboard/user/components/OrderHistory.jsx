@@ -4,15 +4,16 @@ import Order from "./Order";
 import Spinner from '../../../../components/spinner/Spinner'
 
 const OrderHistory = () => {
-  const { auth } = useFirebase();
+  const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);  
 
 
-  useEffect(() => {
+ useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
+
         setIsLoading(false);
       }
     });
@@ -35,7 +36,7 @@ const OrderHistory = () => {
                   {
                  ( user.shoppingCart?.length > 0 ) ? 
                  user.shoppingCart.map(
-                  <ul key={user?.id} role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
+                  <ul key={user?.id_User} role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
                     <Order user={user}/>
                   </ul>
                  ) : 

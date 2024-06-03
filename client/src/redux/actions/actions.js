@@ -32,6 +32,7 @@ import {
   ADMIN_REVIEW,
   GET_PRODUCT_REVIEW,
   GET_USER_BY_ID,
+  SET_USER,
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -216,8 +217,11 @@ export const getUserById = (id) => {
       console.log(error.message);
     }
   };
-
 }
+export const setUser = (user) => ({
+  type: 'SET_USER',
+  payload: user
+});
 //**********************REVIEWS***************************
 
 export const createReview = (formData) => {

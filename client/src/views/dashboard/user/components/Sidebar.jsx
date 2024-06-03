@@ -7,7 +7,7 @@ import { IoCart } from "react-icons/io5";
 import { FaRegGrinBeamSweat } from "react-icons/fa";
 import { BsPersonSquare } from "react-icons/bs";
 import Perfil from '../../user/components/Perfil'
-import Spinner from "../../../../components/spinner/Spinner";
+
 
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -39,7 +39,7 @@ const Sidebar = () => {
   }, [auth]);
 
   if (isLoading) {
-    return <Spinner className=''/>;
+    return <div></div>;
   }
 
   return (
@@ -54,12 +54,15 @@ const Sidebar = () => {
           src={user.photoURL}
           className="w-20 h-20 object-cover rounded-full ring-2 ring-gray-300"
         />
-        <h1 className="text-xl text-white font-bold">{user?.given_name||'usuario'}</h1>
+        <h1 className="text-xl text-white font-bold">{user.name||'Usuario'}</h1>
         <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
           {user?.email|| 'No se encuentra email'}
         </p>
         <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
           {user?.adress|| 'Dirección de usuario'}
+        </p>
+        <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
+          {user?.phone|| 'Teléfono'}
         </p>
       </div>
       <div className="bg-gradient-to-r from-blue-600 to-green-600  rounded-br-[100px] flex flex-col justify-between ">

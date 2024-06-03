@@ -26,6 +26,7 @@ import {
   ADMIN_REVIEW,
   GET_PRODUCT_REVIEW,
   GET_USER_BY_ID,
+  SET_USER,
 } from "../actions/types";
 
 import {
@@ -49,6 +50,7 @@ const initialState = {
   copyUsers:[],
   adminReview: [],
   getProductReviews: [],
+  dataUser:[],
 
 };
 
@@ -347,9 +349,15 @@ function rootReducer(state = initialState, action) {
     case GET_USER_BY_ID:
       return {
         ...state,
-        allUsers: action.payload
+        dataUser: action.payload
 
-      }
+      };
+      case SET_USER:
+        return {
+          ...state,
+          user: action.payload.user,
+          userData: action.payload.userData,
+        };
       
     default:
       return { ...state };
