@@ -32,7 +32,7 @@ import {
   ADMIN_REVIEW,
   GET_PRODUCT_REVIEW,
   GET_USER_BY_ID,
-  SET_USER_DATA
+  SET_USER_DATA,
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
