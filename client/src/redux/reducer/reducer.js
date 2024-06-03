@@ -26,7 +26,8 @@ import {
   ADMIN_REVIEW,
   GET_PRODUCT_REVIEW,
   GET_USER_BY_ID,
-  SET_USER_DATA
+  SET_USER_DATA,
+  UPDATE_DATA_USER,
 } from "../actions/types";
 
 import {
@@ -51,6 +52,7 @@ const initialState = {
   adminReview: [],
   getProductReviews: [],
   currentUserData: [],
+  
 
 };
 
@@ -358,8 +360,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         dataUser: action.payload
 
+      };
+    case UPDATE_DATA_USER:
+      return {
+        ...state,
+        currentUserData: action.payload
       }
-
       
     default:
       return { ...state };

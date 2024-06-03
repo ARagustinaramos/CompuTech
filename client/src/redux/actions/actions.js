@@ -32,7 +32,9 @@ import {
   ADMIN_REVIEW,
   GET_PRODUCT_REVIEW,
   GET_USER_BY_ID,
+  GET_USER_BY_EMAIL,
   SET_USER_DATA,
+  UPDATE_DATA_USER,
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -218,10 +220,31 @@ export const getUserById = (id) => {
     }
   };
 }
+
+export const updateDataUser = (id, updatedData) => {
+  return async (dispatch) => {
+    try {
+      console.log('updatedata', updatedData)
+      const { data } = await axios.put(`http://localhost:3001/users/put/${id}`, {
+        data: { updatedData }
+
+      });
+      console.log(data)
+      return dispatch({
+        type: UPDATE_DATA_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.error('Error updating user data:', error.message);
+    }
+  };
+};
+
 export const setUser = (user) => ({
   type: 'SET_USER',
   payload: user
 });
+
 //**********************REVIEWS***************************
 
 export const createReview = (formData) => {

@@ -6,7 +6,7 @@ import { auth } from "../../firebase/firebase";
 import SignInButton from '../../firebase/authGoogle';
 import { SignUpForm, SignInForm } from '../../firebase/authManual';
 import Perfil from '../../views/dashboard/user/components/Perfil';
-import { setUserData } from '../../redux/actions/actions';
+import { getUsers } from '../../redux/actions/actions';
 
 const LoginLogout = () => {
   const [user] = useAuthState(auth);
@@ -16,7 +16,15 @@ const LoginLogout = () => {
   const [isModalProfileOpen, setIsModalProfileOpen] = useState(false);
   
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.currentUserData);
+  const allUsers = useSelector((state) => state.allUsers);  
+  
+  
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+  
+  const currentUser = allUsers.find(u => u.mail === user.email);
+  console.log('currentUser', currentUser)
 
   const openProfileModal = () => {
     setIsModalProfileOpen(true);
@@ -26,45 +34,7 @@ const LoginLogout = () => {
     setIsModalProfileOpen(false);
   };
 
-  useEffect(() => {
-    if (user) {
-      saveUserData(user);
-      fetchUserData(user.id_User); // Llama a fetchUserData con el correo electrónico del usuario
-    }
-  }, [user]);
-
-  const fetchUserData = async (user) => {
-    try {
-      const response = await axios.post(`http://localhost:3001/users/${user.id_User}`);
-      setUserData(response.data);
-      console.log('Datos de usuario cargados correctamente:', response.data);
-    } catch (error) {
-      console.error('Error al cargar datos de usuario:', error.response?.data || error.message);
-    }
-  };
-
-  const saveUserData = async (user) => {
-    const userData = {
-      id_User: user.uid,
-      name: user.displayName,
-      mail: user.email,
-      image: user.photoURL
-    };
-
-    // Verifica que los datos del usuario no sean nulos
-    if (!userData.name || !userData.mail || !userData.image) {
-      console.error('Datos de usuario incompletos:', userData);
-      return;
-    }
-
-    try {
-      const response = await axios.post('http://localhost:3001/users', userData);
-      console.log('Datos de usuario guardados correctamente:', response.data);
-      dispatch(setUserData(response.data)); // Guarda los datos en el estado de Redux
-    } catch (error) {
-      console.error('Error al guardar datos de usuario:', error.response?.data || error.message);
-    }
-  };
+     
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -176,7 +146,7 @@ const LoginLogout = () => {
                 aria-orientation="vertical"
                 aria-labelledby="options-menu"
               >
-                {(userData?.rol === true )? (
+                {(currentUser?.rol === true )? (
                   <a
                     href="/dashboardadmin/manage/products"
                     className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -201,7 +171,7 @@ const LoginLogout = () => {
                 >
                   Perfil
                 </a>
-                  <Perfil userData={userData} isOpen={isModalProfileOpen} onClose={closeProfileModal}/>
+                  <Perfil currentUser={currentUser} isOpen={isModalProfileOpen} onClose={closeProfileModal}/>
                 <a
                   href="/account-settings"
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"

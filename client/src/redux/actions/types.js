@@ -39,3 +39,5 @@ export const ADMIN_REVIEW = 'ADMIN_REVIEW';
 export const GET_PRODUCT_REVIEW = 'GET_PRODUCT_REVIEW';
 
 export const GET_USER_BY_ID = 'GET_USER_BY_ID';
+export const GET_USER_BY_EMAIL = 'GET_USER_BY_EMAIL';
+export const UPDATE_DATA_USER = 'UPDATE_DATA_USER'

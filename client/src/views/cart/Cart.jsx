@@ -5,40 +5,43 @@ import { removeFromCart, updateCartItemQuantity, setCartItems } from '../../redu
 import { getMemoizedCartItems } from '../../redux/selectors/selectors';
 import PayPalButton from '../../components/PayPalButton';
 import { useFirebase } from '../../firebase/firebase.jsx'
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Cart = () => {
     const [showPayPalButton, setShowPayPalButton] = useState(false);
     const cartItems = useSelector(getMemoizedCartItems);
     const dispatch = useDispatch();
-
-
+  
+    
     //firebase
     const { auth } = useFirebase();
     const isAuthenticated = !!auth.currentUser;
+    const [user] = useAuthState(auth);
+    const [userId, setUserId] = useState(null);
     
 
     const items = cartItems.map(item => ({
-        id_Product: item.id_Product,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity
+      id_Product: item.id_Product,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity
     }));
-
+    
     useEffect(() => {
-        const restoreCartFromStorage = () => {
-            const storedCartItems = isAuthenticated
-                ? JSON.parse(localStorage.getItem('cartItems')) || []
-                : JSON.parse(localStorage.getItem('cartItems')) || [];
-            dispatch(setCartItems(storedCartItems));
-        };
-
+      const restoreCartFromStorage = () => {
+        const storedCartItems = isAuthenticated
+        ? JSON.parse(localStorage.getItem('cartItems')) || []
+        : JSON.parse(localStorage.getItem('cartItems')) || [];
+        dispatch(setCartItems(storedCartItems));
+      };
+      
         restoreCartFromStorage();
-    }, [dispatch, isAuthenticated]);
+      }, [dispatch, isAuthenticated]);
 
-    useEffect(() => {
+      useEffect(() => {
         const saveCartToStorage = () => {
             if (isAuthenticated) {
-                sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+              sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
                 localStorage.setItem('cartItems', JSON.stringify(cartItems));
             } else {
                 localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -46,98 +49,116 @@ const Cart = () => {
         };
 
         saveCartToStorage();
-    }, [cartItems, isAuthenticated]);
-
+      }, [cartItems, isAuthenticated]);
+      
     useEffect(() => {
         const clearCartAndStorage = () => {
             if (!isAuthenticated) {
-                //dispatch(setCartItems([]));
-                //localStorage.removeItem('cartItems');
+              //dispatch(setCartItems([]));
+              //localStorage.removeItem('cartItems');
                 //sessionStorage.removeItem('cartItem');
-            }
-        };
-
-        clearCartAndStorage();
-    }, [isAuthenticated, dispatch]);
-
-    useEffect(() => {
-        const saveCartToSessionStorage = () => {
-            if (isAuthenticated) {
+              }
+            };
+            
+            clearCartAndStorage();
+          }, [isAuthenticated, dispatch]);
+          
+          useEffect(() => {
+            const saveCartToSessionStorage = () => {
+              if (isAuthenticated) {
                 sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
-            }
-        };
-
-        saveCartToSessionStorage();
+              }
+            };
+            
+            saveCartToSessionStorage();
     }, [cartItems, isAuthenticated]);
-
+    
     const handleRemoveItemClick = (itemId) => {
-        dispatch(removeFromCart(itemId));
+      dispatch(removeFromCart(itemId));
     };
     
     const handleQuantityChange = (itemId, newQuantity) => {
-        const quantity = Math.max(1, parseInt(newQuantity, 10) || 1);
-        dispatch(updateCartItemQuantity(itemId, quantity));
+      const quantity = Math.max(1, parseInt(newQuantity, 10) || 1);
+      dispatch(updateCartItemQuantity(itemId, quantity));
     };
     
     const handleIncrement = (itemId, currentQuantity) => {
-        const newQuantity = parseInt(currentQuantity, 10) + 1;
-        handleQuantityChange(itemId, newQuantity);
+      const newQuantity = parseInt(currentQuantity, 10) + 1;
+      handleQuantityChange(itemId, newQuantity);
     };
     
     const handleDecrement = (itemId, currentQuantity) => {
-        const newQuantity = Math.max(1, parseInt(currentQuantity, 10) - 1);
-        handleQuantityChange(itemId, newQuantity);
+      const newQuantity = Math.max(1, parseInt(currentQuantity, 10) - 1);
+      handleQuantityChange(itemId, newQuantity);
+    };
+    
+    const total = cartItems
+    .map(item => parseFloat(item.price) * parseInt(item.quantity, 10))
+    .reduce((acc, curr) => acc + curr, 0);
+    
+    const handleProceedToCheckout = async () => {
+      if (!auth.currentUser) {
+        // Asegúrate de que el usuario esté autenticado
+        return;
+      }
+      
+      const userId = auth.currentUser.uid; // Suponiendo que utilizas Firebase Auth y uid es el ID del usuario
+      const payload = {
+        userId: userId,
+        cartItems: cartItems
+      };
+      
+      console.log('Respuesta del carrito',payload);
+      
+      
+      try {
+        const response = await axios.post('http://localhost:3001/api/update-cart', payload);
+        if (response.status === 200) {
+          setShowPayPalButton(true);
+        } else {
+          console.error('Error al actualizar el carrito');
+        }
+      } catch (error) {
+        console.error('Error al enviar los datos del carrito:', error);
+      }
     };
 
-    const total = cartItems
-        .map(item => parseFloat(item.price) * parseInt(item.quantity, 10))
-        .reduce((acc, curr) => acc + curr, 0);
 
-    const handleProceedToCheckout = async () => {
-          if (!auth.currentUser) {
-              // Asegúrate de que el usuario esté autenticado
-              return;
-          }
-  
-          const userId = auth.currentUser.uid; // Suponiendo que utilizas Firebase Auth y uid es el ID del usuario
-          const payload = {
-              userId: userId,
-              cartItems: cartItems
-          };
+    useEffect(() => {
+      if (user && user.email) {
+          fetch('http://localhost:3001/users')
+              .then(response => response.json())
+              .then(data => {
+                  const matchingUser = data.find(u => u.mail === user.email);
+                  if (matchingUser) {
+                      setUserId(matchingUser.id_User);
+                  }
+              })
+              .catch(error => console.error('Error fetching users:', error));
+      }
+  }, [user]);
+  console.log(userId)
 
-          console.log('Respuesta del carrito',payload);
 
-          
-          try {
-              const response = await axios.post('http://localhost:3001/api/update-cart', payload);
-              if (response.status === 200) {
-                  setShowPayPalButton(true);
-              } else {
-                  console.error('Error al actualizar el carrito');
-              }
-          } catch (error) {
-              console.error('Error al enviar los datos del carrito:', error);
-          }
-      };
-    //registro de ordenes
-
+  //registro de ordenes
+   
     const [order, setOrder] = useState({
-            id: '',
-            intent: '',
-            status: '',
-            create_time: '',
-            update_time: '',
-            links: [
-              {
-                href: '',
-                method: '',
-                rel: ''
-              }
-            ],
-            payer: {
-              address: {
-                country_code: ''
-              },
+      id: '',
+      intent: '',
+      status: '',
+      create_time: '',
+      update_time: '',
+      links: [
+        {
+          href: '',
+          method: '',
+          rel: ''
+        }
+      ],
+      payer: {
+        address: {
+          country_code: ''
+        },
               email_address: '',
               name: {
                 given_name: '',
