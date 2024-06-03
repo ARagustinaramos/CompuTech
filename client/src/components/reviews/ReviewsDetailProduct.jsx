@@ -10,10 +10,15 @@ export function ReviewsDetailProduct({ productId }) {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/products/${id}`);
+        const response = await fetch(`http://localhost:3001/products/${productId}`);
         const data = await response.json();
-        setProduct(data.product);
-        setReviews(data.review);
+        
+        if (data.error) {
+          console.error(data.error);
+        } else {
+          setProduct(data.product);
+          setReviews(data.reviews);
+        }
       } catch (error) {
         console.error("Error fetching product data:", error);
       }
@@ -31,12 +36,12 @@ export function ReviewsDetailProduct({ productId }) {
       <h1>{product.name}</h1>
       <p>{product.description}</p>
       {reviews.length > 0 ? (
-        reviews.map(review => (
-          <figure className="max-w-screen-md" key={review.id_Review}>
+        reviews.map((review, index) => (
+          <figure className="max-w-screen-md" key={index}>
             <div className="mb-4 flex items-center">
               <Rating size="md">
-                {[...Array(review.ranking)].map((_, index) => (
-                  <Rating.Star key={index} />
+                {[...Array(review.ranking)].map((_, idx) => (
+                  <Rating.Star key={idx} />
                 ))}
               </Rating>
             </div>
@@ -49,11 +54,11 @@ export function ReviewsDetailProduct({ productId }) {
               <Avatar
                 rounded
                 size="xs"
-                img="https://example.com/path-to-user-avatar.jpg" 
+                img="https://example.com/path-to-user-avatar.jpg" // Aquí puedes agregar una URL real o usar una imagen predeterminada
                 alt="profile picture"
               />
               <div className="flex items-center divide-x-2 divide-gray-300 dark:divide-gray-700">
-                <cite className="pr-3 font-medium text-gray-900 dark:text-white">{review.user_name}</cite>
+                <cite className="pr-3 font-medium text-gray-900 dark:text-white">{review.name}</cite>
                 <cite className="pl-3 text-sm text-gray-500 dark:text-gray-400">{review.user_mail}</cite>
               </div>
             </figcaption>
