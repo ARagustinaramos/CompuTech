@@ -63,7 +63,7 @@ const Home = () => {
 
   const activeProducts = allProducts.filter(product => product.active);
   const toShow = filteredProducts.length > 0 ? filteredProducts.filter(product => product.active) : activeProducts;
-console.log(allProducts)
+  console.log(allProducts)
   return (
     <>
       <Flowbite>
@@ -71,7 +71,7 @@ console.log(allProducts)
           <div className="pt-16">
             <CarouselComponent />
             <div className="flex justify-center mb-4 "></div>
-            <div className="flex overflow-x-auto sm:justify-center mb-2">
+            <div className="flex overflow-x-auto sm:justify-center mb-2 space-x-4"> {/* Añadido espacio horizontal */}
               <ByName resetPriceOrder={() => dispatch(setPriceOrder(''))} />
               <ByPrice resetNameOrder={() => dispatch(setNameOrder(''))} />
               <div className="content-center">
@@ -105,13 +105,11 @@ console.log(allProducts)
                 </select>
               </div>
               <button
-                onClick={handleResetSearch}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-0 px-4 flex items-center dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
-                <svg className="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4" />
-                </svg>
-              </button>
+  onClick={handleResetSearch}
+  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-3 px-1 flex items-center dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" // Ajuste de altura
+>
+  Reiniciar
+</button>
             </div>
             <Cards
               products={toShow}

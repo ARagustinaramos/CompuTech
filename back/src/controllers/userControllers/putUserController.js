@@ -4,6 +4,7 @@ const putUserController = async (id, userData, res) => {
   try {
     // Buscar el usuario por su ID
     const user = await User.findByPk(id);
+    console.log(id)
 
     // Verificar si el usuario existe
     if (!user) {

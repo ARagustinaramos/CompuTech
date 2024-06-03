@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import axios from "axios";
 import {
   GET_DETAIL,
@@ -190,6 +191,21 @@ export const deleteProduct = (id, boolean) => {
       console.error('Error deleting product:', error);
     }
 
+  }
+};
+
+export const deleteUser = (email) => {
+  return async (dispatch) => {
+    try {
+      console.log("action:", email);
+      const response = await axios.delete(`http://localhost:3001/users/${email}`);
+      dispatch({ type: 'DELETE_USER_SUCCESS', payload: response.data });
+      Swal.fire("Usuario desactivado correctamente");
+    } catch (error) {
+      console.error('Error updating user:', error);
+      dispatch({ type: 'DELETE_USER_FAILURE', error });
+      Swal.fire("Error al desactivar el usuario");
+    }
   }
 };
 export const setCartItems = (items) => ({
