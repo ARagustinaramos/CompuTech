@@ -68,20 +68,6 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 	const handleSave = async () => {
 		try {
 			dispatch(updateDataUser(id_User, perfilInfo));
-			// if (auth.currentUser) {
-			//     // Actualiza los datos del usuario en Firebase
-			//     await auth.currentUser.updateProfile({
-			//         displayName: perfilInfo.name,
-			//         photoURL: perfilInfo.photoURL,
-			//     });
-			//     if (perfilInfo.email !== user.email) {
-			//         await auth.currentUser.updateEmail(perfilInfo.email);
-			//     }
-			//     // Aquí puedes agregar lógica para guardar los cambios en tu base de datos local si es necesario
-			//     setEditMode(false);
-			//     // Opcional: actualizar el estado del usuario con los nuevos datos
-			//     setUser(auth.currentUser);
-			// }
 		} catch (error) {
 			console.error("Error updating profile:", error);
 			// Manejar el error (por ejemplo, mostrar una notificación al usuario)
@@ -141,17 +127,6 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 									<p className="text-red-500 font-bold">'Ingresa un correo'</p>
 								)}
 							</label>
-							{/* {editMode && (
-								<input
-									type="text"
-									name="email"
-									value={perfilInfo.email}
-									onChange={handleChange}
-									className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-									placeholder="Correo de usuario"
-									required
-								/>
-							)} */}
 							<label>{currentUser?.name || "Nombre de usuario"}</label>
 							{editMode && (
 								<input
@@ -200,39 +175,6 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 									required
 								/>
 							)}
-						</div>
-						<label className="block text-2xl font-bold mb-2 text-gray-900 dark:text-white">
-							Modificar contraseña
-						</label>
-						<div className="mb-6">
-							<label
-								htmlFor="password"
-								className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-							>
-								Password
-							</label>
-							<input
-								type="password"
-								id="password"
-								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-								placeholder="•••••••••"
-								required
-							/>
-						</div>
-						<div className="mb-6">
-							<label
-								htmlFor="confirm_password"
-								className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-							>
-								Confirm password
-							</label>
-							<input
-								type="password"
-								id="confirm_password"
-								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-								placeholder="•••••••••"
-								required
-							/>
 						</div>
 						<button
 							type="button"
