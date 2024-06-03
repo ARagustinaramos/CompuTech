@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFirebase } from "../../../../firebase/firebase"; // Importa el hook useFirebase
 import Order from "./Order";
+import Spinner from '../../../../components/spinner/Spinner'
 
 const ReviewHistory = () => {
   const { auth } = useFirebase();
@@ -18,8 +19,10 @@ const ReviewHistory = () => {
     return () => unsubscribe();
   }, [auth]);
 
+
+
   if (isLoading) {
-    return <div>Cargando...</div>;
+    return <Spinner className=''/>;
   }
     return(
         <div className="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-600">

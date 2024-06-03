@@ -7,6 +7,7 @@ import { IoCart } from "react-icons/io5";
 import { FaRegGrinBeamSweat } from "react-icons/fa";
 import { BsPersonSquare } from "react-icons/bs";
 import Perfil from '../../user/components/Perfil'
+import Spinner from "../../../../components/spinner/Spinner";
 
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -38,7 +39,7 @@ const Sidebar = () => {
   }, [auth]);
 
   if (isLoading) {
-    return <div>Cargando...</div>;
+    return <Spinner className=''/>;
   }
 
   return (

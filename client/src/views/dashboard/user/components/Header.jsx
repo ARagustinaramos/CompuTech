@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useFirebase } from "../../../../firebase/firebase"; // Importa el hook useFirebase
+import Spinner from "../../../../components/spinner/Spinner";
 
 const Header = () => {
   const { auth } = useFirebase();
@@ -18,7 +19,7 @@ const Header = () => {
   }, [auth]);
 
   if (isLoading) {
-    return <div>Cargando...</div>;
+    return <Spinner className=''/>;
   }
 
   return (

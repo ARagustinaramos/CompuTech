@@ -46,8 +46,8 @@ const initialState = {
   categories: [],
   searchResults: [],
   allUsers:[],
-  copyUsers:[]
-  adminReviews: [],
+  copyUsers:[],
+  adminReview: [],
   getProductReviews: [],
 
 };
@@ -335,7 +335,7 @@ function rootReducer(state = initialState, action) {
     case ADMIN_REVIEW:
       return {
         ...state,
-        adminReviews: action.payload
+        adminReview: action.payload
       };
 
     case GET_PRODUCT_REVIEW:
