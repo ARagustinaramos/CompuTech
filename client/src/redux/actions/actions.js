@@ -4,6 +4,7 @@ import {
   GET_PRODUCTS,
   GET_ALL_PRODUCTS,
   GET_USERS,
+  GET_SALES,
   CLEAN_DETAIL,
   SET_FILTER,
   ADD_TO_CART,
@@ -211,6 +212,21 @@ export const getUsers = (id) => {
 };
 
 export const getAllProducts = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get("http://localhost:3001/products/all");
+      return dispatch({
+        type:GET_ALL_PRODUCTS,
+        payload:data
+      });
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+
+  }
+};
+
+export const getAllSales = () => {
   return async (dispatch) => {
     try {
       const {data} = await axios.get("http://localhost:3001/products/all");
