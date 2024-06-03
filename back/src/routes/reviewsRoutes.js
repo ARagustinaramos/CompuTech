@@ -7,7 +7,7 @@ const {getUserReviewsHandler} = require("../handlers/reviewsHandler/getUserRevie
 
 const reviewsRouter = express.Router();
 
-reviewsRouter.get("/:id", getReviewsHandler);
+reviewsRouter.get("/", getReviewsHandler);
 reviewsRouter.post("/", createReviewHandler);
 reviewsRouter.put("/:id", updateReviewHandler);
 reviewsRouter.delete("/:id", deleteReviewHandler);
