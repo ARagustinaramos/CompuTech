@@ -38,7 +38,7 @@ module.exports = (sequelize) => {
 				allowNull: false
 			},
 			shoppingCart: {
-				type: DataTypes.ARRAY(DataTypes.STRING),
+				type: DataTypes.JSONB,
 				allowNull: true
 			},
 			recurringPayment: {

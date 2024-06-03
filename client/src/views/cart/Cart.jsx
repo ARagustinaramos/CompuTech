@@ -7,11 +7,15 @@ import PayPalButton from '../../components/PayPalButton';
 import { useFirebase } from '../../firebase/firebase.jsx'
 
 const Cart = () => {
-  const [showPayPalButton, setShowPayPalButton] = useState(false);
-  const cartItems = useSelector(getMemoizedCartItems);
-  const dispatch = useDispatch();
-  const { auth } = useFirebase();
-  const isAuthenticated = !!auth.currentUser;
+    const [showPayPalButton, setShowPayPalButton] = useState(false);
+    const cartItems = useSelector(getMemoizedCartItems);
+    const dispatch = useDispatch();
+
+
+    //firebase
+    const { auth } = useFirebase();
+    const isAuthenticated = !!auth.currentUser;
+    
 
   const items = cartItems.map(item => ({
     id_Product: item.id_Product,
@@ -89,10 +93,33 @@ const Cart = () => {
     .map(item => parseFloat(item.price) * parseInt(item.quantity, 10))
     .reduce((acc, curr) => acc + curr, 0);
 
-  const handleProceedToCheckout = () => {
-    setShowPayPalButton(true);
-  };
-  //registro de ordenes
+    const handleProceedToCheckout = async () => {
+          if (!auth.currentUser) {
+              // Asegúrate de que el usuario esté autenticado
+              return;
+          }
+  
+          const userId = auth.currentUser.uid; // Suponiendo que utilizas Firebase Auth y uid es el ID del usuario
+          const payload = {
+              userId: userId,
+              cartItems: cartItems
+          };
+
+          console.log('Respuesta del carrito',payload);
+
+          
+          try {
+              const response = await axios.post('http://localhost:3001/api/update-cart', payload);
+              if (response.status === 200) {
+                  setShowPayPalButton(true);
+              } else {
+                  console.error('Error al actualizar el carrito');
+              }
+          } catch (error) {
+              console.error('Error al enviar los datos del carrito:', error);
+          }
+      };
+    //registro de ordenes
 
   const [order, setOrder] = useState({
     id: '',
