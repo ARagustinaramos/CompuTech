@@ -37,77 +37,77 @@ const Cart = () => {
   console.log(userId)
     
 
-    const items = cartItems.map(item => ({
-        id_Product: item.id_Product,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity
-    }));
+  const items = cartItems.map(item => ({
+    id_Product: item.id_Product,
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity
+  }));
 
-    useEffect(() => {
-        const restoreCartFromStorage = () => {
-            const storedCartItems = isAuthenticated
-                ? JSON.parse(localStorage.getItem('cartItems')) || []
-                : JSON.parse(localStorage.getItem('cartItems')) || [];
-            dispatch(setCartItems(storedCartItems));
-        };
-
-        restoreCartFromStorage();
-    }, [dispatch, isAuthenticated]);
-
-    useEffect(() => {
-        const saveCartToStorage = () => {
-            if (isAuthenticated) {
-                sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
-                localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            } else {
-                localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            }
-        };
-
-        saveCartToStorage();
-    }, [cartItems, isAuthenticated]);
-
-    useEffect(() => {
-        const clearCartAndStorage = () => {
-            if (!isAuthenticated) {
-                //dispatch(setCartItems([]));
-                //localStorage.removeItem('cartItems');
-                //sessionStorage.removeItem('cartItem');
-            }
-        };
-
-        clearCartAndStorage();
-    }, [isAuthenticated, dispatch]);
-
-    useEffect(() => {
-        const saveCartToSessionStorage = () => {
-            if (isAuthenticated) {
-                sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
-            }
-        };
-
-        saveCartToSessionStorage();
-    }, [cartItems, isAuthenticated]);
-
-    const handleRemoveItemClick = (itemId) => {
-        dispatch(removeFromCart(itemId));
+  useEffect(() => {
+    const restoreCartFromStorage = () => {
+      const storedCartItems = isAuthenticated
+        ? JSON.parse(localStorage.getItem('cartItems')) || []
+        : JSON.parse(localStorage.getItem('cartItems')) || [];
+      dispatch(setCartItems(storedCartItems));
     };
-    
-    const handleQuantityChange = (itemId, newQuantity) => {
-        const quantity = Math.max(1, parseInt(newQuantity, 10) || 1);
-        dispatch(updateCartItemQuantity(itemId, quantity));
+
+    restoreCartFromStorage();
+  }, [dispatch, isAuthenticated]);
+
+  useEffect(() => {
+    const saveCartToStorage = () => {
+      if (isAuthenticated) {
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      } else {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      }
     };
-    
-    const handleIncrement = (itemId, currentQuantity) => {
-        const newQuantity = parseInt(currentQuantity, 10) + 1;
-        handleQuantityChange(itemId, newQuantity);
+
+    saveCartToStorage();
+  }, [cartItems, isAuthenticated]);
+
+  useEffect(() => {
+    const clearCartAndStorage = () => {
+      if (!isAuthenticated) {
+        //dispatch(setCartItems([]));
+        //localStorage.removeItem('cartItems');
+        //sessionStorage.removeItem('cartItem');
+      }
     };
-    
-    const handleDecrement = (itemId, currentQuantity) => {
-        const newQuantity = Math.max(1, parseInt(currentQuantity, 10) - 1);
-        handleQuantityChange(itemId, newQuantity);
+
+    clearCartAndStorage();
+  }, [isAuthenticated, dispatch]);
+
+  useEffect(() => {
+    const saveCartToSessionStorage = () => {
+      if (isAuthenticated) {
+        sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+      }
     };
+
+    saveCartToSessionStorage();
+  }, [cartItems, isAuthenticated]);
+
+  const handleRemoveItemClick = (itemId) => {
+    dispatch(removeFromCart(itemId));
+  };
+
+  const handleQuantityChange = (itemId, newQuantity) => {
+    const quantity = Math.max(1, parseInt(newQuantity, 10) || 1);
+    dispatch(updateCartItemQuantity(itemId, quantity));
+  };
+
+  const handleIncrement = (itemId, currentQuantity) => {
+    const newQuantity = parseInt(currentQuantity, 10) + 1;
+    handleQuantityChange(itemId, newQuantity);
+  };
+
+  const handleDecrement = (itemId, currentQuantity) => {
+    const newQuantity = Math.max(1, parseInt(currentQuantity, 10) - 1);
+    handleQuantityChange(itemId, newQuantity);
+  };
 
     const total = cartItems
         .map(item => parseFloat(item.price) * parseInt(item.quantity, 10))
@@ -361,12 +361,12 @@ const Cart = () => {
             }
     }
 
-    return (
-        <div className="pt-16">
-            <div className="flex flex-col min-h-screen">
-                <section className="flex-grow bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
-                    <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                        <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl text-center">Carrito de compras</h2>
+  return (
+    <div className="pt-16">
+      <div className="flex flex-col min-h-screen">
+        <section className="flex-grow bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+          <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl text-center">Carrito de compras</h2>
 
                         {cartItems?.length === 0 || !isAuthenticated? (
                           <div className="flex flex-col items-center justify-center mt-6 sm:mt-8">
@@ -400,48 +400,48 @@ const Cart = () => {
                                                         )}
                                                     </Link>
 
-                                                    <div className="flex items-center justify-between md:order-3 md:justify-end">
-                                                        <div className="flex items-center">
-                                                            <button
-                                                                type="button"
-                                                                id="decrement-button"
-                                                                data-input-counter-decrement="counter-input"
-                                                                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
-                                                                onClick={() => handleDecrement(item?.cartItemId, item?.quantity)}
-                                                            >
-                                                                <svg className="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
-                                                                </svg>
-                                                            </button>
-                                                            <input
-                                                                type="text"
-                                                                id="counter-input"
-                                                                data-input-counter
-                                                                className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
-                                                                placeholder=""
-                                                                value={item?.quantity || 1}
-                                                                onChange={(e) => handleQuantityChange(item?.cartItemId, e.target.value)}
-                                                                required
-                                                            />
-                                                            <button
-                                                                type="button"
-                                                                id="increment-button"
-                                                                data-input-counter-increment="counter-input"
-                                                                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
-                                                                onClick={() => handleIncrement(item?.cartItemId, item?.quantity)}
-                                                            >
-                                                                <svg className="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                        <div className="text-end md:order-4 md:w-32">
-                                                            <p className="text-base font-bold text-gray-900 dark:text-white">{(item?.price * item?.quantity).toFixed(2)}$</p>
-                                                        </div>
-                                                    </div>
+                          <div className="flex items-center justify-between md:order-3 md:justify-end">
+                            <div className="flex items-center">
+                              <button
+                                type="button"
+                                id="decrement-button"
+                                data-input-counter-decrement="counter-input"
+                                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+                                onClick={() => handleDecrement(item?.cartItemId, item?.quantity)}
+                              >
+                                <svg className="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
+                                </svg>
+                              </button>
+                              <input
+                                type="text"
+                                id="counter-input"
+                                data-input-counter
+                                className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
+                                placeholder=""
+                                value={item?.quantity || 1}
+                                onChange={(e) => handleQuantityChange(item?.cartItemId, e.target.value)}
+                                required
+                              />
+                              <button
+                                type="button"
+                                id="increment-button"
+                                data-input-counter-increment="counter-input"
+                                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+                                onClick={() => handleIncrement(item?.cartItemId, item?.quantity)}
+                              >
+                                <svg className="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
+                                </svg>
+                              </button>
+                            </div>
+                            <div className="text-end md:order-4 md:w-32">
+                              <p className="text-base font-bold text-gray-900 dark:text-white">{(item?.price * item?.quantity).toFixed(2)}$</p>
+                            </div>
+                          </div>
 
-                                                    <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                                                        <Link to={`/detail/${item?.id_Product}`} className="text-base font-medium text-gray-900 hover:underline dark:text-white">{item?.name}</Link>
+                          <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
+                            <Link to={`/detail/${item?.id_Product}`} className="text-base font-medium text-gray-900 hover:underline dark:text-white">{item?.name}</Link>
 
                                                         <div className="flex items-center gap-4">
                                                             <button type="button" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white">
@@ -467,20 +467,20 @@ const Cart = () => {
                                     </ul>
                                 </div>
 
-                                <div className="mt-8 md:mt-10 lg:sticky lg:top-36 lg:mt-0">
-                                    <div className="space-y-4 border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-sm font-medium text-gray-900 dark:text-white">Subtotal</span>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-white">{total.toFixed(2)}$</span>
-                                        </div>
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-sm font-medium text-gray-900 dark:text-white">Envío</span>
-                                            <span className="text-sm font-medium text-gray-900 dark:text-white">0$</span>
-                                        </div>
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-base font-medium text-gray-900 dark:text-white">Total</span>
-                                            <span className="text-base font-medium text-gray-900 dark:text-white">{total.toFixed(2)}$</span>
-                                        </div>
+                <div className="mt-8 md:mt-10 lg:sticky lg:top-36 lg:mt-0">
+                  <div className="space-y-4 border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">Subtotal</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">{total.toFixed(2)}$</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">Envío</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">0$</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base font-medium text-gray-900 dark:text-white">Total</span>
+                      <span className="text-base font-medium text-gray-900 dark:text-white">{total.toFixed(2)}$</span>
+                    </div>
 
                                         <button 
                                             onClick={handleProceedToCheckout} 

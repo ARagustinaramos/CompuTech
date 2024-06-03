@@ -1,6 +1,6 @@
 import { Select, SelectItem } from '@tremor/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts,deleteProduct } from '../../../redux/actions/actions';
+import { getProducts, deleteProduct,getAllProducts,setAllProducts } from '../../../redux/actions/actions';
 import { useEffect } from 'react';
 
 import { RiFlag2Line } from '@remixicon/react';
@@ -16,24 +16,24 @@ import {
 } from '@tremor/react';
 
 export function TableUsageExample() {
-    
-    
-    const dispatch = useDispatch();
-    const allProducts = useSelector((state) => state.allProducts);
 
+
+    const dispatch = useDispatch();
+    const allProducts = useSelector((state) => state.allProductsActivesDesactives);
+    console.log(allProducts)
     useEffect(() => {
-        dispatch(getProducts());
+        dispatch(getAllProducts());
     }, [dispatch]);
 
 
-    const handlerSubmit =(product)=>{
-        dispatch(deleteProduct(product,false));
+    const handlerSubmit = (product) => {
+        dispatch(deleteProduct(product, false));
         console.log("Entró!")
     }
- 
 
 
-    console.log(allProducts)
+
+    //console.log(allProducts)
     return (
         <Card>
             <h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">Lista de productos en Stock</h3>
@@ -59,7 +59,7 @@ export function TableUsageExample() {
                             <TableCell>
                                 <Select
                                     defaultValue={item.active ? "1" : "2"}
-                                    onValueChange={() => handlerSubmit(item.id_Product,false)}
+                                    onValueChange={() => handlerSubmit(item.id_Product, false)}
                                 >
                                     <SelectItem value="1">Activo</SelectItem>
                                     <SelectItem value="2">Inactivo</SelectItem>
