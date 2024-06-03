@@ -328,7 +328,24 @@ export function getAllReviewUser(data) {
         type: GET_ALL_REVIEW_USER,
         payload: data,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.messange)
+    }
   };
 }
+
+export const getAllProducts = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get("http://localhost:3001/products/all");
+      return dispatch({
+        type:GET_ALL_PRODUCTS,
+        payload:data
+      });
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+
+  }
+};
 

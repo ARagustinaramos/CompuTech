@@ -22,7 +22,7 @@ export function TableUsageExample() {
     const allProducts = useSelector((state) => state.allProductsActivesDesactives);
     console.log(allProducts)
     useEffect(() => {
-        dispatch(getAllProducts());
+        dispatch(getProducts());
     }, [dispatch]);
 
 
@@ -30,10 +30,6 @@ export function TableUsageExample() {
         dispatch(deleteProduct(product, false));
         console.log("Entró!")
     }
-
-
-
-    //console.log(allProducts)
     return (
         <Card>
             <h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">Lista de productos en Stock</h3>
