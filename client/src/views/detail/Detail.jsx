@@ -166,7 +166,7 @@ const Detail = () => {
 
       <div className="mt-8 lg:mt-0">
           <div className="mb-5 mt-16">
-            <ReviewsDetailProduct />
+            <ReviewsDetailProduct  />
           </div>
           <div className="mb-5 mt-16">
             <ReviewsDetailProduct />
