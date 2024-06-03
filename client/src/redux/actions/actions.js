@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_DETAIL,
   GET_PRODUCTS,
+  GET_ALL_PRODUCTS,
   GET_USERS,
   CLEAN_DETAIL,
   SET_FILTER,
@@ -21,7 +22,7 @@ import {
   SET_PRICE_ORDER,
   SET_CART_ITEMS,
   RESET_FILTERS
-  
+
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -33,6 +34,7 @@ export const getProducts = () => async (dispatch) => {
     console.error("Error fetching products:", error);
   }
 };
+
 export const setNameOrder = (order) => ({
   type: SET_NAME_ORDER,
   payload: order,
@@ -206,4 +208,19 @@ export const getUsers = (id) => {
       console.log(error.message);
     }
   };
+};
+
+export const getAllProducts = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get("http://localhost:3001/products/all");
+      return dispatch({
+        type:GET_ALL_PRODUCTS,
+        payload:data
+      });
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+
+  }
 };

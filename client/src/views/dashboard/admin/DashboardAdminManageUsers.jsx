@@ -14,7 +14,6 @@ const DashboardAdminManageUsers = () => {
         <div className="pt-16">
         <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
             <SideBarAdmin></SideBarAdmin>
-
             <div>
                 <div className='grid grid-cols-3 gap-2'>
                     <CardStat />
