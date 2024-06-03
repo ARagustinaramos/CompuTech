@@ -235,6 +235,7 @@ const Cart = () => {
           }
         ]
       });
+     
 
     const handleSaveOrder = async (e) => {
         e.preventDefault();
@@ -311,6 +312,7 @@ const Cart = () => {
             ]
           };
         }
+        
 
           try {
             const response = await fetch('http://localhost:3001/api/create-order', {
