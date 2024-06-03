@@ -8,6 +8,8 @@ import { ReviewsDetailProduct } from '../../components/reviews/ReviewsDetailProd
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase/firebase';
 
+import { Carousel } from "flowbite-react";
+
 const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();

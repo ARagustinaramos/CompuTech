@@ -9,7 +9,11 @@ module.exports = (sequelize) => {
 				primaryKey: true,
 				defaultValue: DataTypes.UUIDV4
 			},
-			deliveryAddress: {
+			userInformation: {
+				type: DataTypes.JSONB,
+				allowNull: false
+			},
+			address: {
 				type: DataTypes.STRING,
 				allowNull: false
 			},
@@ -25,12 +29,8 @@ module.exports = (sequelize) => {
 				type: DataTypes.STRING,
 				allowNull: false
 			},
-			shippingStatus: {
+			date: {
 				type: DataTypes.STRING,
-				allowNull: false
-			},
-			orderQuantity: {
-				type: DataTypes.INTEGER,
 				allowNull: false
 			},
 			total: {

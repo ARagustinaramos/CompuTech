@@ -20,6 +20,8 @@ const SearchBar = () => {
     dispatch(getProducts());
     dispatch(filterByBrand(''));
     dispatch(filterByCategory(''))
+    setBrand('');  // Reset brand filter
+    setCategory('');  // Reset category filter
   };
   const handleResetSearch = () => {
     dispatch(getProducts());
@@ -32,6 +34,10 @@ const SearchBar = () => {
 
   const handleReset = () => {
     setSearchQuery('');
+    dispatch(filterByBrand(''));
+    dispatch(filterByCategory(''))
+    setBrand('');  // Reset brand filter
+    setCategory('')
     setError('');
     dispatch(setFilterProducts(allProducts)); // Resetea los productos filtrados en el estado de Redux a todos los productos
   };

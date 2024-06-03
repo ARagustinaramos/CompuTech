@@ -3,7 +3,7 @@ import { Select, SelectItem } from '@tremor/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../../redux/actions/actions';
 
-export function TableDashboardAdminManageUsers() {
+export function TableDashboardReviews() {
   const dispatch = useDispatch();
   const allUsers = useSelector((state) => state.allUsers);
 
@@ -44,7 +44,7 @@ export function TableDashboardAdminManageUsers() {
               Nombre
             </th>
             <th scope="col" className="px-6 py-3">
-              Rol
+              Review
             </th>
             <th scope="col" className="px-6 py-3">
               Status
@@ -79,10 +79,10 @@ export function TableDashboardAdminManageUsers() {
               <td className="px-6 py-4">
                 <div className="flex items-center">
                   <div className={`h-2.5 w-2.5 rounded-full ${userStatus[user.id] === 'activo' ? 'bg-green-500' : 'bg-red-500'} me-2`}></div>
-                  <Select defaultValue={userStatus[user.id]} onValueChange={(value) => handleStatusChange(user.id, value)}>
-                    <SelectItem value="activo">Activo</SelectItem>
-                    <SelectItem value="inactivo">Inactivo</SelectItem>
-                  </Select>
+                  <Select defaultValue="1">
+                  <SelectItem value="1">Usuario</SelectItem>
+                  <SelectItem value="2">Administrador</SelectItem>
+                </Select>
                 </div>
               </td>
               <td className="px-6 py-4">
@@ -95,7 +95,3 @@ export function TableDashboardAdminManageUsers() {
     </div>
   );
 }
-
-
-
-

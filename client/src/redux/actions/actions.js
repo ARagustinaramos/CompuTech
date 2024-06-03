@@ -2,6 +2,8 @@ import axios from "axios";
 import {
   GET_DETAIL,
   GET_PRODUCTS,
+  GET_ALL_PRODUCTS,
+  GET_USERS,
   CLEAN_DETAIL,
   SET_FILTER,
   ADD_TO_CART,
@@ -16,9 +18,11 @@ import {
   SET_BRANDS,
   SEARCH_PRODUCTS_BY_NAME,
   SET_CATEGORIES,
-  SET_NAME_ORDER, 
+  SET_NAME_ORDER,
   SET_PRICE_ORDER,
-  SET_CART_ITEMS
+  SET_CART_ITEMS,
+  RESET_FILTERS
+
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -30,6 +34,7 @@ export const getProducts = () => async (dispatch) => {
     console.error("Error fetching products:", error);
   }
 };
+
 export const setNameOrder = (order) => ({
   type: SET_NAME_ORDER,
   payload: order,
@@ -51,43 +56,43 @@ export const getBrands = () => async (dispatch) => {
 };
 
 export const getCategories = () => async (dispatch) => {
+  try {
+    const response = await fetch("http://localhost:3001/categories");
+    const data = await response.json();
+    dispatch({ type: SET_CATEGORIES, payload: data });
+  } catch (error) {
+    console.error("Error fetching brands:", error);
+  }
+};
+
+export const searchProductsByName = (name) => {
+  return async (dispatch, getState) => {
     try {
-      const response = await fetch("http://localhost:3001/categories");
-      const data = await response.json();
-      dispatch({ type: SET_CATEGORIES, payload: data });
+      let response;
+      if (name.trim() === "") {
+        // Si el nombre está vacío, obtiene todos los productos
+        response = await axios.get('http://localhost:3001/products');
+      } else {
+        // Busca productos por nombre
+        response = await axios.get(`http://localhost:3001/products/name?name=${name}`);
+      }
+
+      if (response.data.length === 0) {
+        // Si el resultado de la búsqueda está vacío, muestra un mensaje de alerta
+        alert("No se encontraron productos con ese nombre");
+      }
+
+      const searchResults = response.data;
+
+      dispatch({
+        type: SEARCH_PRODUCTS_BY_NAME,
+        payload: searchResults,
+      });
     } catch (error) {
-      console.error("Error fetching brands:", error);
+      console.error('Error searching products:', error);
     }
   };
-
-  export const searchProductsByName = (name) => {
-    return async (dispatch, getState) => {
-      try {
-        let response;
-        if (name.trim() === "") {
-          // Si el nombre está vacío, obtiene todos los productos
-          response = await axios.get('http://localhost:3001/products');
-        } else {
-          // Busca productos por nombre
-          response = await axios.get(`http://localhost:3001/products/name?name=${name}`);
-        }
-        
-        if (response.data.length === 0) {
-          // Si el resultado de la búsqueda está vacío, muestra un mensaje de alerta
-          alert("No se encontraron productos con ese nombre");
-        }
-        
-        const searchResults = response.data;
-    
-        dispatch({
-          type: SEARCH_PRODUCTS_BY_NAME,
-          payload: searchResults,
-        });
-      } catch (error) {
-        console.error('Error searching products:', error);
-      }
-    };
-  };
+};
 export const setAllProducts = (products) => ({
   type: SET_ALL_PRODUCTS,
   payload: products,
@@ -121,10 +126,8 @@ export const filterByBrand = (brand) => {
 
 export const filterByCategory = (category) => {
   return {
-      type: FILTER_BY_CATEGORY,
-      payload: category,
-
-
+    type: FILTER_BY_CATEGORY,
+    payload: category,
   }
 }
 
@@ -174,13 +177,50 @@ export const setFilter = (filter) => ({
   payload: filter,
 });
 
-export const deleteProduct = (id) => {
-  return {
-    type: DELETE_PRODUCT,
-    payload: id,
-  };
+export const deleteProduct = (id, boolean) => {
+  return async (dispatch) => {
+    try {
+      console.log("action:" + id, boolean)
+      await axios.delete(`http://localhost:3001/products/delete/${id}`, {
+        data: { exterminateProduct: boolean }
+
+      });
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
+
+  }
 };
 export const setCartItems = (items) => ({
   type: SET_CART_ITEMS,
   payload: items
 });
+
+export const getUsers = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get('http://localhost:3001/users/');
+      return dispatch({
+        type: GET_USERS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const getAllProducts = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get("http://localhost:3001/products/all");
+      return dispatch({
+        type:GET_ALL_PRODUCTS,
+        payload:data
+      });
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+
+  }
+};
