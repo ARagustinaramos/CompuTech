@@ -11,18 +11,27 @@ const Perfil = ({ isOpen, onClose }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          if (user) {
+            setUser(user);
+            setIsLoading(false);
+          }
+        });
+
      console.log('user desde dashboard :', user)    
 
-    const [perfilInfo, setPerfilInfo] = useState({
-        //Inicializo el estado hasta esperar el back
-        photoURL:user.photoURL,
-        name: user.displayName,
-        address: '',
-        phoneNumber: user.phoneNumber,
-        email: user.email,
-        image:'https://res.cloudinary.com/damfsltm2/image/upload/v1716826731/Computech-Products/favicon_chnb9k.png'
+    // const [perfilInfo, setPerfilInfo] = useState({
+    //     //Inicializo el estado hasta esperar el back
+    //     photoURL:user.photoURL,
+    //     name: user.displayName,
+    //     address: '',
+    //     phoneNumber: user.phoneNumber,
+    //     email: user.email,
+    //     image:'https://res.cloudinary.com/damfsltm2/image/upload/v1716826731/Computech-Products/favicon_chnb9k.png'
 
-    });    
+    // });    
 
 
     // Función para manejar cambios en los campos del formulario
@@ -42,13 +51,7 @@ const Perfil = ({ isOpen, onClose }) => {
         setEditMode(false);
     };    
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-        setIsLoading(false);
-      }
-    });
+  
 
     return () => unsubscribe();
   }, [auth]);

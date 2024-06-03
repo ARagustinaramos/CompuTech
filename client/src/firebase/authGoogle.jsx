@@ -10,6 +10,7 @@ const signInWithGoogle = async () => {
     const userInfo = {
       mail: user.email,
       name: user.displayName,
+      image: user.photoURL,
       rol: true
     };
     await sendUserInfoToBackend(userInfo, token);

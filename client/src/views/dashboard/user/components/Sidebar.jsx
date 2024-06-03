@@ -51,7 +51,7 @@ const Sidebar = () => {
     >
       <div className="bg-gradient-to-r from-blue-600 to-green-600 1 rounded-tr-[100px] dark:border-gray-700 flex flex-col items-center justify-center h-[30vh]">
         <img
-          src={user?.picture||'https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg'}
+          src={user.photoURL}
           className="w-20 h-20 object-cover rounded-full ring-2 ring-gray-300"
         />
         <h1 className="text-xl text-white font-bold">{user?.given_name||'usuario'}</h1>
