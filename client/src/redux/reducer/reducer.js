@@ -325,6 +325,19 @@ function rootReducer(state = initialState, action) {
         allProducts: state.filteredProducts.length ? state.allProducts : sortedProducts,
       };
     }
+    case 'DELETE_USER_SUCCESS':
+      return {
+        ...state,
+        users: state.allUsers.map(user =>
+          user.id === action.payload.id ? { ...user, active: action.payload.active } : user
+        )
+      };
+    case 'DELETE_USER_FAILURE':
+      return {
+        ...state,
+        error: action.error
+      };
+
     default:
       return { ...state };
   }
