@@ -6,6 +6,14 @@ const path = require("path");
 const postUserController = async (req, res) => {
   try {
     const { name, mail, image, rol } = req.body;
+    const existingUser = await User.findOne({ where: { mail } });
+
+    if (existingUser) {
+      // Si el usuario ya existe, simplemente devolvemos el usuario existente
+      return res.status(200).json(existingUser);
+    }
+
+    // Si el usuario no existe, lo creamos
     const newUser = await User.create({
       mail,
       name,
@@ -13,6 +21,7 @@ const postUserController = async (req, res) => {
       rol: true,
       // Aquí puedes añadir más campos si es necesario
     });
+
     res.status(201).json(newUser);
   } catch (error) {
     console.error("Error creating user:", error);
