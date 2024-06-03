@@ -3,10 +3,10 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/Spinner'; // Asegúrate de importar Spinner
-
+import SideBarAdmin from '../sidebaradmin/SideBarAdmin';
 export default function ProductForm() {
   // Cloudinary 
-  const preset = 'presetComputech'; 
+  const preset = 'presetComputech';
   const cloudName = 'damfsltm2';
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
@@ -15,7 +15,7 @@ export default function ProductForm() {
 
   const changeUploadImage = async (e) => {
     const files = Array.from(e.target.files);
-    const urls = [...url_imgs]; 
+    const urls = [...url_imgs];
 
     try {
       for (const file of files) {
@@ -46,7 +46,7 @@ export default function ProductForm() {
     brand: "",
     category: ""
   });
-  
+
   const [errors, setErrors] = useState({});
   const [nameLengthError, setNameLengthError] = useState(false);
   const navigate = useNavigate();
@@ -146,9 +146,9 @@ export default function ProductForm() {
         ...product,
         price: parseFloat(product.price),
         stock: parseInt(product.stock, 10),
-        image: url_imgs 
+        image: url_imgs
       };
-  
+
       try {
         const response = await fetch('http://localhost:3001/products', {
           method: 'POST',
@@ -157,7 +157,7 @@ export default function ProductForm() {
           },
           body: JSON.stringify(parsedProduct),
         });
-  
+
         if (response.ok) {
           Swal.fire({
             position: "center",
@@ -220,7 +220,9 @@ export default function ProductForm() {
 
   return (
     <div className="pt-16">
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 antialiased md:py-5">
+  <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
+    <SideBarAdmin></SideBarAdmin>
+    <div className="flex-grow flex items-center justify-center bg-gray-100 dark:bg-gray-900 antialiased md:py-5">
       <div className="max-w-md w-full p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
         <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">Añade un producto</h1>
         <form onSubmit={handleSave}>
@@ -336,6 +338,8 @@ export default function ProductForm() {
         </form>
       </div>
     </div>
-    </div>
+  </div>
+</div>
+
   );
 }

@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_DETAIL,
   GET_PRODUCTS,
+  GET_ALL_PRODUCTS,
   GET_USERS,
   CLEAN_DETAIL,
   SET_FILTER,
@@ -46,6 +47,7 @@ export const getProducts = () => async (dispatch) => {
     console.error("Error fetching products:", error);
   }
 };
+
 export const setNameOrder = (order) => ({
   type: SET_NAME_ORDER,
   payload: order,

@@ -1,11 +1,106 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from 'sweetalert2';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/firebase";
+import axios from 'axios';
 
+const PayPalButton = ({ total, items }) => {
+    const [user] = useAuthState(auth);
+    const [userId, setUserId] = useState(null);
+    const [details, setDetails] = useState(null);
 
-const PayPalButton = ({ total, items, handleOrderComplete }) => {
+    useEffect(() => {
+        if (user && user.email) {
+            fetch('http://localhost:3001/users')
+                .then(response => response.json())
+                .then(data => {
+                    const matchingUser = data.find(u => u.mail === user.email);
+                    if (matchingUser) {
+                        setUserId(matchingUser.id_User);
+                    }
+                })
+                .catch(error => console.error('Error fetching users:', error));
+        }
+    }, [user]);
 
+    useEffect(() => {
+        if (details && userId) {
+            handleOrderComplete(details, userId);
+        }
+    }, [details, userId]);
 
+    const handleOrderComplete = async (detail, userId) => {
+        console.log('handleOrderComplete - userId:', userId);
+
+        if (detail.status === 'COMPLETED') {
+            const formattedOrder = {
+                payer: {
+                    address: {
+                        country_code: detail.payer.address?.country_code || ''
+                    },
+                    email_address: detail.payer.email_address || '',
+                    name: {
+                        given_name: detail.payer.name?.given_name || '',
+                        surname: detail.payer.name?.surname || ''
+                    },
+                    payer_id: detail.payer.payer_id || ''
+                },
+                purchase_units: detail.purchase_units.map(unit => ({
+                    amount: {
+                        currency_code: unit.amount?.currency_code || '',
+                        value: unit.amount?.value || ''
+                    },
+                    payee: {
+                        email_address: unit.payee?.email_address || '',
+                        merchant_id: unit.payee?.merchant_id || ''
+                    },
+                    payments: {
+                        captures: unit.payments.captures.map(capture => ({
+                            amount: {
+                                currency_code: capture.amount?.currency_code || '',
+                                value: capture.amount?.value || ''
+                            },
+                            create_time: capture.create_time || '',
+                            final_capture: capture.final_capture || false,
+                            id: capture.id || '',
+                            seller_protection: {
+                                dispute_categories: capture.seller_protection?.dispute_categories || [],
+                                status: capture.seller_protection?.status || ''
+                            },
+                            status: capture.status || '',
+                            update_time: capture.update_time || ''
+                        }))
+                    },
+                    reference_id: unit.reference_id || '',
+                    shipping: {
+                        address: {
+                            address_line_1: unit.shipping?.address?.address_line_1 || '',
+                            admin_area_1: unit.shipping?.address?.admin_area_1 || '',
+                            admin_area_2: unit.shipping?.address?.admin_area_2 || '',
+                            country_code: unit.shipping?.address?.country_code || '',
+                            postal_code: unit.shipping?.address?.postal_code || ''
+                        },
+                        name: {
+                            full_name: unit.shipping?.name?.full_name || ''
+                        }
+                    },
+                    soft_descriptor: unit.soft_descriptor || ''
+                })),
+                status: detail.status || '',
+                update_time: detail.update_time || ''
+            };
+
+            console.log('formattedOrder:', formattedOrder);
+
+            try {
+                await axios.post(`http://localhost:3001/order/create-order/${userId}`, formattedOrder);
+                console.log('Datos del pedido enviados correctamente:', formattedOrder);
+            } catch (error) {
+                console.error(`Error al enviar los datos del pedido: ${userId}`, error.response?.data || error.message);
+            }
+        }
+    };
 
     return (
         <PayPalButtons
@@ -34,48 +129,8 @@ const PayPalButton = ({ total, items, handleOrderComplete }) => {
                         console.log('Transacción exitosa ' + details.payer.name.given_name);
                         console.log('Detalles de la orden:', details);
 
-                        // Guardar los detalles del pedido en el shoppingCart
-                        const handleOrderComplete = (detail) => {
-
-                            if(detail.status === 'COMPLETED'){                        
-                                updateUserData({
-                                    id: detail.id || '',
-                                    intent: detail.intent || '',
-                                    status: detail.status || '',
-                                    purchase_units: detail.purchase_units || [],
-                                    payer: {
-                                        email_address: detail.payer.email_address || '',
-                                        name: {
-                                            given_name: detail.payer.name?.given_name || '',
-                                            surname: detail.payer.name?.surname || ''
-                                        },
-                                        payer_id: detail.payer.payer_id || ''
-                                    },
-                                    create_time: detail.create_time || '',
-                                    links: detail.links || [],
-                                    reference_id: detail.reference_id || '',
-                                    shipping: {
-                                        address: {
-                                            address_line_1: detail.shipping?.address?.address_line_1 || '',
-                                            admin_area_1: detail.shipping?.address?.admin_area_1 || '',
-                                            admin_area_2: detail.shipping?.address?.admin_area_2 || '',
-                                            country_code: detail.shipping?.address?.country_code || '',
-                                            postal_code: detail.shipping?.address?.postal_code || ''
-                                        },
-                                        name: {
-                                            full_name: detail.shipping?.name?.full_name || ''
-                                        }
-                                    },
-                                    soft_descriptor: detail.soft_descriptor || ''
-                                });
-                            }                            
-                        };
-                        console.log('Actualiza estado del usuario: ', details);
-
-                        setTimeout(() => {
-                            window.location.href = "http://localhost:5173/dashboarduser";
-                        }, 5000);
-
+                        // Establecer los detalles para manejar la orden cuando userId esté disponible
+                        setDetails(details);
                     }
 
                 } catch (error) {

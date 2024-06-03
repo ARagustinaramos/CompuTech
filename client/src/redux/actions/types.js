@@ -1,4 +1,5 @@
 export const GET_PRODUCTS= "GET_PRODUCTS";
+export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_DETAIL = "GET_DETAIL";
 export const GET_BY_NAME = "GET_BY_NAME";
 export const ORDER_NAME = "ORDER_NAME";
