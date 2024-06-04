@@ -37,15 +37,15 @@ const CardStat = () => {
     // Convertir el objeto en un array
     const soldByBrand = Object.keys(brandSales).map(brandName => ({
         name: brandName,
-        sold: brandSales[brandName]
+        ventas: brandSales[brandName]
     }));
 
     // Ordenar marcas por cantidad vendida (descendente) y seleccionar las 3 primeras
     const topSoldByBrand = [...soldByBrand]
-        .sort((a, b) => b.sold - a.sold)
+        .sort((a, b) => b.ventas - a.ventas)
         .slice(0, 3);
 
-    const totalSoldByBrand = soldByBrand.map(brand => brand.sold)
+    const totalSoldByBrand = soldByBrand.map(brand => brand.ventas)
         .reduce((accumulator, currentSold) => accumulator + currentSold, 0);
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -75,7 +75,7 @@ const CardStat = () => {
                     {topSoldByBrand.map((brand, index) => (
                         <div key={index} className="flex justify-between">
                             <Text className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">{brand.name}</Text>
-                            <Text className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">{brand.sold}</Text>
+                            <Text className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">{brand.ventas}</Text>
                         </div>
                     ))}
                 </div>
@@ -110,7 +110,7 @@ const CardStat = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="sold" fill="#007CFF" />
+                    <Bar dataKey="ventas" fill="#007CFF" />
                 </BarChart>
                 <button onClick={closeModal} style={{ marginTop: '20px', padding: '10px', backgroundColor: '#007CFF', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
                     Cerrar
