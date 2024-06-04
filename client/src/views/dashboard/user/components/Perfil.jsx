@@ -7,8 +7,10 @@ import axios from "axios";
 import { updateCurrentUser } from "firebase/auth";
 import { updateDataUser } from "../../../../redux/actions/actions";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Perfil = ({ isOpen, onClose, currentUser }) => {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [editMode, setEditMode] = useState(false);
 	const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
@@ -65,9 +67,22 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 	}, [auth]);
 	//guardo el id del usuario para pasarlo por parametro al updateDataUser
 	const id_User = currentUser?.id_User;
+	//handler para enviar el update al back
 	const handleSave = async () => {
 		try {
 			dispatch(updateDataUser(id_User, perfilInfo));
+			Swal.fire({
+				position: "center",
+				icon: "success",
+				title: "Informacion actualiazada correctamente",
+				showConfirmButton: true,
+				confirmButtonText: "volver al home"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					onClose();
+					navigate("/");
+				}
+			});
 		} catch (error) {
 			console.error("Error updating profile:", error);
 			// Manejar el error (por ejemplo, mostrar una notificación al usuario)
