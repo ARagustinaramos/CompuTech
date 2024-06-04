@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Card, Text } from "@tremor/react";
 import Modal from 'react-modal';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
@@ -7,18 +8,27 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 Modal.setAppElement('#root');
 
 const CardSoldProducts = () => {
-    // Variables hardcodeadas por ahora
-    const soldProducts = [
-        { name: 'Producto A', sold: 30 },
-        { name: 'Producto B', sold: 45 },
-        { name: 'Producto C', sold: 25 },
-        { name: 'Producto D', sold: 15 },
-        { name: 'Producto Z', sold: 15 },
-        { name: 'Producto J', sold: 15 },
-        { name: 'Producto F', sold: 15 },
-        { name: 'Producto D', sold: 15 },
-        { name: 'Producto E', sold: 20 }
-    ];
+    // Obtener el estado de Redux
+    const allSales = useSelector(state => state.allSales);
+
+    // Procesar las ventas para obtener el total de cada producto
+    const productSales = {};
+
+    allSales.forEach(sale => {
+        sale.paymentInformation.shoppingCart.forEach(item => {
+            if (productSales[item.name]) {
+                productSales[item.name] += 1;
+            } else {
+                productSales[item.name] = 1;
+            }
+        });
+    });
+
+    // Convertir el objeto en un array
+    const soldProducts = Object.keys(productSales).map(productName => ({
+        name: productName,
+        sold: productSales[productName]
+    }));
 
     // Ordenar productos por cantidad vendida (descendente) y seleccionar los 3 primeros
     const topSoldProducts = [...soldProducts]
