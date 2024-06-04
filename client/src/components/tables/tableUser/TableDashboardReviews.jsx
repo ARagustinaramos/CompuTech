@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Select, SelectItem } from '@tremor/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers, getAllSales, getDetail } from '../../../redux/actions/actions';
+import { getUsers, getAllSales, getDetail,addToCart } from '../../../redux/actions/actions';
 import { useParams } from 'react-router-dom';
 
 export function TableDashboardReviews() {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const allUsers = useSelector((state) => state.allUsers);
   const producto = useSelector((state) => state.productDetail);
-  const {id} = useParams();
-  
-  console.log(producto?.reviews)
+
+  console.log(producto)
 
   // Estado local para manejar el estado activo/inactivo de cada usuario
   const [userStatus, setUserStatus] = useState({});
@@ -34,7 +34,6 @@ export function TableDashboardReviews() {
 
     
   }, [dispatch, id]);
-
 
   useEffect(() => {
     const statusMap = {};

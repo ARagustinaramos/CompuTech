@@ -36,7 +36,7 @@ const initialState = {
   allProducts: [],
   copyProducts: [],
   producto: [],
-  productDetail: {},
+  productDetail: {msj:"hola"},
   items: loadCartFromLocalStorage(),
   filteredProducts: [],
   categoryFilter: "",

@@ -10,6 +10,7 @@ import { TableUsageExample } from '../../../components/tables/tableUser/TableUsa
 import { Card } from '@tremor/react';
 import CardSoldProducts from '../../../components/cardstat/CardOrderStat';
 import { TableDashboardOrders } from '../../../components/tables/TableDashboardOrders';
+import SideBarAdminResponsive from '../../../components/sidebaradmin/SideBarAdminResponsive';
 
 const DashboardAdmin = () => {
   return (
@@ -17,15 +18,15 @@ const DashboardAdmin = () => {
       <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
         {/* Sidebar */}
         <SideBarAdmin></SideBarAdmin>
-
+        {/* <SideBarAdminResponsive></SideBarAdminResponsive> */}
         <div>
-          <div className='grid grid-cols-4 gap-2'>
+          <div className='grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
             <CardSoldProducts />
             <CardStat />
             <CardStat2 />
             <CardStat3 />
           </div>
-          <div className='grid grid-cols-4'>
+          <div className='grid grid-cols-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
             <div className='col-span-2 mt-10'>
               <TableUsageExample />
               <TableDashboardOrders className='flex-1' />
