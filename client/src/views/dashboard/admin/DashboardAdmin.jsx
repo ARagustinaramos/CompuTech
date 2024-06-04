@@ -1,4 +1,6 @@
 import CardStat from '../../../components/cardstat/CardStat'
+import CardStat2 from '../../../components/cardstat/CardStat2'
+import CardStat3 from '../../../components/cardstat/CardStat3'
 import { ChartCategories } from '../../../components/charts/ChartCategories';
 // import { ChartCategories } from '../../../components/charts/ChartCategories';
 import { Chart } from '../../../components/charts/ChartProductStock'
@@ -20,8 +22,8 @@ const DashboardAdmin = () => {
           <div className='grid grid-cols-4 gap-2'>
             <CardSoldProducts />
             <CardStat />
-            <CardStat />
-            <CardStat />
+            <CardStat2 />
+            <CardStat3 />
           </div>
           <div className='grid grid-cols-4'>
             <div className='col-span-2 mt-10'>

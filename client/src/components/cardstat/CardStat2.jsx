@@ -1,34 +1,34 @@
-import { useDispatch,useSelector } from "react-redux"
-import { getProducts } from "../../redux/actions/actions"
-import { useEffect,useState } from "react"
-import { Card, Metric, Text } from "@tremor/react"
+import { useSelector } from "react-redux";
+import { Card, Text } from "@tremor/react";
 
 const CardStat2 = () => {
-    const dispatch = useDispatch();
-    const allProducts = useSelector((state) => state.allProducts);
-   
+    // Obtener el estado de Redux
+    const allSales = useSelector((state) => state.allSales);
 
-    useEffect(() => {
-        dispatch(getProducts());
-    }, [dispatch]);
+    // Calcular las ganancias totales
+    const totalEarnings = allSales.reduce((accumulator, sale) => {
+        const total = parseFloat(sale.paymentInformation.total);
+        return !isNaN(total) ? accumulator + total : accumulator;
+    }, 0);
 
-    const totalStock = allProducts.map(product => product.stock)
-    .reduce((acumulador,stockActual) =>acumulador + stockActual,0)
-    
+    // Calcular el número total de pedidos
+    const totalOrders = allSales.length;
+
     return (
-
         <Card
             className="mx-auto max-w-xs"
             decoration="top"
             decorationColor="indigo"
         >
-            <p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">Productos en stock: </p>
-            <p className="text-3xl text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">{totalStock}</p>
+            <p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">Ganancias totales:</p>
+            <p className="text-3xl text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">
+                ${totalEarnings.toFixed(2)}
+            </p>
+            <p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content mt-2">
+                en {totalOrders} pedidos
+            </p>
         </Card>
-
-    )
+    );
 }
-
-
 
 export default CardStat2
