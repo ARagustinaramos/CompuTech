@@ -154,9 +154,13 @@ function rootReducer(state = initialState, action) {
 			};
 
 		case SET_USER_DATA:
+			const userLog = state.allUsers.find(
+				(user) => user.mail === action.payload
+			);
+			console.log("action.payload", action.payload);
 			return {
 				...state,
-				currentUserData: action.payload
+				currentUserData: userLog
 			};
 
 		case SET_BRANDS:

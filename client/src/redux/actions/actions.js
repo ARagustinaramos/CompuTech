@@ -274,10 +274,13 @@ export const createReview = (formData) => {
 	};
 };
 
-export const setUserData = (userData) => ({
-	type: SET_USER_DATA,
-	payload: userData
-});
+export const setUserData = (userEmail) => (
+	console.log("aaaaa", userEmail?.email),
+	{
+		type: SET_USER_DATA,
+		payload: userEmail?.email
+	}
+);
 
 const reviewPostSuccess = (data) => ({
 	type: REVIEW_SENT_SUCCESS,
