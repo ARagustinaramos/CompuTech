@@ -18,7 +18,7 @@ const CardStat2 = () => {
         <Card
             className="mx-auto max-w-xs"
             decoration="top"
-            decorationColor="indigo"
+            fill="#8884d8"
         >
             <p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">Ganancias totales:</p>
             <p className="text-3xl text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">

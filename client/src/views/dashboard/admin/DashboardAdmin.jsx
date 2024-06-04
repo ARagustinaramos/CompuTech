@@ -1,7 +1,7 @@
 import CardStat from '../../../components/cardstat/CardStat'
 import CardStat2 from '../../../components/cardstat/CardStat2'
 import CardStat3 from '../../../components/cardstat/CardStat3'
-import { ChartCategories } from '../../../components/charts/ChartCategories';
+import { ChartCategories } from '../../../components/charts/ChartProductSold';
 // import { ChartCategories } from '../../../components/charts/ChartCategories';
 import { Chart } from '../../../components/charts/ChartProductStock'
 import { DangerCard } from '../../../components/dangercard/DangerCard';

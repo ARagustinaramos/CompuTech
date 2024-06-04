@@ -53,7 +53,7 @@ const CardSoldProducts = () => {
             <Card
                 className="mx-auto max-w-xs"
                 decoration="top"
-                decorationColor="emerald"
+                fill="#8884d8"
                 onClick={openModal}
                 style={{ cursor: 'pointer' }}
             >
@@ -100,9 +100,9 @@ const CardSoldProducts = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="sold" fill="#8884d8" />
+                    <Bar dataKey="sold" fill="#007CFF" />
                 </BarChart>
-                <button onClick={closeModal} style={{ marginTop: '20px', padding: '10px', backgroundColor: '#8884d8', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                <button onClick={closeModal} style={{ marginTop: '20px', padding: '10px', backgroundColor: '#007CFF', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
                     Cerrar
                 </button>
             </Modal>

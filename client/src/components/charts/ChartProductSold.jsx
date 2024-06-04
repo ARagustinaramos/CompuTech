@@ -30,7 +30,7 @@ export function ChartCategories() {
     return (
         <>
             <h3 className="text-lg font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
-                Productos más vendidos
+                Productos más vendidosaaaa
             </h3>
             <BarChart
                 className="mt-6"
