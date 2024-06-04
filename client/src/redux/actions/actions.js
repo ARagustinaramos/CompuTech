@@ -245,9 +245,9 @@ export const getAllProducts = () => {
 export const getAllSales = () => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get("http://localhost:3001/products/all");
+      const {data} = await axios.get("http://localhost:3001/order/");
       return dispatch({
-        type:GET_ALL_PRODUCTS,
+        type:GET_SALES,
         payload:data
       });
     } catch (error) {

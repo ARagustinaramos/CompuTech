@@ -24,6 +24,7 @@ import {
   SET_NAME_ORDER,
   SET_PRICE_ORDER,
   SET_CART_ITEMS,
+  GET_SALES,
 } from "../actions/types";
 
 import {
@@ -46,7 +47,9 @@ const initialState = {
   allUsers: [],
   copyUsers: [],
   allProductsActivesDesactives: [],
-  copyallProductsActivesDesactives: []
+  copyallProductsActivesDesactives: [],
+  allSales:[],
+  copyAllSales:[],
 };
 
 const applyFilters = (products, filters) => {
@@ -108,6 +111,12 @@ function rootReducer(state = initialState, action) {
         copyUsers: [...action.payload],
       };
 
+      case GET_SALES:
+      return {
+        ...state,
+        allSales: action.payload,
+        copyAllSales: [...action.payload],
+      };
     case GET_ALL_PRODUCTS:
       return {
         ...state,

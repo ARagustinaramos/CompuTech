@@ -7,6 +7,7 @@ import SideBarAdmin from '../../../components/sidebaradmin/SideBarAdmin';
 import { TableUsageExample } from '../../../components/tables/tableUser/TableUsageExample'
 import { Card } from '@tremor/react';
 import CardSoldProducts from '../../../components/cardstat/CardOrderStat';
+import { TableDashboardOrders } from '../../../components/tables/TableDashboardOrders';
 
 const DashboardAdmin = () => {
   return (
@@ -25,6 +26,7 @@ const DashboardAdmin = () => {
           <div className='grid grid-cols-4'>
             <div className='col-span-2 mt-10'>
               <TableUsageExample />
+              <TableDashboardOrders className='flex-1' />
             </div>
             <div className='col-span-2 mt-10 px-7'>
               <Card className="mb-5 ">
@@ -36,9 +38,6 @@ const DashboardAdmin = () => {
               <Card className="mb-5 ">
                 <DangerCard></DangerCard>
               </Card>
-            </div>
-            <div className='col-span-2 mt-10'>
-              <TableUsageExample />
             </div>
           </div>
         </div>

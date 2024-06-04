@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Select, SelectItem } from '@tremor/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '../../../redux/actions/actions';
+import { getUsers,getAllSales } from '../../../redux/actions/actions';
 
 export function TableDashboardReviews() {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export function TableDashboardReviews() {
   const [userStatus, setUserStatus] = useState({});
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getAllSales());
   }, [dispatch]);
 
   useEffect(() => {
@@ -28,7 +28,6 @@ export function TableDashboardReviews() {
       [userId]: status,
     }));
   };
- console.log(allUsers)
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">  
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -41,7 +40,7 @@ export function TableDashboardReviews() {
               </div>
             </th>
             <th scope="col" className="px-6 py-3">
-              Nombre
+              ORDEN
             </th>
             <th scope="col" className="px-6 py-3">
               Review
