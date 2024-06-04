@@ -20,7 +20,7 @@ const DashboardUser = () => {
     dispatch(getUsers());
   }, [dispatch]);
   
-  const currentUser = allUsers.find(u => u.mail === user?.email);
+  const currentUser = useSelector((state) =>state.allUsers.find(u => u.mail === user?.email));
 
 
 
@@ -36,12 +36,12 @@ const DashboardUser = () => {
           {/* Section 1 */}
           <section className="grid sm:grid-cols-1 sm:col-span-1 lg:col-span-3 xl:col-span-5 dark:bg-gray-900 p-4 md:p-8 gap-4 py-2 flex-grow">
             {/* Historial de pedidos */}
-            <OrderHistory className="sm:col-span-1 lg:cols-span-3" />
-            <ReviewHistory className="sm:col-span-1 lg:cols-span-3 cols-span-6" />
+            <OrderHistory currentUser={currentUser} className="sm:col-span-1 lg:cols-span-3" />
           </section>
         </main>
       </div>
     </div>
+            //<ReviewHistory className="sm:col-span-1 lg:cols-span-3 cols-span-6" />
   );
 };
 

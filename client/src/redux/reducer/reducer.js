@@ -29,6 +29,7 @@ import {
   GET_USER_BY_ID,
   SET_USER_DATA,
   UPDATE_DATA_USER,
+  GET_ORDER_BY_USER,
 } from "../actions/types";
 
 import {
@@ -55,6 +56,7 @@ const initialState = {
   adminReview: [],
   getProductReviews: [],
   currentUserData: [],
+  ordersByUser:[],
   
 
 };
@@ -376,6 +378,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         currentUserData: action.payload
       }
+    case GET_ORDER_BY_USER:
+      return {
+        ...state,
+        orderByUser: action.payload
+      };
+      
       
     default:
       return { ...state };

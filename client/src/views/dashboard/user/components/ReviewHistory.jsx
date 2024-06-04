@@ -6,10 +6,10 @@ import Order from "./Order";
 import Spinner from '../../../../components/spinner/Spinner'
 
 const ReviewHistory = () => {
-  const { auth } = useFirebase();
+  const [isLoading, setIsLoading] = useState(true);
+/*   const { auth } = useFirebase();
   
   const dispatch = useDispatch()
-  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
   
   const allUsers = useSelector((state) => state.allUsers);  
@@ -33,7 +33,7 @@ const ReviewHistory = () => {
 
   console.log('current User', currentUser)
 
-
+ */
 
   if (isLoading) {
     return <Spinner className=''/>;

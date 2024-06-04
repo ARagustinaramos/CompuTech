@@ -36,6 +36,7 @@ import {
   GET_USER_BY_EMAIL,
   SET_USER_DATA,
   UPDATE_DATA_USER,
+  GET_ORDER_BY_USER,
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -348,4 +349,19 @@ export const getAllProducts = () => {
 
   }
 };
+
+export const getOrderByUser = (id) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.put(`http://localhost:3001/order/${id}/orders`);
+      return dispatch({
+        type:GET_ORDER_BY_USER,
+        payload: data
+      });
+    } catch (error) {
+      console.error("Error al traer las ordenes del usuuario:", error);
+    }
+
+  }
+}
 
