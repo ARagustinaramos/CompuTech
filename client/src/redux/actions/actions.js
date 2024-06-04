@@ -37,6 +37,8 @@ import {
   SET_USER_DATA,
   UPDATE_DATA_USER,
   GET_ORDER_BY_USER,
+  UPDATE_SHOPPINGCART_ITEM_QUANTITY,
+  SET_SHOPPINGCART_ITEMS,
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -271,6 +273,7 @@ export const createReview = (formData) => {
 
 
 
+
 export const setUserData = (userData) => ({
   type: SET_USER_DATA,
   payload: userData,
@@ -290,14 +293,14 @@ export const updateReview = (id, updatedBody) => {
   return async (dispatch) => {
     try {
       dispatch({ type: UPDATE_REVIEW_REQUEST });
-
+      
       console.log("ID recibido en la acción:", id);
       console.log("Cuerpo actualizado recibido en la acción:", updatedBody);
-
+      
       const response = await axios.put(`http://localhost:3001/reviews/${id}`, {
         body: updatedBody,
       });
-
+      
       console.log("Respuesta del servidor:", response.data);
 
       dispatch({ type: UPDATE_REVIEW_SUCCESS, payload: response.data });
@@ -312,10 +315,10 @@ export const updateReview = (id, updatedBody) => {
 export const deleteReview = (id) => {
   return async (dispatch) => {
     dispatch({ type: DELETE_REVIEW_REQUEST });
-
+    
     try {
       await axios.delete(`http://localhost:3001/reviews/${id}`);
-
+      
       dispatch({ type: DELETE_REVIEW_SUCCESS, payload: id });
     } catch (error) {
       dispatch({ type: DELETE_REVIEW_FAILURE, payload: error.message });
@@ -346,22 +349,36 @@ export const getAllProducts = () => {
     } catch (error) {
       console.error("Error fetching products:", error);
     }
-
+    
   }
 };
 
-export const getOrderByUser = (id) => {
-  return async (dispatch) => {
+//**********************SHOPPINGCART POR USER***************************
+export const updateShoppingCartItemQuantity = (itemId, quantity) => ({
+  type: UPDATE_SHOPPINGCART_ITEM_QUANTITY,
+  payload: { itemId, quantity },
+});
+
+
+  export const getOrderByUser = (id) => {
+  return async () => {
     try {
-      const {data} = await axios.put(`http://localhost:3001/order/${id}/orders`);
-      return dispatch({
+      const {data} = await axios.get(`http://localhost:3001/order/${id}/orders`);
+      return({
         type:GET_ORDER_BY_USER,
         payload: data
       });
     } catch (error) {
       console.error("Error al traer las ordenes del usuuario:", error);
     }
-
+    
   }
-}
+}  
+
+export const setShoppingCartItems = (items) => ({
+  type: SET_SHOPPINGCART_ITEMS,
+  payload: items
+});
+
+
 

@@ -1,31 +1,215 @@
-const OrderHistoryOrder = (currentUser) => {
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import {  updateShoppingCartItemQuantity} from '../../../../redux/actions/actions.js';
 
-  console.log(currentUser)
+import { useFirebase } from '../../../../firebase/firebase.jsx';
+import { useAuthState } from "react-firebase-hooks/auth";
 
-    return (
-        <div>
-        <div className="bg-gray-500 p-8 rounded-xl shadow-2xl mb-8 flex flex-col gap-8">
-          {/* Producto */}
-          <div className="grid grid-cols-1 xl:grid-cols-4 items-center gap-4 mb-4">
-            <div className="col-span-2 flex items-center gap-4">
-              <img
-                src={currentUser?.shoppingCart?.image}
-                className="w-14 h-14 object-cover rounded-xl"
-              />
-              <div>
-                <h3 className="font-bold">{currentUser?.shoppingCart?.name}</h3>
-                <p className="text-gray-500">{currentUser?.shoppingCart?.description}</p>
-              </div>
-            </div>
-            <div>
-            </div>
-            <div>
-              <span className="font-bold">&#36; 1,200.87</span>
-            </div>
-          </div>
-        </div>           
-      </div>
-    )
-}
 
-export default OrderHistoryOrder
+const Order = (currentUser) => {
+    const shoppingCartItems = useSelector(state => state.ordersByUser);
+    const dispatch = useDispatch();
+    console.log(currentUser)
+    console.log(shoppingCartItems)
+
+  
+    
+    //firebase
+    const { auth } = useFirebase();
+    const isAuthenticated = !!auth.currentUser;
+    const [user] = useAuthState(auth);
+    const [userId, setUserId] = useState(null);
+    
+
+/*     useEffect(() => {
+      if (user && user.email) {
+          fetch('http://localhost:3001/users')
+              .then(response => response.json())
+              .then(data => {
+                  const matchingUser = data.find(u => u.mail === user.email);
+                  if (matchingUser) {
+                      setUserId(matchingUser.id_User);
+                  }
+              })
+              .catch(error => console.error('Error fetching users:', error));
+      }
+  }, [user]);
+  console.log(userId) */
+
+  console.log(shoppingCartItems)
+    
+/* 
+  const items = cartItems.map(item => ({
+    id_Product: item.id_Product,
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity
+  })); */
+
+
+
+  const handleQuantityChange = (itemId, newQuantity) => {
+    const quantity = Math.max(1, parseInt(newQuantity, 10) || 1);
+    dispatch(updateShoppingCartItemQuantity(itemId, quantity));
+  };
+
+  const handleIncrement = (itemId, currentQuantity) => {
+    const newQuantity = parseInt(currentQuantity, 10) + 1;
+    handleQuantityChange(itemId, newQuantity);
+  };
+
+  const handleDecrement = (itemId, currentQuantity) => {
+    const newQuantity = Math.max(1, parseInt(currentQuantity, 10) - 1);
+    handleQuantityChange(itemId, newQuantity);
+  };
+
+    const total = shoppingCartItems
+        .map(item => parseFloat(item.price) * parseInt(item.quantity, 10))
+        .reduce((acc, curr) => acc + curr, 0);
+
+  return (
+    <div className="pt-16">
+      <div className="flex flex-col min-h-screen">
+        <section className="flex-grow bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+          <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl text-center">Carrito de compras</h2>
+
+                        {shoppingCartItems?.length === 0 || !isAuthenticated? (
+                          <div className="flex flex-col items-center justify-center mt-6 sm:mt-8">
+                            <img src="https://images.vexels.com/media/users/3/134743/isolated/preview/97ae591756f3dc69db88c09fd097319a-emoticon-de-emoji-de-cara-triste.png" alt="Carrito vacío" className="mx-auto mb-4 h-48 w-48" />
+                             <p className="mt-6 sm:mt-8 text-2xl font-bold text-gray-500 dark:text-gray-400 text-center">Aun no has hecho ningun pedido </p>
+                              <Link to="/" className="mt-4 inline-block rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                               Seguir comprando
+                           </Link>
+                       </div>
+                        ) : (
+                            <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
+                                <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
+                                    <ul className="space-y-6">
+                                        {shoppingCartItems.map((item, index) => (
+                                            <li key={index} className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+                                                <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
+                                                    <Link to={`/detail/${item.id_Product}`} className="shrink-0 md:order-1">
+                                                        {item.image && (
+                                                            <>
+                                                                <img
+                                                                    className="h-20 w-20 object-cover object-center" // Ajusta el tamaño de la imagen y la posición
+                                                                    src={item.image[0]} // Accede a la primera imagen del arreglo
+                                                                    alt={item.name}
+                                                                />
+                                                                <img
+                                                                    className="h-20 w-20 hidden"
+                                                                    src={item.darkImage && item.darkImage[0]} // Accede a la primera imagen del arreglo darkImage
+                                                                    alt={item.name}
+                                                                />
+                                                            </>
+                                                        )}
+                                                    </Link>
+
+                          <div className="flex items-center justify-between md:order-3 md:justify-end">
+                            <div className="flex items-center">
+                              <button
+                                type="button"
+                                id="decrement-button"
+                                data-input-counter-decrement="counter-input"
+                                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+                                onClick={() => handleDecrement(item?.cartItemId, item?.quantity)}
+                              >
+                                <svg className="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
+                                </svg>
+                              </button>
+                              <input
+                                type="text"
+                                id="counter-input"
+                                data-input-counter
+                                className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
+                                placeholder=""
+                                value={item?.quantity || 1}
+                                onChange={(e) => handleQuantityChange(item?.cartItemId, e.target.value)}
+                                required
+                              />
+                              <button
+                                type="button"
+                                id="increment-button"
+                                data-input-counter-increment="counter-input"
+                                className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+                                onClick={() => handleIncrement(item?.cartItemId, item?.quantity)}
+                              >
+                                <svg className="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
+                                </svg>
+                              </button>
+                            </div>
+                            <div className="text-end md:order-4 md:w-32">
+                              <p className="text-base font-bold text-gray-900 dark:text-white">{(item?.price * item?.quantity).toFixed(2)}$</p>
+                            </div>
+                          </div>
+
+                          <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
+                            <Link to={`/detail/${item?.id_Product}`} className="text-base font-medium text-gray-900 hover:underline dark:text-white">{item?.name}</Link>
+
+                                                        <div className="flex items-center gap-4">
+                                                            <button type="button" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white">
+                                                                <svg className="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 21l6.218-7.999C23 8 17.5 1 12.01 6.001Z" />
+                                                                </svg>
+                                                                Guardar para después
+                                                            </button>
+                                                            <div className="flex h-4 items-center border-l border-gray-300 dark:border-gray-600">
+                                                                <button
+                                                                    type="button"
+                                                                    className="inline-flex items-center ps-4 text-sm font-medium text-red-600 hover:underline dark:text-red-500"
+                                                                    onClick={() => handleRemoveItemClick(item?.cartItemId)}
+                                                                >
+                                                                    Eliminar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                <div className="mt-8 md:mt-10 lg:sticky lg:top-36 lg:mt-0">
+                  <div className="space-y-4 border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">Subtotal</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">{total.toFixed(2)}$</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">Envío</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">0$</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base font-medium text-gray-900 dark:text-white">Total</span>
+                      <span className="text-base font-medium text-gray-900 dark:text-white">{total.toFixed(2)}$</span>
+                    </div>
+
+                                        <button 
+                                            onClick={handleProceedToCheckout} 
+                                            className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 sm:text-base"
+                                        >
+                                            Proceder con la compra
+                                        </button>
+
+                                        {showPayPalButton && (
+                                            <div className="mt-6">
+                                                <PayPalButton total={total} items={items} />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </section>
+            </div>
+        </div>
+    );
+};
+
+export default Order;

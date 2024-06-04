@@ -7,7 +7,7 @@ import Cart from "./views/cart/Cart";
 import Form from "./components/form/Form";
 import Detail from "./views/detail/Detail";
 import About from "./views/about/About";
-import DashboardUser from "./views/dashboard/user/DashboardUser";
+import DashboardUser2 from "./views/dashboard/user/DashboardUser2";
 import DashboardAdmin from "./views/dashboard/admin/DashboardAdmin";
 import DashboardAdminManageUsers from "./views/dashboard/admin/DashboardAdminManageUsers";
 
@@ -26,7 +26,10 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/dashboardadmin/manage/products" element={<DashboardAdmin />} />
           <Route path="/dashboardadmin/manage/users" element={<DashboardAdminManageUsers />} />
-          <Route path="/dashboarduser" element={<DashboardUser />} />
+          <Route path="/dashboarduser2/" element={<DashboardUser2 />} />
+
+          <Route path="/perfil" element={<DashboardUser2 />} />
+
 
 
 

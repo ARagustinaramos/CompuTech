@@ -20,11 +20,12 @@ const DashboardUser = () => {
     dispatch(getUsers());
   }, [dispatch]);
   
-  const currentUser = useSelector((state) =>state.allUsers.find(u => u.mail === user?.email));
+  const currentUser = useSelector((state) =>state.allUsers);
+  const currentUserData = useSelector((state) => state.currentUserData)
 
 
 
-  //console.log('dashboardUser', currentUser)
+  console.log('dashboardUser', currentUser)
 
 
   return (
@@ -36,7 +37,7 @@ const DashboardUser = () => {
           {/* Section 1 */}
           <section className="grid sm:grid-cols-1 sm:col-span-1 lg:col-span-3 xl:col-span-5 dark:bg-gray-900 p-4 md:p-8 gap-4 py-2 flex-grow">
             {/* Historial de pedidos */}
-            <OrderHistory currentUser={currentUser} className="sm:col-span-1 lg:cols-span-3" />
+            <OrderHistory currentUser={currentUser}/>
           </section>
         </main>
       </div>

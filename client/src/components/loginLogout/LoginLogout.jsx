@@ -146,7 +146,7 @@ const LoginLogout = () => {
                 aria-orientation="vertical"
                 aria-labelledby="options-menu"
               >
-                {(currentUser?.rol === true )? (
+                
                   <a
                     href="/dashboardadmin/manage/products"
                     className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -154,7 +154,7 @@ const LoginLogout = () => {
                   >
                     Administrador
                   </a>
-                ) : (
+        
                   <a
                     href="/dashboarduser"
                     className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -162,7 +162,7 @@ const LoginLogout = () => {
                   >
                     Mi cuenta
                   </a>
-                )}
+            
                 <a
                   onClick={openProfileModal}
                   className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"

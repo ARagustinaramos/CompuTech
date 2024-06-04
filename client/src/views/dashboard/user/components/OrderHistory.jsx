@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase } from "../../../../firebase/firebase"; // Importa el hook useFirebase
 import Order from "./Order";
 import Spinner from '../../../../components/spinner/Spinner'
+import { getUsers} from '../../../../redux/actions/actions'
 
-const OrderHistory = (currentUser) => {
+const OrderHistory = () => {
   const { auth } = useFirebase();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+ const dispatch = useDispatch();
+  const allUsers = useSelector((state) => state.allUsers);  
+  const userByMail = allUsers.find(u => u.mail === user?.email);
+  const [currentUser,setCurrentuser] = useState('')
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-        setIsLoading(false);
-      }
-    });
+  
 
-    return () => unsubscribe();
-  }, [auth]);
+  console.log(currentUser)
+
+
+  //console.log(currentUser)
 
   if (isLoading) {
     return <Spinner />;
