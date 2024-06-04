@@ -1,70 +1,75 @@
-import { Select, SelectItem } from '@tremor/react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProducts, deleteProduct,getAllProducts,setAllProducts } from '../../../redux/actions/actions';
-import { useEffect } from 'react';
-
-import { RiFlag2Line } from '@remixicon/react';
+import { Select, SelectItem } from "@tremor/react";
+import { useDispatch, useSelector } from "react-redux";
 import {
-    Badge,
-    Card,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeaderCell,
-    TableRow,
-} from '@tremor/react';
+	getProducts,
+	deleteProduct,
+	getAllProducts,
+	setAllProducts
+} from "../../../redux/actions/actions";
+import { useEffect } from "react";
+
+import { RiFlag2Line } from "@remixicon/react";
+import {
+	Badge,
+	Card,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeaderCell,
+	TableRow
+} from "@tremor/react";
 
 export function TableUsageExample() {
+	const dispatch = useDispatch();
+	const allProducts = useSelector(
+		(state) => state.allProductsActivesDesactives
+	);
+	console.log(allProducts);
+	useEffect(() => {
+		dispatch(getProducts());
+	}, [dispatch]);
 
-
-    const dispatch = useDispatch();
-    const allProducts = useSelector((state) => state.allProductsActivesDesactives);
-    console.log(allProducts)
-    useEffect(() => {
-        dispatch(getProducts());
-    }, [dispatch]);
-
-
-    const handlerSubmit = (product) => {
-        dispatch(deleteProduct(product, false));
-        console.log("Entró!")
-    }
-    return (
-        <Card>
-            <h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">Tus historial de pedidos</h3>
-            <Table className="mt-5">
-                <TableHead>
-                    <TableRow>
-                        <TableHeaderCell>Fecha</TableHeaderCell>
-                        <TableHeaderCell>Cant de productos</TableHeaderCell>
-                        <TableHeaderCell>Total</TableHeaderCell>
-                        <TableHeaderCell>Status</TableHeaderCell>
-
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {allProducts.map((item) => (
-                        <TableRow key={item.id_Product}>
-                            <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.BrandIdBrand}</TableCell>
-                            <TableCell>{item.CategoryIdCategory}</TableCell>
-                            <TableCell>{item.price}</TableCell>
-                            <TableCell>
-                                <Select
-                                    defaultValue={item.active ? "1" : "2"}
-                                    onValueChange={() => handlerSubmit(item.id_Product, false)}
-                                >
-                                    <SelectItem value="1">Activo</SelectItem>
-                                    <SelectItem value="2">Inactivo</SelectItem>
-                                </Select>
-                            </TableCell>
-                            <TableCell>{item.stock}</TableCell>
-                            <TableCell>{item.id_Product}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </Card>
-    );
+	const handlerSubmit = (product) => {
+		dispatch(deleteProduct(product, false));
+		console.log("Entró!");
+	};
+	return (
+		<Card>
+			<h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">
+				Tus historial de pedidos
+			</h3>
+			<Table className="mt-5">
+				<TableHead>
+					<TableRow>
+						<TableHeaderCell>Fecha</TableHeaderCell>
+						<TableHeaderCell>Cant de productos</TableHeaderCell>
+						<TableHeaderCell>Total</TableHeaderCell>
+						<TableHeaderCell>Status</TableHeaderCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{allProducts.map((item) => (
+						<TableRow key={item.id_Product}>
+							<TableCell>{item.name}</TableCell>
+							<TableCell>{item.BrandIdBrand}</TableCell>
+							<TableCell>{item.CategoryIdCategory}</TableCell>
+							<TableCell>{item.price}</TableCell>
+							<TableCell>
+								<Select
+									defaultValue={item.active ? "1" : "2"}
+									onValueChange={() => handlerSubmit(item.id_Product, false)}
+								>
+									<SelectItem value="1">Activo</SelectItem>
+									<SelectItem value="2">Inactivo</SelectItem>
+								</Select>
+							</TableCell>
+							<TableCell>{item.stock}</TableCell>
+							<TableCell>{item.id_Product}</TableCell>
+						</TableRow>
+					))}
+				</TableBody>
+			</Table>
+		</Card>
+	);
 }
