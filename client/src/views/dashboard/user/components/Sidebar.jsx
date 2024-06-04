@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { useSelector } from "react-redux";
 import { useFirebase } from '../../../../firebase/firebase'; // Importa el hook useFirebase
 import {RiHome3Line, RiPieChartLine, RiMore2Fill, RiCloseFill} from "react-icons/ri";
 import { FaRegStar } from "react-icons/fa";
@@ -11,11 +11,13 @@ import Perfil from '../../user/components/Perfil'
 
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
+const currentUser = useSelector((state) => state.currentUserData);  
 
-  
+console.log(currentUser)
+
+  const [isLoading, setIsLoading] = useState(true);
+  console.log(currentUser)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -27,16 +29,15 @@ const Sidebar = () => {
   };
 
 
- useEffect(() => {
+useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setUser(user);
         setIsLoading(false);
       }
     });
 
     return () => unsubscribe();
-  }, [auth]);
+  }, [auth]); 
 
   if (isLoading) {
     return <div></div>;
@@ -51,18 +52,18 @@ const Sidebar = () => {
     >
       <div className="bg-gradient-to-r from-blue-600 to-green-600 1 rounded-tr-[100px] dark:border-gray-700 flex flex-col items-center justify-center h-[30vh]">
         <img
-          src={user.photoURL}
+          src={currentUser?.image||'https://res.cloudinary.com/damfsltm2/image/upload/v1716826731/Computech-Products/favicon_chnb9k.png'}
           className="w-20 h-20 object-cover rounded-full ring-2 ring-gray-300"
         />
-        <h1 className="text-xl text-white font-bold">{user.name||'Usuario'}</h1>
+        <h1 className="text-xl text-white font-bold">{currentUser?.name ||'Usuario'}</h1>
         <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
-          {user?.email|| 'No se encuentra email'}
+          {currentUser?.mail||'No se encuentra email'}
         </p>
         <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
-          {user?.adress|| 'Dirección de usuario'}
+          {currentUser?.address || 'Dirección de usuario'}
         </p>
         <p className="bg-primary-100 pb-1 py-2 px-4 rounded-full text-white">
-          {user?.phone|| 'Teléfono'}
+          {currentUser?.phone || 'Teléfono'}
         </p>
       </div>
       <div className="bg-gradient-to-r from-blue-600 to-green-600  rounded-br-[100px] flex flex-col justify-between ">
@@ -93,12 +94,12 @@ const Sidebar = () => {
           >
             <FaRegStar /> Reviews
           </a>
-          <a
+{/*           <a
             href="#"
             className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors"
           >
             <RiPieChartLine /> Reclamos
-          </a>
+          </a> */}
           <a href="/about" 
              className="flex items-center gap-4 text-white py-2 px-4 rounded-xl hover:bg-primary-900/50 transition-colors" 
              >

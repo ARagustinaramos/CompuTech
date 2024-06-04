@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase } from "../../../../firebase/firebase"; // Importa el hook useFirebase
 import Order from "./Order";
 import Spinner from '../../../../components/spinner/Spinner'
+import { getUsers} from '../../../../redux/actions/actions'
 
 const OrderHistory = () => {
-  const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
+  const { auth } = useFirebase();
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);  
+  const [isLoading, setIsLoading] = useState(true);
+
+ const dispatch = useDispatch();
+  const allUsers = useSelector((state) => state.allUsers);  
+  const userByMail = allUsers.find(u => u.mail === user?.email);
+  const [currentUser,setCurrentuser] = useState('')
+
+  
+
+  console.log(currentUser)
 
 
- useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-
-        setIsLoading(false);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [auth]);
+  //console.log(currentUser)
 
   if (isLoading) {
     return <Spinner />;
@@ -34,14 +35,12 @@ const OrderHistory = () => {
             </div>
             <div className="flow-root">
                   {
-                 ( user.shoppingCart?.length > 0 ) ? 
-                 user.shoppingCart.map(
-                  <ul key={user?.id_User} role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
-                    <Order user={user}/>
+                  <ul key={user?.id} role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
+                    <Order currentUser={currentUser}/>
                   </ul>
-                 ) : 
-                 (<h1 className='text-bold dark:text-white'>...Aun no has hecho ningún pedido 😠</h1>)
-                  }
+                 
+                }
+                <h1 className='text-bold dark:text-white'>...Aun no has hecho ningún pedido 😠</h1>
       </div>
     </div>
   );

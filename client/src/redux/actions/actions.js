@@ -2,6 +2,7 @@ import axios from "axios";
 import {
 	GET_DETAIL,
 	GET_PRODUCTS,
+	GET_ALL_PRODUCTS,
 	GET_USERS,
 	CLEAN_DETAIL,
 	SET_FILTER,
@@ -34,7 +35,10 @@ import {
 	GET_USER_BY_ID,
 	GET_USER_BY_EMAIL,
 	SET_USER_DATA,
-	UPDATE_DATA_USER
+	UPDATE_DATA_USER,
+	GET_ORDER_BY_USER,
+	UPDATE_SHOPPINGCART_ITEM_QUANTITY,
+	SET_SHOPPINGCART_ITEMS
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -46,6 +50,7 @@ export const getProducts = () => async (dispatch) => {
 		console.error("Error fetching products:", error);
 	}
 };
+
 export const setNameOrder = (order) => ({
 	type: SET_NAME_ORDER,
 	payload: order
@@ -327,6 +332,49 @@ export function getAllReviewUser(data) {
 				type: GET_ALL_REVIEW_USER,
 				payload: data
 			});
-		} catch (error) {}
+		} catch (error) {
+			console.log(error.messange);
+		}
 	};
 }
+
+export const getAllProducts = () => {
+	return async (dispatch) => {
+		try {
+			const { data } = await axios.get("http://localhost:3001/products/all");
+			return dispatch({
+				type: GET_ALL_PRODUCTS,
+				payload: data
+			});
+		} catch (error) {
+			console.error("Error fetching products:", error);
+		}
+	};
+};
+
+//**********************SHOPPINGCART POR USER***************************
+export const updateShoppingCartItemQuantity = (itemId, quantity) => ({
+	type: UPDATE_SHOPPINGCART_ITEM_QUANTITY,
+	payload: { itemId, quantity }
+});
+
+export const getOrderByUser = (id) => {
+	return async () => {
+		try {
+			const { data } = await axios.get(
+				`http://localhost:3001/order/${id}/orders`
+			);
+			return {
+				type: GET_ORDER_BY_USER,
+				payload: data
+			};
+		} catch (error) {
+			console.error("Error al traer las ordenes del usuuario:", error);
+		}
+	};
+};
+
+export const setShoppingCartItems = (items) => ({
+	type: SET_SHOPPINGCART_ITEMS,
+	payload: items
+});

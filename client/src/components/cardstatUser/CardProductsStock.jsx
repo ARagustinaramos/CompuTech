@@ -3,10 +3,9 @@ import { getProducts } from "../../redux/actions/actions"
 import { useEffect,useState } from "react"
 import { Card, Metric, Text } from "@tremor/react"
 
-const CardStatUser = () => {
+const CardProductStock = () => {
     const dispatch = useDispatch();
-    const allProducts = useSelector((state) => state.allProducts);
-   
+    const allProducts = useSelector((state) => state.allProducts);   
 
     useEffect(() => {
         dispatch(getProducts());
@@ -28,7 +27,4 @@ const CardStatUser = () => {
 
     )
 }
-
-
-
-export default CardStatUser
+export default CardProductStock

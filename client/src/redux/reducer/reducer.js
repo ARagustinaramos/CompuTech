@@ -1,6 +1,7 @@
 import {
 	ADD_TO_CART,
 	GET_PRODUCTS,
+	GET_ALL_PRODUCTS,
 	GET_DETAIL,
 	GET_USERS,
 	REMOVE_FROM_CART,
@@ -27,7 +28,10 @@ import {
 	GET_PRODUCT_REVIEW,
 	GET_USER_BY_ID,
 	SET_USER_DATA,
-	UPDATE_DATA_USER
+	UPDATE_DATA_USER,
+	GET_ORDER_BY_USER,
+	UPDATE_SHOPPINGCART_ITEM_QUANTITY,
+	SET_SHOPPINGCART_ITEMS
 } from "../actions/types";
 
 import {
@@ -49,9 +53,13 @@ const initialState = {
 	searchResults: [],
 	allUsers: [],
 	copyUsers: [],
+	allProductsActivesDesactives: [],
+	copyallProductsActivesDesactives: [],
 	adminReview: [],
 	getProductReviews: [],
-	currentUserData: []
+	currentUserData: [],
+	ordersByUser: [],
+	itemsShoppingCartByUser: []
 };
 
 const applyFilters = (products, filters) => {
@@ -113,6 +121,13 @@ function rootReducer(state = initialState, action) {
 				...state,
 				allUsers: action.payload,
 				copyUsers: [...action.payload]
+			};
+
+		case GET_ALL_PRODUCTS:
+			return {
+				...state,
+				allProductsActivesDesactives: action.payload,
+				copyallProductsActivesDesactives: [...action.payload]
 			};
 
 		case SEARCH_PRODUCTS_BY_NAME:
@@ -382,7 +397,29 @@ function rootReducer(state = initialState, action) {
 				...state,
 				currentUserData: action.payload
 			};
+		case GET_ORDER_BY_USER:
+			return {
+				...state,
+				ordersByUser: action.payload
+			};
 
+		case UPDATE_SHOPPINGCART_ITEM_QUANTITY: {
+			const updatedShoppingcartItemsAfterQuantityChange = state.items.map(
+				(item) =>
+					item.cartItemId === action.payload.itemId
+						? { ...item, quantity: action.payload.quantity }
+						: item
+			);
+			return {
+				...state,
+				items: updatedShoppingcartItemsAfterQuantityChange
+			};
+		}
+		case SET_SHOPPINGCART_ITEMS:
+			return {
+				...state,
+				itemsShoppingCartByUser: action.payload
+			};
 		default:
 			return { ...state };
 	}

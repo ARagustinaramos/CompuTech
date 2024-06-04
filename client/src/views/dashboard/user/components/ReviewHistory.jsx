@@ -1,25 +1,39 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useFirebase } from "../../../../firebase/firebase"; // Importa el hook useFirebase
 import Order from "./Order";
 import Spinner from '../../../../components/spinner/Spinner'
 
 const ReviewHistory = () => {
-  const { auth } = useFirebase();
-  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+/*   const { auth } = useFirebase();
+  
+  const dispatch = useDispatch()
+  const [user, setUser] = useState(null);
+  
+  const allUsers = useSelector((state) => state.allUsers);  
+  const currentUser = allUsers.find(u => u.mail === user?.email);
+  
+  const id_User = currentUser?.id_User
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setUser(user);
+
+        setUser(currentUser);
         setIsLoading(false);
+
       }
     });
 
     return () => unsubscribe();
   }, [auth]);
 
+  console.log('current User', currentUser)
 
+ */
 
   if (isLoading) {
     return <Spinner className=''/>;
