@@ -8,4 +8,12 @@ admin.initializeApp({
 
 const auth = admin.auth();
 
-module.exports = { auth };
+const disableFirebaseUser = async (uid) => {
+  await admin.auth().updateUser(uid, { disabled: true });
+};
+
+const enableFirebaseUser = async (uid) => {
+  await admin.auth().updateUser(uid, { disabled: false });
+};
+
+module.exports = { auth, disableFirebaseUser, enableFirebaseUser };

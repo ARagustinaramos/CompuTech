@@ -9,7 +9,12 @@ const postUserController = async (req, res) => {
     const existingUser = await User.findOne({ where: { mail } });
 
     if (existingUser) {
-      // Si el usuario ya existe, simplemente devolvemos el usuario existente
+      // Si el usuario ya existe, verificamos si está activo
+      if (!existingUser.active) {
+        // Si el usuario no está activo, devolvemos un mensaje indicando que la cuenta está desactivada
+        return res.status(403).json({ message: "Esta cuenta está desactivada." });
+      }
+      // Si el usuario está activo, simplemente devolvemos el usuario existente
       return res.status(200).json(existingUser);
     }
 
