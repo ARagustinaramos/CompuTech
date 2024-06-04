@@ -8,10 +8,6 @@ import { getOrderByUser, getUserById, getUsers } from '../../../redux/actions/ac
 
 //COMPONENTES
 import CardStatUser from '../../../components/cardstatUser/CardStatUser'
-import { ChartCategories } from '../../../components/charts/ChartCategories';
-// import { ChartCategories } from '../../../components/charts/ChartCategories';
-import { Chart } from '../../../components/charts/ChartProductStock'
-import { DangerCard } from '../../../components/dangercard/DangerCard';
 import SideBarUser from '../../../components/sidebarUser/SideBarUser';
 import { TableUsageExample } from '../../../components/tables/tableUser/TableUsageExample'
 import { Card } from '@tremor/react';
