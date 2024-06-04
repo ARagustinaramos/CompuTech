@@ -92,11 +92,11 @@ const LoginLogout = () => {
               onClick={toggleDropdown}
             >
               <img
-                src={user.photoURL}
-                alt={user.displayName}
+                src={user?.photoURL}
+                alt={user?.displayName}
                 className="h-8 w-8 rounded-full mr-2"
               />
-              Hola, {user.displayName}
+              Hola, {user?.displayName}
               <svg
                 className="ml-2 -mr-1 h-5 w-5"
                 xmlns="http://www.w3.org/2000/svg"
