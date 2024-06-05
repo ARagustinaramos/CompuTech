@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../firebase/firebase';
@@ -37,7 +36,13 @@ const signInWithEmail = async (email, password) => {
     };
     await sendUserInfoToBackend(userInfo, token);
   } catch (error) {
-    console.error('Error signing in with email:', error);
+    if (error.code === "auth/user-disabled") {
+      // Si el usuario está desactivado, no continuar con el inicio de sesión
+      console.log("Esta cuenta está desactivada. Por favor, contacta al administrador.");
+      return;
+    } else {
+      console.error('Error signing in with email:', error);
+    }
   }
 };
 
