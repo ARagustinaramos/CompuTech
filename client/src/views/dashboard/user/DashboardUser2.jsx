@@ -17,6 +17,7 @@ import SideBarUser from "../../../components/sidebarUser/SideBarUser";
 import { TableUsageExample } from "../../../components/tables/tableUser/TableUsageExample";
 import { Card } from "@tremor/react";
 import CardProductStock from "../../../components/cardstatUser/CardProductsStock";
+import ProductDisplay from "../../reviews/reviews";
 
 const DashboardUser2 = () => {
 	const [user] = useAuthState(auth);
@@ -30,20 +31,18 @@ const DashboardUser2 = () => {
 		dispatch(setUserData(user));
 	}, [dispatch]);
 
-	// console.log(userByMail);
-
 	console.log("currentUserData Dash", currentUserData);
 
 	return (
 		<div className="pt-16">
 			<div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
-				{/* Sidebar */}
 				<SideBarUser />
 				<div>
 					<div className="grid grid-cols-4 gap-2">
 						{/* <CardSoldProducts /> */}
 						{/* <CardProductStock /> */}
 						{/* <CardStatUser userByMail={userByMail}/> */}
+						<ProductDisplay />
 					</div>
 					<div className="grid grid-cols-4">
 						<div className="col-span-2 mt-10">
