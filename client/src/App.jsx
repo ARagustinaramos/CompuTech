@@ -11,6 +11,7 @@ import DashboardUser from "./views/dashboard/user/DashboardUser";
 import DashboardAdmin from "./views/dashboard/admin/DashboardAdmin";
 import DashboardAdminManageUsers from "./views/dashboard/admin/DashboardAdminManageUsers";
 import { FirebaseProvider } from "./firebase/firebase"; // Asegúrate de importar correctamente FirebaseProvider
+import OrderDetail from "./views/orderdetail/OrderDetail";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/dashboardadmin/manage/products" element={<DashboardAdmin />} />
           <Route path="/dashboardadmin/manage/users" element={<DashboardAdminManageUsers />} />
           <Route path="/dashboarduser" element={<DashboardUser />} />
+          <Route path="/dashboardadmin/manage/products/orderdetail" element={<OrderDetail />} />
         </Routes>
         <Footer />
       </>

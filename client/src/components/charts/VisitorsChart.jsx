@@ -1,18 +1,28 @@
 'use client';
-
+import { useEffect } from 'react';
 import { FunnelChart } from '@tremor/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllSales } from '../../redux/actions/actions';
 
-const chartdata = [
-    
-    { name: 'Visitas', value: 351 },
-    {
-        name: "Agregadas al carrito",
-        value: 191,
-    },
-    { name: 'Ordenes', value: 10 },
-];
 
 export function VisitorsChart() {
+    const dispatch = useDispatch();
+    const allSales = useSelector((state) => state.allSales);
+    const totalSales = allSales.length
+    const chartdata = [
+        
+        { name: 'Visitas', value: 351 },
+        {
+            name: "Agregadas al carrito",
+            value: 191,
+        },
+        { name: 'Ordenes', value: totalSales },
+    ];
+    
+    useEffect(() => {
+        dispatch(getAllSales());
+    }, [dispatch]);
+
     return (
         <>
             <h3 className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">

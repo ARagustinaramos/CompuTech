@@ -64,6 +64,7 @@ const Detail = () => {
   };
 
   const reviews = producto.review || [];
+  console.log(producto.reviews)
 
   return (
     <section className="  text-gray-700 body-font overflow-hidden bg-white py-8  antialiased dark:bg-gray-900  dark:text-gray-200 md:py-16 ">
@@ -165,20 +166,12 @@ const Detail = () => {
         </div>
       </div>
       <div className='w-1/2 flex-col flex justify-center w-00 mx-auto'>
-
-      <div className="mt-8 lg:mt-0">
+        <div className="mt-8 lg:mt-0">
           <div className="mb-5 mt-16">
-            <ReviewsDetailProduct />
-          </div>
-          <div className="mb-5 mt-16">
-            <ReviewsDetailProduct />
-          </div>
-          <div className="mb-5 mt-16">
-            <ReviewsDetailProduct />
+            <ReviewsDetailProduct producto={producto} />
           </div>
         </div>
       </div>
-    
     </section>
   );
 };

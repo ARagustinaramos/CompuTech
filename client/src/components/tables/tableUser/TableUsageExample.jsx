@@ -20,7 +20,7 @@ export function TableUsageExample() {
 
     const dispatch = useDispatch();
     const allProducts = useSelector((state) => state.allProductsActivesDesactives);
-    console.log(allProducts)
+    
     useEffect(() => {
         dispatch(getAllProducts());
     }, [dispatch]);
@@ -30,8 +30,6 @@ export function TableUsageExample() {
         dispatch(deleteProduct(product, false));
         console.log("Entró!")
     }
-
-
 
     //console.log(allProducts)
     return (
