@@ -7,7 +7,6 @@ import Spinner from '../../../src/components/spinner/Spinner';
 import { ReviewsDetailProduct } from '../../components/reviews/ReviewsDetailProduct';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase/firebase';
-
 import { Carousel } from "flowbite-react";
 
 const Detail = () => {
@@ -15,12 +14,14 @@ const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const producto = useSelector((state) => state.productDetail);
-
+  const averageRatings = useSelector((state) => state.averageRatings);
   const isLoading = useSelector((state) => state.isLoading);
   const allReviews = useSelector((state) => state.allReviews);
   const [isNavigating, setIsNavigating] = useState(false);
   const [user] = useAuthState(auth);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const averageRating = averageRatings[producto.product?.id_Product]?.averageRanking || 0;
 
   const handleAddToCart = () => {
     if (!user) {
@@ -64,12 +65,26 @@ const Detail = () => {
   const goToSlide = (index) => {
     setActiveIndex(index);
   };
-  
+
+  const renderStars = (averageRating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <svg
+          key={i}
+          className={`w-4 h-4 ${i <= averageRating ? 'text-yellow-400' : 'text-gray-300'}`}
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.971a1 1 0 00.95.674h4.173c.969 0 1.37 1.24.588 1.812l-3.36 2.44a1 1 0 00-.364 1.118l1.286 3.971c.3.921-.755 1.683-1.539 1.118l-3.36-2.44a1 1 0 00-1.175 0l-3.36 2.44c-.784.565-1.838-.197-1.539-1.118l1.286-3.971a1 1 0 00-.364-1.118l-3.36-2.44c-.782-.572-.381-1.812.588-1.812h4.173a1 1 0 00.951-.674l1.286-3.971z" />
+        </svg>
+      );
+    }
+    return stars;
+  };
 
   // Filtrar las revisiones por 'approved' y 'ProductIdProduct' coincidente
   const approvedReviews = allReviews.filter(review => review.status === 'approved' && review.ProductIdProduct === producto.product?.id_Product);
-  console.log(approvedReviews)
-  
 
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white py-8 antialiased dark:bg-gray-900 dark:text-gray-200 md:py-16">
@@ -147,9 +162,8 @@ const Detail = () => {
           <h1 className="text-gray-900 dark:text-white text-3xl title-font font-medium mb-1">{producto.product?.name}</h1>
           <div className="flex mb-4">
             <span className="flex items-center">
-              <svg fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 text-red-500" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-              </svg>
+              {renderStars(Math.round(averageRating))}
+              <span className="text-gray-600 ml-3">{`${averageRating.toFixed(1)} / 5`}</span>
             </span>
           </div>
           <p className="leading-relaxed text-gray-500 dark:text-gray-400">{producto.product?.description}</p>

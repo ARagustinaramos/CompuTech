@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flowbite } from 'flowbite-react';
 import Cards from '../../components/cards/Cards';
-import { getProducts, getBrands, filterByBrand, getCategories, filterByCategory, searchProductsByName, setNameOrder, setPriceOrder } from '../../redux/actions/actions';
+import { getProducts, getBrands, filterByBrand, getCategories, filterByCategory, searchProductsByName, setNameOrder, setPriceOrder,getAllReviews, calculateAverageRatings } from '../../redux/actions/actions';
 import CarouselComponent from '../../components/carousel/carousel';
 import ByName from '../../components/filters/ByName';
 import ByPrice from '../../components/filters/ByPrice';
 import Spinner from '../../components/spinner/Spinner';
-
 const Home = () => {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.allProducts);
   const filteredProducts = useSelector((state) => state.filteredProducts);
   const brands = useSelector(state => state.brands);
   const categories = useSelector(state => state.categories);
+  const reviews = useSelector(state => state.allReviews)
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
   const [filterApplied, setFilterApplied] = useState(0);
@@ -22,6 +22,8 @@ const Home = () => {
     dispatch(getProducts());
     dispatch(getBrands());
     dispatch(getCategories());
+    dispatch(getAllReviews());
+    dispatch(calculateAverageRatings());
   }, [dispatch]);
 
   const handleBrandFilter = (e) => {
@@ -63,7 +65,6 @@ const Home = () => {
 
   const activeProducts = allProducts.filter(product => product.active);
   const toShow = filteredProducts.length > 0 ? filteredProducts.filter(product => product.active) : activeProducts;
-  console.log(allProducts)
   return (
     <>
       <Flowbite>
