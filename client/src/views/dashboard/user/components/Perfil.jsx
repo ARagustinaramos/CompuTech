@@ -128,7 +128,7 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 	const { auth } = useFirebase(); // Obtén la instancia de autenticación de Firebase
 	const [user, setUser] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
-
+	console.log("peeerfil", currentUser);
 	// Cloudinary
 	const preset = "presetComputech";
 	const cloudName = "damfsltm2";
@@ -254,7 +254,8 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 									<p className="text-red-500 font-bold">'Ingresa un correo'</p>
 								)}
 							</label>
-							<label>{currentUser?.name || "Nombre de usuario"}</label>
+
+							<label>Nombre: {currentUser?.name || "Nombre de usuario"}</label>
 							{editMode && (
 								<input
 									type="text"

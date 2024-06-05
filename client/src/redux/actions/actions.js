@@ -276,26 +276,26 @@ export const getAllReviews = () => async (dispatch) => {
   };
 
 export const updateDataUser = (id, userData) => {
-  console.log("update action id", id);
-  console.log("update action", userData);
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.put(
-        `http://localhost:3001/users/put/${id}`,
-        {
-          name: userData.name,
-          address: userData.address,
-          phone: userData.address,
-          image: userData.image,
-        }
-      );
-      console.log("data del put", data);
-      return dispatch({
-        type: UPDATE_DATA_USER,
-        payload: data,
-      });
-    } catch (error) {
-      console.error("Error updating user data:", error.message);
-    }
-  };
+	console.log("update action id", id);
+	console.log("update action", userData);
+	return async (dispatch) => {
+		try {
+			const { data } = await axios.put(
+				`http://localhost:3001/users/put/${id}`,
+				{
+					name: userData.name,
+					address: userData.address,
+					phone: userData.phone,
+					image: userData.image
+				}
+			);
+			console.log("data del put", data);
+			return dispatch({
+				type: UPDATE_DATA_USER,
+				payload: data
+			});
+		} catch (error) {
+			console.error("Error updating user data:", error.message);
+		}
+	};
 };
