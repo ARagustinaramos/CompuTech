@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 export function TableDashboardReviews() {
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	const allUsers = useSelector((state) => state.allUsers);
+	const allUsers = useSelector((state) => state.allUsers) || [];
 	const producto = useSelector((state) => state.productDetail);
 
 	console.log(producto);
