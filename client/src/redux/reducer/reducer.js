@@ -25,7 +25,8 @@ import {
 	SET_PRICE_ORDER,
 	SET_CART_ITEMS,
 	GET_SALES,
-	GET_ALL_REVIEWS
+	GET_ALL_REVIEWS,
+	UPDATE_DATA_USER
 } from "../actions/types";
 
 import {
@@ -374,6 +375,11 @@ function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				allReviews: action.payload
+			};
+		case UPDATE_DATA_USER:
+			return {
+				...state,
+				currentUserData: action.payload
 			};
 		default:
 			return { ...state };

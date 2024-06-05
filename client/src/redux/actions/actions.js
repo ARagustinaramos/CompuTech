@@ -24,7 +24,8 @@ import {
 	SET_PRICE_ORDER,
 	SET_CART_ITEMS,
 	RESET_FILTERS,
-	GET_ALL_REVIEWS
+	GET_ALL_REVIEWS,
+	UPDATE_DATA_USER
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -265,6 +266,31 @@ export const getAllReviews = () => {
 			});
 		} catch (error) {
 			console.log("Error fetching review", error);
+		}
+	};
+};
+
+export const updateDataUser = (id, userData) => {
+	console.log("update action id", id);
+	console.log("update action", userData);
+	return async (dispatch) => {
+		try {
+			const { data } = await axios.put(
+				`http://localhost:3001/users/put/${id}`,
+				{
+					name: userData.name,
+					address: userData.address,
+					phone: userData.address,
+					image: userData.image
+				}
+			);
+			console.log("data del put", data);
+			return dispatch({
+				type: UPDATE_DATA_USER,
+				payload: data
+			});
+		} catch (error) {
+			console.error("Error updating user data:", error.message);
 		}
 	};
 };

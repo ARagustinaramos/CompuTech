@@ -1,14 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/firebase";
 import SignInButton from "../../firebase/authGoogle";
 import { SignUpForm, SignInForm } from "../../firebase/authManual";
+import Perfil from "../../views/dashboard/user/components/Perfil";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../../redux/actions/actions";
 
 const LoginLogout = () => {
 	const [user] = useAuthState(auth);
 	const [isRegistering, setIsRegistering] = useState(false);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
+	const [isModalProfileOpen, setIsModalProfileOpen] = useState(false);
+
+	const dispatch = useDispatch();
+	const allUsers = useSelector((state) => state.allUsers);
+
+	useEffect(() => {
+		dispatch(getUsers());
+	}, [dispatch]);
+
+	let currentUser = "";
+	allUsers.map((u) => {
+		if (user?.email === u.mail) {
+			currentUser = u;
+		} else {
+			currentUser = "";
+		}
+	});
+
+	const openProfileModal = () => {
+		setIsModalProfileOpen(true);
+	};
+
+	const closeProfileModal = () => {
+		setIsModalProfileOpen(false);
+	};
 
 	const toggleDropdown = () => {
 		setDropdownOpen(!dropdownOpen);
@@ -142,12 +170,19 @@ const LoginLogout = () => {
 									Administrador
 								</a>
 								<a
-									href="/profile"
+									onClick={openProfileModal}
 									className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
 									role="menuitem"
+									data-modal-target="crud-modal"
+									data-modal-toggle="crud-modal"
 								>
 									Perfil
 								</a>
+								<Perfil
+									currentUser={currentUser}
+									isOpen={isModalProfileOpen}
+									onClose={closeProfileModal}
+								/>
 								<a
 									href="/account-settings"
 									className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
