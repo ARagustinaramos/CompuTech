@@ -12,13 +12,20 @@ const postUserController = async (req, res) => {
 			// Si el usuario ya existe, simplemente devolvemos el usuario existente
 			return res.status(200).json(existingUser);
 		}
+		let rolUser = false;
+		if (
+			mail === "computechsoyhenry@gmail.com" ||
+			mail === "worldcomputechcompany@gmail.com"
+		) {
+			return (rolUser = true);
+		}
 
 		// Si el usuario no existe, lo creamos
 		const newUser = await User.create({
 			mail,
 			name,
 			image: image || null,
-			rol: true
+			rol: rolUser
 			// Aquí puedes añadir más campos si es necesario
 		});
 
