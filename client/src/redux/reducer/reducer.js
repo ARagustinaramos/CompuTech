@@ -25,6 +25,9 @@ import {
   SET_PRICE_ORDER,
   SET_CART_ITEMS,
   GET_SALES,
+  GET_ALL_REVIEWS,
+  UPDATE_DATA_USER,
+  CALCULATE_AVERAGE_RATINGS
 } from "../actions/types";
 
 import {
@@ -36,7 +39,7 @@ const initialState = {
   allProducts: [],
   copyProducts: [],
   producto: [],
-  productDetail: {},
+  productDetail: { msj: "hola" },
   items: loadCartFromLocalStorage(),
   filteredProducts: [],
   categoryFilter: "",
@@ -48,8 +51,10 @@ const initialState = {
   copyUsers: [],
   allProductsActivesDesactives: [],
   copyallProductsActivesDesactives: [],
-  allSales:[],
-  copyAllSales:[],
+  allSales: [],
+  copyAllSales: [],
+  allReviews: [],
+  averageRatings: {},
 };
 
 const applyFilters = (products, filters) => {
@@ -59,22 +64,24 @@ const applyFilters = (products, filters) => {
 
   // Aplicar búsqueda por nombre
   if (searchResults && searchResults.length > 0) {
-    filtered = filtered.filter(product => {
-      return searchResults.some(result => result.id === product.id);
+    filtered = filtered.filter((product) => {
+      return searchResults.some((result) => result.id === product.id);
     });
   }
 
   // Aplicar filtro de categoría
   if (categoryFilter !== "" && categoryFilter !== "") {
-    filtered = filtered.filter(product => {
-      const normalizedCategoryPayload = String(product.CategoryIdCategory).toLowerCase();
+    filtered = filtered.filter((product) => {
+      const normalizedCategoryPayload = String(
+        product.CategoryIdCategory
+      ).toLowerCase();
       return normalizedCategoryPayload === categoryFilter;
     });
   }
 
   // Aplicar filtro de marca
   if (brandFilter !== "default" && brandFilter !== "") {
-    filtered = filtered.filter(product => {
+    filtered = filtered.filter((product) => {
       const normalizedBrandIdBrand = String(product.BrandIdBrand).toLowerCase();
       return normalizedBrandIdBrand === brandFilter;
     });
@@ -84,14 +91,14 @@ const applyFilters = (products, filters) => {
 };
 
 const compareByName = (a, b, order) => {
-  if (order === 'a-z') return a.name.localeCompare(b.name);
-  if (order === 'z-a') return b.name.localeCompare(a.name);
+  if (order === "a-z") return a.name.localeCompare(b.name);
+  if (order === "z-a") return b.name.localeCompare(a.name);
   return 0;
 };
 
 const compareByPrice = (a, b, order) => {
-  if (order === 'asc') return a.price - b.price;
-  if (order === 'desc') return b.price - a.price;
+  if (order === "asc") return a.price - b.price;
+  if (order === "desc") return b.price - a.price;
   return 0;
 };
 
@@ -111,7 +118,7 @@ function rootReducer(state = initialState, action) {
         copyUsers: [...action.payload],
       };
 
-      case GET_SALES:
+    case GET_SALES:
       return {
         ...state,
         allSales: action.payload,
@@ -124,16 +131,18 @@ function rootReducer(state = initialState, action) {
         copyallProductsActivesDesactives: [...action.payload],
       };
 
-
     case SEARCH_PRODUCTS_BY_NAME:
       const { payload: searchResults } = action;
       const resetFiltersState = {
         ...state,
-        brandFilter: '',
-        categoryFilter: '',
+        brandFilter: "",
+        categoryFilter: "",
         searchResults,
       };
-      const filteredResultsAfterSearch = applyFilters(state.allProducts, resetFiltersState);
+      const filteredResultsAfterSearch = applyFilters(
+        state.allProducts,
+        resetFiltersState
+      );
       return {
         ...resetFiltersState,
         filteredProducts: searchResults,
@@ -171,7 +180,9 @@ function rootReducer(state = initialState, action) {
         brandFilter: normalizedBrandPayload,
       };
       const filteredResultsByBrand = applyFilters(
-        state.searchResults.length > 0 ? state.searchResults : state.allProducts,
+        state.searchResults.length > 0
+          ? state.searchResults
+          : state.allProducts,
         newStateAfterBrandFilter
       );
       if (filteredResultsByBrand.length === 0) {
@@ -190,7 +201,9 @@ function rootReducer(state = initialState, action) {
         categoryFilter: normalizedCategoryPayload,
       };
       const filteredProductsByCategory = applyFilters(
-        state.searchResults.length > 0 ? state.searchResults : state.allProducts,
+        state.searchResults.length > 0
+          ? state.searchResults
+          : state.allProducts,
         newStateAfterCategoryFilter
       );
       if (filteredProductsByCategory.length === 0) {
@@ -295,8 +308,8 @@ function rootReducer(state = initialState, action) {
     case RESET_FILTERS:
       return {
         ...state,
-        brandFilter: '',
-        categoryFilter: '',
+        brandFilter: "",
+        categoryFilter: "",
         filteredProducts: state.allProducts,
       };
 
@@ -313,40 +326,95 @@ function rootReducer(state = initialState, action) {
 
     case SET_NAME_ORDER: {
       const nameOrder = action.payload;
-      const productsToSort = state.filteredProducts.length ? state.filteredProducts : state.allProducts;
-      const sortedProducts = [...productsToSort].sort((a, b) => compareByName(a, b, nameOrder));
+      const productsToSort = state.filteredProducts.length
+        ? state.filteredProducts
+        : state.allProducts;
+      const sortedProducts = [...productsToSort].sort((a, b) =>
+        compareByName(a, b, nameOrder)
+      );
       return {
         ...state,
         nameOrder,
         filteredProducts: state.filteredProducts.length ? sortedProducts : [],
-        allProducts: state.filteredProducts.length ? state.allProducts : sortedProducts,
+        allProducts: state.filteredProducts.length
+          ? state.allProducts
+          : sortedProducts,
       };
     }
 
     case SET_PRICE_ORDER: {
       const priceOrder = action.payload;
-      const productsToSort = state.filteredProducts.length ? state.filteredProducts : state.allProducts;
-      const sortedProducts = [...productsToSort].sort((a, b) => compareByPrice(a, b, priceOrder));
+      const productsToSort = state.filteredProducts.length
+        ? state.filteredProducts
+        : state.allProducts;
+      const sortedProducts = [...productsToSort].sort((a, b) =>
+        compareByPrice(a, b, priceOrder)
+      );
       return {
         ...state,
         priceOrder,
         filteredProducts: state.filteredProducts.length ? sortedProducts : [],
-        allProducts: state.filteredProducts.length ? state.allProducts : sortedProducts,
+        allProducts: state.filteredProducts.length
+          ? state.allProducts
+          : sortedProducts,
       };
     }
-    case 'DELETE_USER_SUCCESS':
+    case "DELETE_USER_SUCCESS":
       return {
         ...state,
-        users: state.allUsers.map(user =>
-          user.id === action.payload.id ? { ...user, active: action.payload.active } : user
-        )
+        users: state.allUsers.map((user) =>
+          user.id === action.payload.id
+            ? { ...user, active: action.payload.active }
+            : user
+        ),
       };
-    case 'DELETE_USER_FAILURE':
+    case "DELETE_USER_FAILURE":
       return {
         ...state,
-        error: action.error
+        error: action.error,
       };
-
+    case GET_ALL_REVIEWS:
+      return {
+        ...state,
+        allReviews: action.payload,
+      };
+    case UPDATE_DATA_USER:
+      return {
+        ...state,
+        currentUserData: action.payload,
+      };
+	  
+	  case CALCULATE_AVERAGE_RATINGS:
+		const productRatings = {};
+		state.allReviews.forEach((review) => {
+		  const { ProductIdProduct, ranking, Product } = review;
+		  if (!productRatings[ProductIdProduct]) {
+			productRatings[ProductIdProduct] = {
+			  name: Product.name,
+			  id: ProductIdProduct,
+			  totalRanking: 0,
+			  count: 0,
+			};
+		  }
+		  productRatings[ProductIdProduct].totalRanking += ranking;
+		  productRatings[ProductIdProduct].count += 1;
+		});
+  
+		const averageRatings = Object.keys(productRatings).reduce((acc, productId) => {
+		  const { name, totalRanking, count } = productRatings[productId];
+		  acc[productId] = {
+			name,
+			id: productId,
+			averageRanking: totalRanking / count,
+		  };
+		  return acc;
+		}, {});
+  
+		return {
+		  ...state,
+		  averageRatings,
+		};
+      
     default:
       return { ...state };
   }

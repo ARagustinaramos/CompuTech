@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import axios from "axios";
 import {
   GET_DETAIL,
@@ -23,8 +23,10 @@ import {
   SET_NAME_ORDER,
   SET_PRICE_ORDER,
   SET_CART_ITEMS,
-  RESET_FILTERS
-
+  RESET_FILTERS,
+  GET_ALL_REVIEWS,
+  UPDATE_DATA_USER,
+  CALCULATE_AVERAGE_RATINGS,
 } from "./types";
 
 export const getProducts = () => async (dispatch) => {
@@ -73,10 +75,12 @@ export const searchProductsByName = (name) => {
       let response;
       if (name.trim() === "") {
         // Si el nombre está vacío, obtiene todos los productos
-        response = await axios.get('http://localhost:3001/products');
+        response = await axios.get("http://localhost:3001/products");
       } else {
         // Busca productos por nombre
-        response = await axios.get(`http://localhost:3001/products/name?name=${name}`);
+        response = await axios.get(
+          `http://localhost:3001/products/name?name=${name}`
+        );
       }
 
       if (response.data.length === 0) {
@@ -91,7 +95,7 @@ export const searchProductsByName = (name) => {
         payload: searchResults,
       });
     } catch (error) {
-      console.error('Error searching products:', error);
+      console.error("Error searching products:", error);
     }
   };
 };
@@ -130,8 +134,8 @@ export const filterByCategory = (category) => {
   return {
     type: FILTER_BY_CATEGORY,
     payload: category,
-  }
-}
+  };
+};
 
 export const addToCart = (product) => {
   return {
@@ -167,8 +171,6 @@ export const getDetail = (id) => {
   };
 };
 
-
-
 export const cleanDetail = () => {
   return {
     type: CLEAN_DETAIL,
@@ -182,41 +184,41 @@ export const setFilter = (filter) => ({
 export const deleteProduct = (id, boolean) => {
   return async (dispatch) => {
     try {
-      console.log("action:" + id, boolean)
+      console.log("action:" + id, boolean);
       await axios.delete(`http://localhost:3001/products/delete/${id}`, {
-        data: { exterminateProduct: boolean }
-
+        data: { exterminateProduct: boolean },
       });
     } catch (error) {
-      console.error('Error deleting product:', error);
+      console.error("Error deleting product:", error);
     }
-
-  }
+  };
 };
 
 export const deleteUser = (email) => {
   return async (dispatch) => {
     try {
       console.log("action:", email);
-      const response = await axios.delete(`http://localhost:3001/users/${email}`);
-      dispatch({ type: 'DELETE_USER_SUCCESS', payload: response.data });
+      const response = await axios.delete(
+        `http://localhost:3001/users/${email}`
+      );
+      dispatch({ type: "DELETE_USER_SUCCESS", payload: response.data });
       Swal.fire("Usuario desactivado correctamente");
     } catch (error) {
-      console.error('Error updating user:', error);
-      dispatch({ type: 'DELETE_USER_FAILURE', error });
+      console.error("Error updating user:", error);
+      dispatch({ type: "DELETE_USER_FAILURE", error });
       Swal.fire("Error al desactivar el usuario");
     }
-  }
+  };
 };
 export const setCartItems = (items) => ({
   type: SET_CART_ITEMS,
-  payload: items
+  payload: items,
 });
 
 export const getUsers = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get('http://localhost:3001/users/');
+      const { data } = await axios.get("http://localhost:3001/users/");
       return dispatch({
         type: GET_USERS,
         payload: data,
@@ -230,29 +232,70 @@ export const getUsers = (id) => {
 export const getAllProducts = () => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get("http://localhost:3001/products/all");
+      const { data } = await axios.get("http://localhost:3001/products/all");
       return dispatch({
-        type:GET_ALL_PRODUCTS,
-        payload:data
+        type: GET_ALL_PRODUCTS,
+        payload: data,
       });
     } catch (error) {
       console.error("Error fetching products:", error);
     }
-
-  }
+  };
 };
 
 export const getAllSales = () => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.get("http://localhost:3001/order/");
+      const { data } = await axios.get("http://localhost:3001/order/");
       return dispatch({
-        type:GET_SALES,
-        payload:data
+        type: GET_SALES,
+        payload: data,
       });
     } catch (error) {
       console.error("Error fetching products:", error);
     }
+  };
+};
 
-  }
+
+export const calculateAverageRatings = () => ({
+  type: CALCULATE_AVERAGE_RATINGS,
+});
+
+export const getAllReviews = () => async (dispatch) => {
+	try {
+	  const response = await axios.get('http://localhost:3001/reviews');
+	  dispatch({
+		type: GET_ALL_REVIEWS,
+		payload: response.data,
+	  });
+	  dispatch(calculateAverageRatings());
+	} catch (error) {
+	  console.error('Error fetching reviews:', error);
+	}
+  };
+
+export const updateDataUser = (id, userData) => {
+	console.log("update action id", id);
+	console.log("update action", userData);
+	return async (dispatch) => {
+		try {
+			const { data } = await axios.put(
+				`http://localhost:3001/users/put/${id}`,
+				{
+					name: userData.name,
+					address: userData.address,
+					phone: userData.phone,
+					image: userData.image
+				}
+			);
+			console.log("data del put", data);
+			return dispatch({
+				type: UPDATE_DATA_USER,
+				payload: data
+			});
+		} catch (error) {
+			console.error("Error updating user data:", error.message);
+		}
+	};
 };

@@ -34,7 +34,7 @@ const Cart = () => {
               .catch(error => console.error('Error fetching users:', error));
       }
   }, [user]);
-  console.log(userId)
+ 
     
 
   const items = cartItems.map(item => ({
