@@ -1,3 +1,4 @@
+
 export const GET_PRODUCTS= "GET_PRODUCTS";
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_DETAIL = "GET_DETAIL";
@@ -22,5 +23,4 @@ export const SET_NAME_ORDER = 'SET_NAME_ORDER';
 export const SET_PRICE_ORDER = 'SET_PRICE_ORDER';
 export const SET_CART_ITEMS = 'SET_CART_ITEMS';
 export const GET_USERS = 'GET_USERS';
-
-
+export const GET_SALES = 'GET_SALES';

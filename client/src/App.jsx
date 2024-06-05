@@ -7,6 +7,7 @@ import Cart from "./views/cart/Cart";
 import Form from "./components/form/Form";
 import Detail from "./views/detail/Detail";
 import About from "./views/about/About";
+import ProductDisplay from "./views/reviews/reviews";
 import DashboardUser from "./views/dashboard/user/DashboardUser";
 import DashboardAdmin from "./views/dashboard/admin/DashboardAdmin";
 import DashboardAdminManageUsers from "./views/dashboard/admin/DashboardAdminManageUsers";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/form" element={<Form />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/about" element={<About />} />
+          <Route path="/ProductDisplay" element={<ProductDisplay />} /> 
           <Route path="/dashboardadmin/manage/products" element={<DashboardAdmin />} />
           <Route path="/dashboardadmin/manage/users" element={<DashboardAdminManageUsers />} />
           <Route path="/dashboarduser" element={<DashboardUser />} />
