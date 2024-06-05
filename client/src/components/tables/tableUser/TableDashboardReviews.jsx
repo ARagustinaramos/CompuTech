@@ -1,35 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSales, getDetail } from "../../../redux/actions/actions";
-import { useParams } from "react-router-dom";
+import { getAllReviews, getAllSales } from "../../../redux/actions/actions";
 
 export function TableDashboardReviews() {
 	const dispatch = useDispatch();
 	const allUsers = useSelector((state) => state.allUsers);
-	const producto = useSelector((state) => state.productDetail);
-	const { id } = useParams();
-	console.log(id);
-	const [userReviews, setUserReviews] = useState({});
+	const allReviews = useSelector((state) => state.allReviews);
 
 	useEffect(() => {
+		dispatch(getAllReviews());
 		dispatch(getAllSales());
-		if (id) {
-			dispatch(getDetail(id));
-		}
-	}, [dispatch, id]);
-
-	useEffect(() => {
-		const reviewsMap = {};
-		allUsers.forEach((user) => {
-			if (producto && producto.review) {
-				const userReviews = producto.review.filter(
-					(review) => review.userId === user.id
-				);
-				reviewsMap[user.id] = userReviews;
-			}
-		});
-		setUserReviews(reviewsMap);
-	}, [allUsers, producto]);
+	}, [dispatch]);
 
 	return (
 		<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -65,16 +46,18 @@ export function TableDashboardReviews() {
 								</div>
 							</td>
 							<td className="px-6 py-4">
-								{producto.reviews?.map((review, index) => (
-									<div key={index}>{review.comment}</div>
-								))}
+								{allReviews.map((review) => {
+									return review.UserIdUser === user.id_User ? (
+										<p>{review.comment}</p>
+									) : null;
+								})}
 							</td>
 							<td className="px-6 py-4">
 								<a
 									href="#"
 									className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
 								>
-									Ver detalle
+									toggle button
 								</a>
 							</td>
 						</tr>
