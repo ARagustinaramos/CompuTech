@@ -131,7 +131,7 @@ const LoginLogout = () => {
 							onClick={toggleDropdown}
 						>
 							<img
-								src={currentUser.image}
+								src={currentUser?.image}
 								alt={currentUser.name}
 								className="h-8 w-8 rounded-full mr-2"
 							/>
