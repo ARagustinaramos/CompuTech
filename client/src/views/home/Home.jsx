@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Flowbite } from 'flowbite-react';
 import Cards from '../../components/cards/Cards';
-import { getProducts, getBrands, filterByBrand, getCategories, filterByCategory, searchProductsByName, setNameOrder, setPriceOrder, getAllReviews, calculateAverageRatings } from '../../redux/actions/actions';
+import { getProducts, getBrands, filterByBrand, getCategories, filterByCategory, searchProductsByName, setNameOrder, setPriceOrder } from '../../redux/actions/actions';
 import CarouselComponent from '../../components/carousel/carousel';
 import ByName from '../../components/filters/ByName';
 import ByPrice from '../../components/filters/ByPrice';
@@ -14,7 +14,6 @@ const Home = () => {
   const filteredProducts = useSelector((state) => state.filteredProducts);
   const brands = useSelector(state => state.brands);
   const categories = useSelector(state => state.categories);
-  const reviews = useSelector(state => state.allReviews);
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
   const [filterApplied, setFilterApplied] = useState(0);
@@ -23,8 +22,6 @@ const Home = () => {
     dispatch(getProducts());
     dispatch(getBrands());
     dispatch(getCategories());
-    dispatch(getAllReviews());
-    dispatch(calculateAverageRatings());
   }, [dispatch]);
 
   const handleBrandFilter = (e) => {
@@ -66,15 +63,15 @@ const Home = () => {
 
   const activeProducts = allProducts.filter(product => product.active);
   const toShow = filteredProducts.length > 0 ? filteredProducts.filter(product => product.active) : activeProducts;
-
+  console.log(allProducts)
   return (
     <>
       <Flowbite>
         <div className="bg-white antialiased dark:bg-gray-900 md:py-5">
           <div className="pt-16">
             <CarouselComponent />
-            <div className="flex justify-center mb-4"></div>
-            <div className="flex flex-col sm:flex-row sm:justify-center mb-2 space-y-2 sm:space-y-0 sm:space-x-4"> {/* Flex column for mobile and row for larger screens */}
+            <div className="flex justify-center mb-4 "></div>
+            <div className="flex overflow-x-auto sm:justify-center mb-2 space-x-4"> {/* Añadido espacio horizontal */}
               <ByName resetPriceOrder={() => dispatch(setPriceOrder(''))} />
               <ByPrice resetNameOrder={() => dispatch(setNameOrder(''))} />
               <div className="content-center">
@@ -109,7 +106,7 @@ const Home = () => {
               </div>
               <button
                 onClick={handleResetSearch}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-3 px-1 flex items-center dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="h-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-5 px-1 flex items-center dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 content-center mt-1.5" // Ajuste de altura
               >
                 Reiniciar
               </button>

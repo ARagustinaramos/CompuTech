@@ -11,9 +11,11 @@ import { Card } from '@tremor/react';
 import CardSoldProducts from '../../../components/cardstat/CardOrderStat';
 import { TableDashboardOrders } from '../../../components/tables/TableDashboardOrders';
 import SideBarAdminResponsive from '../../../components/sidebaradmin/SideBarAdminResponsive';
+import { Flowbite } from 'flowbite-react';
 
 const DashboardAdmin = () => {
   return (
+    <Flowbite>
     <div className="pt-16">
       <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
         {/* Sidebar */}
@@ -48,6 +50,7 @@ const DashboardAdmin = () => {
       </div>
     </div>
     </div>
+    </Flowbite>
 
   )
 }
