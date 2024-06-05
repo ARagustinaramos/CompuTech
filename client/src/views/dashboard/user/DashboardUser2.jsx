@@ -42,7 +42,7 @@ const DashboardUser2 = () => {
 				<div>
 					<div className="grid grid-cols-4 gap-2">
 						{/* <CardSoldProducts /> */}
-						<CardProductStock />
+						{/* <CardProductStock /> */}
 						{/* <CardStatUser userByMail={userByMail}/> */}
 					</div>
 					<div className="grid grid-cols-4">
