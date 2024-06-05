@@ -27,15 +27,15 @@ const CardSoldProducts = () => {
     // Convertir el objeto en un array
     const soldProducts = Object.keys(productSales).map(productName => ({
         name: productName,
-        sold: productSales[productName]
+        ventas: productSales[productName]
     }));
 
     // Ordenar productos por cantidad vendida (descendente) y seleccionar los 3 primeros
     const topSoldProducts = [...soldProducts]
-        .sort((a, b) => b.sold - a.sold)
+        .sort((a, b) => b.ventas - a.ventas)
         .slice(0, 3);
 
-    const totalSold = soldProducts.map(product => product.sold)
+    const totalSold = soldProducts.map(product => product.ventas)
         .reduce((accumulator, currentSold) => accumulator + currentSold, 0);
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -53,7 +53,7 @@ const CardSoldProducts = () => {
             <Card
                 className="mx-auto max-w-xs"
                 decoration="top"
-                decorationColor="emerald"
+                fill="#8884d8"
                 onClick={openModal}
                 style={{ cursor: 'pointer' }}
             >
@@ -65,7 +65,7 @@ const CardSoldProducts = () => {
                     {topSoldProducts.map((product, index) => (
                         <div key={index} className="flex justify-between">
                             <Text className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">{product.name}</Text>
-                            <Text className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">{product.sold}</Text>
+                            <Text className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">{product.ventas}</Text>
                         </div>
                     ))}
                 </div>
@@ -100,9 +100,9 @@ const CardSoldProducts = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="sold" fill="#8884d8" />
+                    <Bar dataKey="ventas" fill="#007CFF" />
                 </BarChart>
-                <button onClick={closeModal} style={{ marginTop: '20px', padding: '10px', backgroundColor: '#8884d8', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                <button onClick={closeModal} style={{ marginTop: '20px', padding: '10px', backgroundColor: '#007CFF', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
                     Cerrar
                 </button>
             </Modal>

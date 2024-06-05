@@ -66,7 +66,7 @@ const SearchBar = () => {
         </button>
         <input
           className="input rounded-full px-8 border-2 border-transparent focus:outline-none focus:border-blue-500 placeholder-gray-400 transition-all duration-300 shadow-md text-slate-500"
-          placeholder="Search..."
+          placeholder="Buscar"
           value={searchQuery}
           onChange={handleInputChange}
           required

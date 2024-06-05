@@ -1,7 +1,7 @@
 import CardStat from '../../../components/cardstat/CardStat'
 import CardStat2 from '../../../components/cardstat/CardStat2'
 import CardStat3 from '../../../components/cardstat/CardStat3'
-import { ChartCategories } from '../../../components/charts/ChartCategories';
+import { ChartCategories } from '../../../components/charts/ChartProductSold';
 // import { ChartCategories } from '../../../components/charts/ChartCategories';
 import { Chart } from '../../../components/charts/ChartProductStock'
 import { DangerCard } from '../../../components/dangercard/DangerCard';
@@ -19,6 +19,7 @@ const DashboardAdmin = () => {
         {/* Sidebar */}
         <SideBarAdmin></SideBarAdmin>
         {/* <SideBarAdminResponsive></SideBarAdminResponsive> */}
+        <div className="pt-6">
         <div>
           <div className='grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
             <CardSoldProducts />
@@ -45,6 +46,7 @@ const DashboardAdmin = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
 
   )

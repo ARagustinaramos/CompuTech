@@ -16,10 +16,12 @@ const LoginLogout = () => {
 
 	const dispatch = useDispatch();
 	const allUsers = useSelector((state) => state.allUsers);
-	console.log("allUsers", allUsers);
+
 	useEffect(() => {
-		dispatch(getUsers());
-	}, [dispatch]);
+		setTimeout(() => {
+			dispatch(getUsers());
+		}, "1000");
+	}, [dispatch, user]);
 
 	let currentUser = "";
 	allUsers.map((u) => {
@@ -27,7 +29,6 @@ const LoginLogout = () => {
 			return (currentUser = u);
 		}
 	});
-	console.log("currentUser", currentUser);
 	const openProfileModal = () => {
 		setIsModalProfileOpen(true);
 	};

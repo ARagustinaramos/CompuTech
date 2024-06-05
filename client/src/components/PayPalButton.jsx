@@ -96,8 +96,43 @@ const PayPalButton = ({ total, items }) => {
             try {
                 await axios.post(`http://localhost:3001/order/create-order/${userId}`, formattedOrder);
                 console.log('Datos del pedido enviados correctamente:', formattedOrder);
+
+                // Reducir el stock de los productos en la base de datos
+                for (const item of items) {
+                    // Obtener el stock actual del producto
+                    const productResponse = await axios.get(`http://localhost:3001/products/${item.id_Product}`);
+                    
+                    const currentStock = productResponse.data.product.stock;
+                    
+
+                    // Calcular el nuevo stock
+                    const newStock = currentStock - item.quantity;
+                    
+
+                    // Actualizar el stock del producto
+                    const response = await axios.put(`http://localhost:3001/products/${item.id_Product}`, {
+                        stock: newStock
+                    });
+
+                    if (response.status !== 200) {
+                        throw new Error(`No se pudo actualizar el stock para el producto ${item.name}`);
+                    }
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Felicitaciones!',
+                    text: 'Tu compra se realizó con éxito y el stock ha sido actualizado.',
+                    confirmButtonText: 'Aceptar'
+                });
+
             } catch (error) {
                 console.error(`Error al enviar los datos del pedido: ${userId}`, error.response?.data || error.message);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Error al procesar el pedido o actualizar el stock.",
+                });
             }
         }
     };
@@ -108,7 +143,7 @@ const PayPalButton = ({ total, items }) => {
             createOrder={(data, actions) => {
                 return actions.order.create({
                     purchase_units: [{
-                        description: items.name,
+                        description: items.map(item => item.name).join(', '), // Combine item names for description
                         amount: {
                             value: total.toFixed(2),
                         }

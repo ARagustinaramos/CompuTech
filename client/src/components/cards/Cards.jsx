@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Card from '../card/Card';
 import Spinner from '../spinner/Spinner';
 import Pagination from '../pagination/Pagination';
 
-
 const Cards = ({ products, filterApplied }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const dataQt = 12;
+  const averageRatings = useSelector(state => state.averageRatings);
 
   useEffect(() => {
     // Reset current page to 1 whenever filterApplied changes
@@ -30,7 +31,7 @@ const Cards = ({ products, filterApplied }) => {
                 name={product.name}
                 image={product.image}
                 price={product.price}
-                brand={product.BrandIdBrand}
+                averageRating={averageRatings[product.id_Product]?.averageRanking || 0} // Obtener la media del ranking
               />
             ))
           ) : (

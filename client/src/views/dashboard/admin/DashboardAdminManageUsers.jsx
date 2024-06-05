@@ -1,4 +1,6 @@
-import CardStat from '../../../components/cardstat/CardStat'
+import CardUserStat from '../../../components/cardstat/CardUserStat'
+import CardUserStat2 from '../../../components/cardstat/CardUserStat2'
+import CardUserStat3 from '../../../components/cardstat/CardUserStat3'
 import { Chart } from '../../../components/charts/Chart'
 import { DangerCard } from '../../../components/dangercard/DangerCard';
 import SideBarAdmin from '../../../components/sidebaradmin/SideBarAdmin';
@@ -13,13 +15,14 @@ import { TableDashboardReviews } from '../../../components/tables/tableUser/Tabl
 const DashboardAdminManageUsers = () => {
     return (
         <div className="pt-16">
-            <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800">
-                <SideBarAdmin></SideBarAdmin>
+  <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
+    <SideBarAdmin></SideBarAdmin>
+    <div className="pt-6">
                 <div className="flex flex-col w-full">
                     <div className='grid grid-cols-3 gap-2'>
-                        <CardStat />
-                        <CardStat />
-                        <CardStat />
+                        <CardUserStat />
+                        <CardUserStat2 />
+                        <CardUserStat3 /> 
                     </div>
                     <div className='flex-1 grid grid-cols-2 gap-7 mt-10'>
                         <div className='flex flex-col'>
@@ -37,6 +40,7 @@ const DashboardAdminManageUsers = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     )
 }
