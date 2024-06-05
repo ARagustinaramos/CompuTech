@@ -103,12 +103,11 @@ const PayPalButton = ({ total, items }) => {
                     const productResponse = await axios.get(`http://localhost:3001/products/${item.id_Product}`);
                     
                     const currentStock = productResponse.data.product.stock;
-                    console.log(item.quantity)
-                    console.log(currentStock)
+                    
 
                     // Calcular el nuevo stock
                     const newStock = currentStock - item.quantity;
-                    console.log(newStock)
+                    
 
                     // Actualizar el stock del producto
                     const response = await axios.put(`http://localhost:3001/products/${item.id_Product}`, {
