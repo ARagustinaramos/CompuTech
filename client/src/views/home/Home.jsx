@@ -105,11 +105,11 @@ const Home = () => {
                 </select>
               </div>
               <button
-  onClick={handleResetSearch}
-  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-3 px-1 flex items-center dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" // Ajuste de altura
->
-  Reiniciar
-</button>
+                onClick={handleResetSearch}
+                className="h-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-5 px-1 flex items-center dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 content-center mt-1.5" // Ajuste de altura
+              >
+                Reiniciar
+              </button>
             </div>
             <Cards
               products={toShow}
