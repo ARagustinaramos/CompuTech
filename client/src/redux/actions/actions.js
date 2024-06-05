@@ -280,7 +280,7 @@ export const updateDataUser = (id, userData) => {
 				{
 					name: userData.name,
 					address: userData.address,
-					phone: userData.address,
+					phone: userData.phone,
 					image: userData.image
 				}
 			);

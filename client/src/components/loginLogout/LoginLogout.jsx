@@ -16,20 +16,18 @@ const LoginLogout = () => {
 
 	const dispatch = useDispatch();
 	const allUsers = useSelector((state) => state.allUsers);
-
+	console.log("allUsers", allUsers);
 	useEffect(() => {
 		dispatch(getUsers());
 	}, [dispatch]);
 
 	let currentUser = "";
 	allUsers.map((u) => {
-		if (user?.email === u.mail) {
-			currentUser = u;
-		} else {
-			currentUser = "";
+		if (user?.email == u.mail) {
+			return (currentUser = u);
 		}
 	});
-
+	console.log("currentUser", currentUser);
 	const openProfileModal = () => {
 		setIsModalProfileOpen(true);
 	};
@@ -133,11 +131,11 @@ const LoginLogout = () => {
 							onClick={toggleDropdown}
 						>
 							<img
-								src={user?.photoURL}
-								alt={user?.displayName}
+								src={currentUser.image}
+								alt={currentUser.name}
 								className="h-8 w-8 rounded-full mr-2"
 							/>
-							Hola, {user?.displayName}
+							Hola, {currentUser.name}
 							<svg
 								className="ml-2 -mr-1 h-5 w-5"
 								xmlns="http://www.w3.org/2000/svg"
