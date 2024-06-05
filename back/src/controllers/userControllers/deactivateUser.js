@@ -1,11 +1,11 @@
 const { User } = require("../../config/db");
 
-const deactivateUser = async (id) => {
+const toggleUserActivation = async (id, activate) => {
 	const user = await User.findByPk(id);
 	if (!user) throw new Error("User not found");
-	user.active = false;
+	user.active = activate;
 	await user.save();
-	return "User successfully marked as inactive!";
-};
-
-module.exports = deactivateUser;
+	return activate ? "User successfully marked as active!" : "User successfully marked as inactive!";
+  };
+  
+  module.exports = toggleUserActivation;
