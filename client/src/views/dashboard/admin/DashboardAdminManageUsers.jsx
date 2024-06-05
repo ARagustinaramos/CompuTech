@@ -2,7 +2,7 @@ import CardStat from '../../../components/cardstat/CardStat'
 import { Chart } from '../../../components/charts/Chart'
 import { DangerCard } from '../../../components/dangercard/DangerCard';
 import SideBarAdmin from '../../../components/sidebaradmin/SideBarAdmin';
-
+import { DangerCardUser } from '../../../components/dangercard/DangerCardUser';
 import { Card } from '@tremor/react';
 import { FunnelChart } from '@tremor/react';
 import React from 'react'
@@ -13,27 +13,27 @@ import { TableDashboardReviews } from '../../../components/tables/tableUser/Tabl
 const DashboardAdminManageUsers = () => {
     return (
         <div className="pt-16">
-            <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
+            <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800">
                 <SideBarAdmin></SideBarAdmin>
-                <div>
+                <div className="flex flex-col w-full">
                     <div className='grid grid-cols-3 gap-2'>
                         <CardStat />
                         <CardStat />
                         <CardStat />
                     </div>
-                    <div className='grid grid-cols-4'>
-                        <div className='col-span-2 mt-10'>
-                            <TableDashboardAdminManageUsers />
+                    <div className='flex-1 grid grid-cols-2 gap-7 mt-10'>
+                        <div className='flex flex-col'>
+                            <TableDashboardAdminManageUsers className='flex-1' />
+                            <TableDashboardReviews className='flex-1' />
                         </div>
-                        <div className='col-span-2 mt-10 px-7'>
-                            <Card className="mb-5 ">
-                                <VisitorsChart></VisitorsChart>
+                        <div className='flex flex-col'>
+                            <Card className="mb-5 flex-1">
+                                <VisitorsChart />
+                            </Card>
+                            <Card className="mb-5">
+                                <DangerCardUser />
                             </Card>
                         </div>
-                        <div className='col-span-2 mt-10'>
-                            <TableDashboardReviews />
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -41,4 +41,4 @@ const DashboardAdminManageUsers = () => {
     )
 }
 
-export default DashboardAdminManageUsers
+export default DashboardAdminManageUsers;

@@ -1,9 +1,11 @@
+import Swal from "sweetalert2";
 import axios from "axios";
 import {
 	GET_DETAIL,
 	GET_PRODUCTS,
 	GET_ALL_PRODUCTS,
 	GET_USERS,
+	GET_SALES,
 	CLEAN_DETAIL,
 	SET_FILTER,
 	ADD_TO_CART,
@@ -21,6 +23,7 @@ import {
 	SET_NAME_ORDER,
 	SET_PRICE_ORDER,
 	SET_CART_ITEMS,
+	RESET_FILTERS,
 	REVIEW_SENT_SUCCESS,
 	REVIEW_SENT_ERROR,
 	UPDATE_REVIEW_REQUEST,
@@ -55,10 +58,12 @@ export const setNameOrder = (order) => ({
 	type: SET_NAME_ORDER,
 	payload: order
 });
+
 export const setPriceOrder = (order) => ({
 	type: SET_PRICE_ORDER,
 	payload: order
 });
+
 export const getBrands = () => async (dispatch) => {
 	try {
 		const response = await fetch("http://localhost:3001/brands");
@@ -68,6 +73,7 @@ export const getBrands = () => async (dispatch) => {
 		console.error("Error fetching brands:", error);
 	}
 };
+
 export const getCategories = () => async (dispatch) => {
 	try {
 		const response = await fetch("http://localhost:3001/categories");
@@ -112,33 +118,40 @@ export const setAllProducts = (products) => ({
 	type: SET_ALL_PRODUCTS,
 	payload: products
 });
+
 export const setCategoryFilter = (category) => ({
 	type: SET_CATEGORY_FILTER,
 	payload: category
 });
+
 export const resetFilters = () => ({
 	type: RESET_FILTERS
 });
+
 export const setFilterProducts = (products) => ({
 	type: SET_FILTER_PRODUCTS,
 	payload: products
 });
+
 export const setBrandFilter = (brand) => ({
 	type: FILTER_BY_BRAND,
 	payload: brand
 });
+
 export const filterByBrand = (brand) => {
 	return {
 		type: FILTER_BY_BRAND,
 		payload: brand
 	};
 };
+
 export const filterByCategory = (category) => {
 	return {
 		type: FILTER_BY_CATEGORY,
 		payload: category
 	};
 };
+
 export const addToCart = (product) => {
 	return {
 		type: ADD_TO_CART,
@@ -148,14 +161,17 @@ export const addToCart = (product) => {
 		}
 	};
 };
+
 export const updateCartItemQuantity = (itemId, quantity) => ({
 	type: UPDATE_CART_ITEM_QUANTITY,
 	payload: { itemId, quantity }
 });
+
 export const removeFromCart = (cartitemId) => ({
 	type: REMOVE_FROM_CART,
 	payload: cartitemId
 });
+
 export const getDetail = (id) => {
 	return async (dispatch) => {
 		try {
@@ -169,6 +185,7 @@ export const getDetail = (id) => {
 		}
 	};
 };
+
 export const cleanDetail = () => {
 	return {
 		type: CLEAN_DETAIL
@@ -191,6 +208,23 @@ export const deleteProduct = (id, boolean) => {
 		}
 	};
 };
+
+export const deleteUser = (email) => {
+	return async (dispatch) => {
+		try {
+			console.log("action:", email);
+			const response = await axios.delete(
+				`http://localhost:3001/users/${email}`
+			);
+			dispatch({ type: "DELETE_USER_SUCCESS", payload: response.data });
+			Swal.fire("Usuario desactivado correctamente");
+		} catch (error) {
+			console.error("Error updating user:", error);
+			dispatch({ type: "DELETE_USER_FAILURE", error });
+			Swal.fire("Error al desactivar el usuario");
+		}
+	};
+};
 export const setCartItems = (items) => ({
 	type: SET_CART_ITEMS,
 	payload: items
@@ -209,8 +243,6 @@ export const getUsers = (id) => {
 		}
 	};
 };
-
-//**********************USERS***************************
 export const getUserById = (id) => {
 	return async (dispatch) => {
 		try {
@@ -340,7 +372,6 @@ export function getAllReviewUser(data) {
 		}
 	};
 }
-
 export const getAllProducts = () => {
 	return async (dispatch) => {
 		try {
@@ -355,6 +386,19 @@ export const getAllProducts = () => {
 	};
 };
 
+export const getAllSales = () => {
+	return async (dispatch) => {
+		try {
+			const { data } = await axios.get("http://localhost:3001/order/");
+			return dispatch({
+				type: GET_SALES,
+				payload: data
+			});
+		} catch (error) {
+			console.error("Error fetching products:", error);
+		}
+	};
+};
 //**********************SHOPPINGCART POR USER***************************
 export const updateShoppingCartItemQuantity = (itemId, quantity) => ({
 	type: UPDATE_SHOPPINGCART_ITEM_QUANTITY,

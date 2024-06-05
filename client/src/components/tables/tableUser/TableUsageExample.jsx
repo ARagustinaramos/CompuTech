@@ -25,27 +25,32 @@ export function TableUsageExample() {
 	const allProducts = useSelector(
 		(state) => state.allProductsActivesDesactives
 	);
-	console.log(allProducts);
+
 	useEffect(() => {
-		dispatch(getProducts());
+		dispatch(getAllProducts());
 	}, [dispatch]);
 
 	const handlerSubmit = (product) => {
 		dispatch(deleteProduct(product, false));
 		console.log("Entró!");
 	};
+
+	//console.log(allProducts)
 	return (
 		<Card>
 			<h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">
-				Tus historial de pedidos
+				Lista de productos en Stock
 			</h3>
 			<Table className="mt-5">
 				<TableHead>
 					<TableRow>
-						<TableHeaderCell>Fecha</TableHeaderCell>
-						<TableHeaderCell>Cant de productos</TableHeaderCell>
-						<TableHeaderCell>Total</TableHeaderCell>
+						<TableHeaderCell>Nombre</TableHeaderCell>
+						<TableHeaderCell>Marca</TableHeaderCell>
+						<TableHeaderCell>Categoria</TableHeaderCell>
+						<TableHeaderCell>Precio unitario</TableHeaderCell>
 						<TableHeaderCell>Status</TableHeaderCell>
+						<TableHeaderCell>Cantidad</TableHeaderCell>
+						<TableHeaderCell>id del producto</TableHeaderCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>

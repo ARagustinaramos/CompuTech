@@ -23,6 +23,7 @@ import {
 	SET_NAME_ORDER,
 	SET_PRICE_ORDER,
 	SET_CART_ITEMS,
+	GET_SALES,
 	UPDATE_PRODUCT_STATUS,
 	ADMIN_REVIEW,
 	GET_PRODUCT_REVIEW,
@@ -43,7 +44,7 @@ const initialState = {
 	allProducts: [],
 	copyProducts: [],
 	producto: [],
-	productDetail: {},
+	productDetail: { msj: "hola" },
 	items: loadCartFromLocalStorage(),
 	filteredProducts: [],
 	categoryFilter: "",
@@ -55,6 +56,8 @@ const initialState = {
 	copyUsers: [],
 	allProductsActivesDesactives: [],
 	copyallProductsActivesDesactives: [],
+	allSales: [],
+	copyAllSales: [],
 	adminReview: [],
 	getProductReviews: [],
 	currentUserData: [],
@@ -123,6 +126,12 @@ function rootReducer(state = initialState, action) {
 				copyUsers: [...action.payload]
 			};
 
+		case GET_SALES:
+			return {
+				...state,
+				allSales: action.payload,
+				copyAllSales: [...action.payload]
+			};
 		case GET_ALL_PRODUCTS:
 			return {
 				...state,
@@ -368,7 +377,20 @@ function rootReducer(state = initialState, action) {
 					: sortedProducts
 			};
 		}
-
+		case "DELETE_USER_SUCCESS":
+			return {
+				...state,
+				users: state.allUsers.map((user) =>
+					user.id === action.payload.id
+						? { ...user, active: action.payload.active }
+						: user
+				)
+			};
+		case "DELETE_USER_FAILURE":
+			return {
+				...state,
+				error: action.error
+			};
 		case UPDATE_PRODUCT_STATUS:
 			return {
 				...state,
