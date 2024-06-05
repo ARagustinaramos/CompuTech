@@ -131,7 +131,11 @@ const LoginLogout = () => {
 							onClick={toggleDropdown}
 						>
 							<img
-								src={currentUser.image}
+								src={
+									currentUser?.image
+										? currentUser?.image
+										: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+								}
 								alt={currentUser.name}
 								className="h-8 w-8 rounded-full mr-2"
 							/>

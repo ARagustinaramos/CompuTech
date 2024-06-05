@@ -267,6 +267,7 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 									required
 								/>
 							)}
+							<label>Direccion:</label>
 							<label>
 								{currentUser?.address || (
 									<p className="text-red-500 font-bold">
@@ -286,6 +287,7 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 								/>
 							)}
 							<label>
+								Telefono:
 								{currentUser?.phone || (
 									<p className="text-red-500 font-bold">
 										'Ingresa un número de teléfono'
@@ -304,13 +306,17 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 								/>
 							)}
 						</div>
-						<button
-							type="button"
-							onClick={handleSave}
-							className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-						>
-							Guardar
-						</button>
+						{editMode && (
+							<div>
+								<button
+									type="button"
+									onClick={handleSave}
+									className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+								>
+									Guardar
+								</button>
+							</div>
+						)}
 						<button
 							type="button"
 							onClick={onClose}
