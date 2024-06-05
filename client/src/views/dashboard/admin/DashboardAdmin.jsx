@@ -19,6 +19,7 @@ const DashboardAdmin = () => {
         {/* Sidebar */}
         <SideBarAdmin></SideBarAdmin>
         {/* <SideBarAdminResponsive></SideBarAdminResponsive> */}
+        <div className="pt-6">
         <div>
           <div className='grid grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4'>
             <CardSoldProducts />
@@ -45,6 +46,7 @@ const DashboardAdmin = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
 
   )

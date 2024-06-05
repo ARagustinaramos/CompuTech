@@ -13,8 +13,9 @@ import { TableDashboardReviews } from '../../../components/tables/tableUser/Tabl
 const DashboardAdminManageUsers = () => {
     return (
         <div className="pt-16">
-            <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800">
-                <SideBarAdmin></SideBarAdmin>
+  <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
+    <SideBarAdmin></SideBarAdmin>
+    <div className="pt-6">
                 <div className="flex flex-col w-full">
                     <div className='grid grid-cols-3 gap-2'>
                         <CardStat />
@@ -37,6 +38,7 @@ const DashboardAdminManageUsers = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

@@ -18,15 +18,17 @@ const Header = () => {
   }, [auth]);
 
   if (isLoading) {
-    return <div>Cargando...</div>;
+    return <div className="text-gray-900 dark:text-white">Cargando...</div>;
   }
 
   return (
-    <header className="flex flex-col md:flex-row items-center justify-between gap-4">
-      <h1 className="text-2xl text-gray-600 dark:text-gray-100 md:text-3xl font-bold dark:bg-gray-900 dark:border-gray-900">
+    <div className="pt-16">
+    <header className="flex flex-col items-center justify-center text-center mb-4">
+      <h1 className="text-2xl text-gray-600 dark:text-gray-100 md:text-3xl font-bold">
         Hola, <span>{user.displayName}</span>
       </h1>
     </header>
+    </div>
   );
 };
 

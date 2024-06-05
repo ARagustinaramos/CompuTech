@@ -2,8 +2,9 @@ import { Avatar, Blockquote, Rating } from "flowbite-react";
 import { auth } from '../../firebase/firebase';
 import { useEffect, useState } from 'react'; 
 
-export function ReviewsDetailProduct({ producto }) {
+export function ReviewsDetailProduct({ reviews}) {
   const [user, setUser] = useState(null); // Estado para almacenar la información del usuario
+  console.log(reviews)
 
   useEffect(() => {
     // Suscribirse al cambio de estado de autenticación de Firebase
@@ -15,7 +16,7 @@ export function ReviewsDetailProduct({ producto }) {
     return () => unsubscribe();
   }, []);
 
-  if (!producto || producto.length === 0) {
+  if (!reviews || reviews.length === 0) {
     return <p>No hay comentarios aún.</p>;
   }
 
@@ -23,7 +24,7 @@ export function ReviewsDetailProduct({ producto }) {
   return (
     <div>
   
-      {producto.reviews?.map((review, index) => (
+      {reviews.map((review, index) => (
         <figure className="max-w-screen-md" key={index}>
           <div className="mb-4 flex items-center">
             <Rating size="md">

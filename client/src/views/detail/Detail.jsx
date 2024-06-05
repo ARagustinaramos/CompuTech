@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDetail, cleanDetail, addToCart } from '../../redux/actions/actions';
+import { getDetail, cleanDetail, addToCart, getAllReviews } from '../../redux/actions/actions';
 import Swal from 'sweetalert2';
 import Spinner from '../../../src/components/spinner/Spinner';
 import { ReviewsDetailProduct } from '../../components/reviews/ReviewsDetailProduct';
@@ -12,12 +12,12 @@ import { Carousel } from "flowbite-react";
 
 const Detail = () => {
   const { id } = useParams();
-  console.log(id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const producto = useSelector((state) => state.productDetail);
 
   const isLoading = useSelector((state) => state.isLoading);
+  const allReviews = useSelector((state) => state.allReviews);
   const [isNavigating, setIsNavigating] = useState(false);
   const [user] = useAuthState(auth);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -35,6 +35,7 @@ const Detail = () => {
     const fetchProducto = async () => {
       try {
         dispatch(getDetail(id));
+        dispatch(getAllReviews());
       } catch (error) {
         console.log(error.message);
       }
@@ -63,14 +64,17 @@ const Detail = () => {
   const goToSlide = (index) => {
     setActiveIndex(index);
   };
+  
 
-  const reviews = producto.review || [];
-  console.log(producto.reviews)
+  // Filtrar las revisiones por 'approved' y 'ProductIdProduct' coincidente
+  const approvedReviews = allReviews.filter(review => review.status === 'approved' && review.ProductIdProduct === producto.product?.id_Product);
+  console.log(approvedReviews)
+  
 
   return (
-    <section className="  text-gray-700 body-font overflow-hidden bg-white py-8  antialiased dark:bg-gray-900  dark:text-gray-200 md:py-16 ">
-        <div className="container px-5 mx-auto flex flex-wrap mt-40">
-            <div className='w-full lg:w-1/2 lg:pr-10 lg:py-6 mb-8 md:mb-0 '>
+    <section className="text-gray-700 body-font overflow-hidden bg-white py-8 antialiased dark:bg-gray-900 dark:text-gray-200 md:py-16">
+      <div className="container px-5 mx-auto flex flex-wrap mt-40">
+        <div className='w-full lg:w-1/2 lg:pr-10 lg:py-6 mb-8 md:mb-0'>
           {producto.product && producto.product?.image.length > 1 && (
             <div id="default-carousel" className="relative w-full" data-carousel="slide">
               <div className="relative h-56 overflow-hidden rounded-lg md:h-72 w-full">
@@ -151,7 +155,6 @@ const Detail = () => {
           <p className="leading-relaxed text-gray-500 dark:text-gray-400">{producto.product?.description}</p>
           <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 dark:border-gray-700 mb-5">
             <div className="flex">
-
             </div>
           </div>
           <div className="flex">
@@ -168,7 +171,7 @@ const Detail = () => {
       <div className='w-1/2 flex-col flex justify-center w-00 mx-auto'>
         <div className="mt-8 lg:mt-0">
           <div className="mb-5 mt-16">
-            <ReviewsDetailProduct producto={producto} />
+            <ReviewsDetailProduct reviews={approvedReviews} />
           </div>
         </div>
       </div>

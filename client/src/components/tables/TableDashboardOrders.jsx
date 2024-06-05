@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 export function TableDashboardOrders() {
     const dispatch = useDispatch();
     const allSales = useSelector((state) => state.allSales);
-    console.log(allSales)
+    
     // Estado local para manejar el estado activo/inactivo de cada usuario
     const [userStatus, setUserStatus] = useState({});
 
