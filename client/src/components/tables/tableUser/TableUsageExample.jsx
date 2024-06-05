@@ -31,8 +31,6 @@ export function TableUsageExample() {
         console.log("Entró!")
     }
 
-
-
     //console.log(allProducts)
     return (
         <Card>

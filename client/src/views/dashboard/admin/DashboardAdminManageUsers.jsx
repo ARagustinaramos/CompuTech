@@ -13,7 +13,7 @@ import { TableDashboardReviews } from '../../../components/tables/tableUser/Tabl
 const DashboardAdminManageUsers = () => {
     return (
         <div className="pt-16">
-            <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
+            <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800">
                 <SideBarAdmin></SideBarAdmin>
                 <div className="flex flex-col w-full">
                     <div className='grid grid-cols-3 gap-2'>
@@ -23,7 +23,7 @@ const DashboardAdminManageUsers = () => {
                     </div>
                     <div className='flex-1 grid grid-cols-2 gap-7 mt-10'>
                         <div className='flex flex-col'>
-                            <TableDashboardAdminManageUsers className='flex-1 mb-55' />
+                            <TableDashboardAdminManageUsers className='flex-1' />
                             <TableDashboardReviews className='flex-1' />
                         </div>
                         <div className='flex flex-col'>
