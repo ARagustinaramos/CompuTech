@@ -271,6 +271,7 @@ export default function ProductForm() {
               name="images"
               multiple
               onChange={changeUploadImage}
+              
               className="mt-1 p-2 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
             />
             {url_imgs.length > 0 && (
