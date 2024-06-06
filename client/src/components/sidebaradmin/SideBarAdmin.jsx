@@ -25,6 +25,7 @@ const SideBarAdmin = () => {
             className={`${location.pathname === "/dashboardadmin/manage/products" ? "bg-gray-200 dark:bg-gray-600" : ""} dark:text-white`}
           >
             Gestionar Productos
+        
           </Sidebar.Item>
           <Sidebar.Item
             as={Link}
