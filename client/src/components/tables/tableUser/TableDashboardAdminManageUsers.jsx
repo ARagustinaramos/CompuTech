@@ -3,6 +3,7 @@ import { Select, SelectItem } from '@tremor/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../../redux/actions/actions';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export function TableDashboardAdminManageUsers() {
   const dispatch = useDispatch();
@@ -40,6 +41,16 @@ export function TableDashboardAdminManageUsers() {
         active: isActive
       });
       console.log(`Estado del usuario ${userId} actualizado a ${status}`);
+      
+      if (!isActive) {
+        Swal.fire({
+          icon: 'warning',
+          title: '¡Atención!',
+          text: 'Has desactivado este usuario',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK'
+        });
+      }
     } catch (error) {
       console.error('Error al actualizar el estado del usuario:', error);
     }

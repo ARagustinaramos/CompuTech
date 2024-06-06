@@ -18,7 +18,7 @@ const postUserController = async (req, res) => {
 			mail,
 			name,
 			image: image || null,
-			rol: true
+			rol: false
 			// Aquí puedes añadir más campos si es necesario
 		});
 
