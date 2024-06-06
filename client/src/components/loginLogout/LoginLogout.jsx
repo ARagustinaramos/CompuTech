@@ -7,6 +7,7 @@ import Perfil from "../../views/dashboard/user/components/Perfil";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../redux/actions/actions";
 import AccountLocked from "../../components/accountLocked/AccountLocked";
+import { useNavigate } from "react-router-dom";
 
 const LoginLogout = () => {
 	const [user] = useAuthState(auth);
@@ -14,9 +15,14 @@ const LoginLogout = () => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [modalOpen, setModalOpen] = useState(false);
 	const [isModalProfileOpen, setIsModalProfileOpen] = useState(false);
-
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const allUsers = useSelector((state) => state.allUsers);
+
+	const handleLog = () => {
+		auth.signOut();
+		navigate("/");
+	};
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -203,7 +209,7 @@ const LoginLogout = () => {
 								/>
 								<div className="border-t border-gray-100"></div>
 								<button
-									onClick={() => auth.signOut()}
+									onClick={() => handleLog()}
 									className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
 									role="menuitem"
 								>
