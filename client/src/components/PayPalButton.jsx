@@ -185,7 +185,9 @@ const PayPalButton = ({ total, items }) => {
 						icon: "error",
 						title: "Oops...",
 						text: "Algo salió mal...",
-						footer: <a href="http://localhost:5173/cart">Volver al carrito</a>
+						footer: (
+							<a href="https://computech.vercel.app/cart">Volver al carrito</a>
+						)
 					});
 					console.error("Error capturando la orden:", error);
 				}
