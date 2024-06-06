@@ -22,6 +22,15 @@ const putUserController = async (id, userData, res) => {
 		user.active = userData.active || user.active;
 		user.shoppingCart = userData.shoppingCart || user.shoppingCart;
 		user.recurringPayment = userData.recurringPayment || user.recurringPayment;
+		// user.rol = userData.rol || user.rol;
+
+		if (typeof userData.rol !== "undefined") {
+			user.rol = userData.rol;
+		}
+
+		if (typeof userData.active !== "undefined") {
+			user.active = userData.active;
+		}
 
 		// Guardar los cambios en la base de datos
 		await user.save();

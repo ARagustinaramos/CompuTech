@@ -11,9 +11,11 @@ import React from 'react'
 import { TableDashboardAdminManageUsers } from '../../../components/tables/tableUser/TableDashboardAdminManageUsers';
 import { VisitorsChart } from '../../../components/charts/VisitorsChart';
 import { TableDashboardReviews } from '../../../components/tables/tableUser/TableDashboardReviews';
+import { Flowbite } from 'flowbite-react';
 
 const DashboardAdminManageUsers = () => {
     return (
+        <Flowbite>
         <div className="pt-16">
   <div className="flex min-h-screen bg-white antialiased dark:bg-gray-800 md:py-5">
     <SideBarAdmin></SideBarAdmin>
@@ -42,6 +44,7 @@ const DashboardAdminManageUsers = () => {
             </div>
         </div>
         </div>
+        </Flowbite>
     )
 }
 

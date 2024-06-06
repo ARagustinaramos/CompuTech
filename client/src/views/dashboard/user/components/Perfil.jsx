@@ -104,15 +104,17 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 				isOpen ? "" : "hidden"
 			}`}
 		>
-			<div className="dark:text-white w-96 p-6 rounded-lg shadow-lg">
+			<div className="dark:text-white w-96 p-6 rounded-lg shadow-lg dark:bg-gray-800 bg-white">
+				<div className="flex justify-between items-center mb-4">
+					<label className="text-2xl font-bold text-gray-900 dark:text-white">
+						Datos actuales
+					</label>
+					<div className="flex justify-end">
+						<Edit editMode={editMode} setEditMode={setEditMode} small />
+					</div>
+				</div>
 				<div className="grid grid-cols-1 mt-10 gap-8 lg:grid-cols-1">
-					<form className="p-8 rounded-xl shadow-2xl mb-8 flex flex-col dark:bg-gray-800 md:py-5">
-						<label className="text-center block text-2xl font-bold mb-2 text-gray-900 dark:text-white">
-							Datos actuales
-						</label>
-						<div className="absolute flex fle-end">
-							<Edit editMode={editMode} setEditMode={setEditMode} />
-						</div>
+					<form className="p-8 rounded-xl shadow-2xl mb-8 flex flex-col dark:bg-gray-800 bg-white md:py-5">
 						<div className="pb-6 flex items-center justify-around">
 							<img
 								src={
@@ -128,7 +130,7 @@ const Perfil = ({ isOpen, onClose, currentUser }) => {
 									id="image"
 									name="image"
 									onChange={changeUploadImage}
-									className="mt-1 p-2 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500  dark:text-gray-300 dark:border-gray-600"
+									className="mt-1 p-10 w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500  dark:text-gray-300 dark:border-gray-600"
 								/>
 							)}
 						</div>

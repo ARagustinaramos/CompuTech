@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Home from "./views/home/Home";
@@ -13,39 +13,56 @@ import DashboardAdmin from "./views/dashboard/admin/DashboardAdmin";
 import DashboardAdminManageUsers from "./views/dashboard/admin/DashboardAdminManageUsers";
 import { FirebaseProvider } from "./firebase/firebase"; // Asegúrate de importar correctamente FirebaseProvider
 import OrderDetail from "./views/orderdetail/OrderDetail";
-import AdminReviews from "./components/adminReviews/AdminReviews";
+import AdminReviews from "../src/components/adminReviews/AdminReviews";
+import AccountLocked from "../src/components/accountLocked/AccountLocked";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "./redux/actions/actions";
 
 function App() {
-	return (
-		<FirebaseProvider>
-			<>
-				<Navbar />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/cart" element={<Cart />} />
-					<Route path="/form" element={<Form />} />
-					<Route path="/detail/:id" element={<Detail />} />
-					<Route path="/about" element={<About />} />
-					<Route path="/ProductDisplay" element={<ProductDisplay />} />
-					<Route path="/dashboardadmin/manage/reviews" element={<AdminReviews/>} />
-					<Route
-						path="/dashboardadmin/manage/products"
-						element={<DashboardAdmin />}
-					/>
-					<Route
-						path="/dashboardadmin/manage/users"
-						element={<DashboardAdminManageUsers />}
-					/>
-					<Route path="/dashboarduser" element={<DashboardUser2 />} />
-					<Route
-						path="/dashboardadmin/manage/products/orderdetail"
-						element={<OrderDetail />}
-					/>
-				</Routes>
-				<Footer />
-			</>
-		</FirebaseProvider>
-	);
+  const [user] = useAuthState(auth);
+  const dispatch = useDispatch();
+  const allUsers = useSelector((state) => state.allUsers);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
+  let currentUser = null;
+  allUsers.forEach((u) => {
+    if (user?.email === u.mail) {
+      currentUser = u;
+    }
+  });
+
+  useEffect(() => {
+    if (currentUser && currentUser.active === false) {
+      navigate("/blocked");
+    }
+  }, [currentUser, navigate]);
+
+  return (
+    <FirebaseProvider>
+      <>
+        <Routes>
+          <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
+          <Route path="/cart" element={<><Navbar /><Cart /><Footer /></>} />
+          <Route path="/form" element={<><Navbar /><Form /><Footer /></>} />
+          <Route path="/detail/:id" element={<><Navbar /><Detail /><Footer /></>} />
+          <Route path="/about" element={<><Navbar /><About /><Footer /></>} />
+          <Route path="/ProductDisplay" element={<><Navbar /><ProductDisplay /><Footer /></>} />
+          <Route path="/dashboardadmin/manage/reviews" element={<><Navbar /><AdminReviews /><Footer /></>} />
+          <Route path="/dashboardadmin/manage/products" element={<><Navbar /><DashboardAdmin /><Footer /></>} />
+          <Route path="/dashboardadmin/manage/users" element={<><Navbar /><DashboardAdminManageUsers /><Footer /></>} />
+          <Route path="/dashboarduser" element={<><Navbar /><DashboardUser2 /><Footer /></>} />
+          <Route path="/dashboardadmin/manage/products/orderdetail" element={<><Navbar /><OrderDetail /><Footer /></>} />
+          <Route path="/blocked" element={<AccountLocked />} />
+        </Routes>
+      </>
+    </FirebaseProvider>
+  );
 }
 
 export default App;

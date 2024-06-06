@@ -33,11 +33,11 @@ module.exports = (sequelize) => {
 				type: DataTypes.BOOLEAN,
 				allowNull: true,
 				defaultValue: true
-			
 			},
 			rol: {
 				type: DataTypes.BOOLEAN,
-				allowNull: false
+				allowNull: false,
+				defaultValue: false
 			},
 			shoppingCart: {
 				type: DataTypes.JSONB,

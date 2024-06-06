@@ -6,6 +6,7 @@ import { SignUpForm, SignInForm } from "../../firebase/authManual";
 import Perfil from "../../views/dashboard/user/components/Perfil";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../redux/actions/actions";
+import AccountLocked from "../../components/accountLocked/AccountLocked";
 
 const LoginLogout = () => {
 	const [user] = useAuthState(auth);
@@ -43,6 +44,10 @@ const LoginLogout = () => {
 
 	const openModal = () => setModalOpen(true);
 	const closeModal = () => setModalOpen(false);
+
+	if (currentUser && currentUser.active === false) {
+		return <AccountLocked />;
+	}
 
 	return (
 		<li className="relative content-center">
@@ -165,13 +170,23 @@ const LoginLogout = () => {
 								aria-orientation="vertical"
 								aria-labelledby="options-menu"
 							>
-								<a
-									href="/dashboardadmin/manage/products"
-									className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-									role="menuitem"
-								>
-									Administrador
-								</a>
+								{currentUser?.rol ? (
+									<a
+										href="/dashboardadmin/manage/products"
+										className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+										role="menuitem"
+									>
+										Administrador
+									</a>
+								) : (
+									<a
+										href="http://localhost:5173/dashboarduser"
+										className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+										role="menuitem"
+									>
+										Usuario
+									</a>
+								)}
 								<a
 									onClick={openProfileModal}
 									className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -186,20 +201,6 @@ const LoginLogout = () => {
 									isOpen={isModalProfileOpen}
 									onClose={closeProfileModal}
 								/>
-								<a
-									href="/account-settings"
-									className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-									role="menuitem"
-								>
-									Configuración de Cuenta
-								</a>
-								<a
-									href="/order-history"
-									className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-									role="menuitem"
-								>
-									Historial de Pedidos
-								</a>
 								<div className="border-t border-gray-100"></div>
 								<button
 									onClick={() => auth.signOut()}

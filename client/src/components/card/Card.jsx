@@ -9,7 +9,8 @@ import { auth } from '../../firebase/firebase';
 const Card = ({ id_Product, name, image, price, averageRating }) => {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
-
+  const formattedPrice = price.toLocaleString('es-ES', { minimumFractionDigits: 2 });
+  
   const handleAddToCart = () => {
     if (!user) {
       Swal.fire("Por favor inicia sesión para agregar productos al carrito");

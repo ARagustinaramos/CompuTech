@@ -21,7 +21,7 @@ const HistorialDePedidos = () => {
   if (isLoading) {
     return <div className="text-gray-900 dark:text-white">Cargando...</div>;
   }
-
+  // w-full max-w-7xl mx-auto p-6 sm:p-8 md:p-10 lg:p-12 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-600
   return (
     <div className="w-full max-w-7xl mx-auto p-6 sm:p-8 md:p-10 lg:p-12 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-600">
       <div className="flex items-center justify-between mb-4">
