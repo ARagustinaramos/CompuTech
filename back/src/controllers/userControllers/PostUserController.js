@@ -17,7 +17,7 @@ const postUserController = async (req, res) => {
 			mail === "computechsoyhenry@gmail.com" ||
 			mail === "worldcomputechcompany@gmail.com"
 		) {
-			return (rolUser = true);
+			rolUser = true;
 		}
 
 		// Si el usuario no existe, lo creamos
