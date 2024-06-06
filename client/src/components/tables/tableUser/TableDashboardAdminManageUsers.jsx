@@ -37,12 +37,9 @@ export function TableDashboardAdminManageUsers() {
 
 		// Realiza la solicitud PUT al backend para actualizar el estado activo/inactivo del usuario
 		try {
-			await axios.put(
-				`https://computechback.onrender.com/users/put/${userId}`,
-				{
-					active: isActive
-				}
-			);
+			await axios.put(`http://localhost:3001/users/put/${userId}`, {
+				active: isActive
+			});
 			console.log(`Estado del usuario ${userId} actualizado a ${status}`);
 
 			if (!isActive) {
@@ -68,12 +65,9 @@ export function TableDashboardAdminManageUsers() {
 
 		// Realiza la solicitud PUT al backend para actualizar el rol del usuario
 		try {
-			await axios.put(
-				`https://computechback.onrender.com/users/put/${userId}`,
-				{
-					rol: isAdmin
-				}
-			);
+			await axios.put(`http://localhost:3001/users/put/${userId}`, {
+				rol: isAdmin
+			});
 			console.log(`Rol del usuario ${userId} actualizado a ${role}`);
 		} catch (error) {
 			console.error("Error al actualizar el rol del usuario:", error);
@@ -93,9 +87,6 @@ export function TableDashboardAdminManageUsers() {
 						</th>
 						<th scope="col" className="px-6 py-3">
 							Status
-						</th>
-						<th scope="col" className="px-6 py-3">
-							Acción
 						</th>
 					</tr>
 				</thead>
@@ -142,14 +133,6 @@ export function TableDashboardAdminManageUsers() {
 										<SelectItem value="inactivo">Inactivo</SelectItem>
 									</Select>
 								</div>
-							</td>
-							<td className="px-6 py-4">
-								<a
-									href="#"
-									className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-								>
-									Ver detalle
-								</a>
 							</td>
 						</tr>
 					))}

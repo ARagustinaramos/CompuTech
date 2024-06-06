@@ -23,9 +23,6 @@ export function TableDashboardReviews() {
 						<th scope="col" className="px-6 py-3">
 							Review
 						</th>
-						<th scope="col" className="px-6 py-3">
-							Acción
-						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,14 +48,6 @@ export function TableDashboardReviews() {
 										<p>{review.comment}</p>
 									) : null;
 								})}
-							</td>
-							<td className="px-6 py-4">
-								<a
-									href="#"
-									className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-								>
-									toggle button
-								</a>
 							</td>
 						</tr>
 					))}
