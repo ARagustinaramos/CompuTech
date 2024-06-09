@@ -31,14 +31,16 @@ module.exports = (sequelize) => {
 			},
 			active: {
 				type: DataTypes.BOOLEAN,
-				allowNull: true
+				allowNull: true,
+				defaultValue: true
 			},
 			rol: {
 				type: DataTypes.BOOLEAN,
-				allowNull: false
+				allowNull: false,
+				defaultValue: false
 			},
 			shoppingCart: {
-				type: DataTypes.ARRAY(DataTypes.STRING),
+				type: DataTypes.JSONB,
 				allowNull: true
 			},
 			recurringPayment: {

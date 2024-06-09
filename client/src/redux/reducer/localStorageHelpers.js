@@ -15,7 +15,7 @@ export const loadCartFromLocalStorage = () => {
         }
         return JSON.parse(serializedCartItems).map(item => ({
             ...item,
-            quantity: item.quantity ?? 1, // Ensure each item has a default quantity of 1
+            quantity: item.quantity ?? 1, 
         }));
     } catch (error) {
         console.error('Could not load cart items from localStorage:', error);

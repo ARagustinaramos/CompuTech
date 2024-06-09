@@ -1,21 +1,33 @@
+// src/redux/reducers/rootReducer.js
 import {
   ADD_TO_CART,
   GET_PRODUCTS,
+  GET_ALL_PRODUCTS,
   GET_DETAIL,
+  GET_USERS,
   REMOVE_FROM_CART,
   UPDATE_CART_ITEM_QUANTITY,
   CLEAN_DETAIL,
   GET_BY_NAME,
-  GET_TYPES,
-  FILTERDBAPI,
-  FILTER_TYPE,
   ORDER_NAME,
   SET_FILTER,
   DELETE_PRODUCT,
   SET_FILTER_PRODUCTS,
   SET_ALL_PRODUCTS,
-  SET_CATEGORY_FILTER, 
-  SET_BRAND_FILTER
+  SET_CATEGORY_FILTER,
+  FILTER_BY_BRAND,
+  SET_BRANDS,
+  SET_CATEGORIES,
+  SEARCH_PRODUCTS_BY_NAME,
+  FILTER_BY_CATEGORY,
+  RESET_FILTERS,
+  SET_NAME_ORDER,
+  SET_PRICE_ORDER,
+  SET_CART_ITEMS,
+  GET_SALES,
+  GET_ALL_REVIEWS,
+  UPDATE_DATA_USER,
+  CALCULATE_AVERAGE_RATINGS
 } from "../actions/types";
 
 import {
@@ -27,13 +39,67 @@ const initialState = {
   allProducts: [],
   copyProducts: [],
   producto: [],
-  productDetail: {},
-  types: [],
+  productDetail: { msj: "hola" },
   items: loadCartFromLocalStorage(),
-  BrandIdBrand: "",
   filteredProducts: [],
-  categoryFilter: '',
-  brandFilter: '',
+  categoryFilter: "",
+  brandFilter: "",
+  brands: [],
+  categories: [],
+  searchResults: [],
+  allUsers: [],
+  copyUsers: [],
+  allProductsActivesDesactives: [],
+  copyallProductsActivesDesactives: [],
+  allSales: [],
+  copyAllSales: [],
+  allReviews: [],
+  averageRatings: {},
+};
+
+const applyFilters = (products, filters) => {
+  const { searchResults, categoryFilter, brandFilter } = filters;
+
+  let filtered = products;
+
+  // Aplicar búsqueda por nombre
+  if (searchResults && searchResults.length > 0) {
+    filtered = filtered.filter((product) => {
+      return searchResults.some((result) => result.id === product.id);
+    });
+  }
+
+  // Aplicar filtro de categoría
+  if (categoryFilter !== "" && categoryFilter !== "") {
+    filtered = filtered.filter((product) => {
+      const normalizedCategoryPayload = String(
+        product.CategoryIdCategory
+      ).toLowerCase();
+      return normalizedCategoryPayload === categoryFilter;
+    });
+  }
+
+  // Aplicar filtro de marca
+  if (brandFilter !== "default" && brandFilter !== "") {
+    filtered = filtered.filter((product) => {
+      const normalizedBrandIdBrand = String(product.BrandIdBrand).toLowerCase();
+      return normalizedBrandIdBrand === brandFilter;
+    });
+  }
+
+  return filtered;
+};
+
+const compareByName = (a, b, order) => {
+  if (order === "a-z") return a.name.localeCompare(b.name);
+  if (order === "z-a") return b.name.localeCompare(a.name);
+  return 0;
+};
+
+const compareByPrice = (a, b, order) => {
+  if (order === "asc") return a.price - b.price;
+  if (order === "desc") return b.price - a.price;
+  return 0;
 };
 
 function rootReducer(state = initialState, action) {
@@ -44,26 +110,110 @@ function rootReducer(state = initialState, action) {
         allProducts: action.payload,
         copyProducts: [...action.payload],
       };
+
+    case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+        copyUsers: [...action.payload],
+      };
+
+    case GET_SALES:
+      return {
+        ...state,
+        allSales: action.payload,
+        copyAllSales: [...action.payload],
+      };
+    case GET_ALL_PRODUCTS:
+      return {
+        ...state,
+        allProductsActivesDesactives: action.payload,
+        copyallProductsActivesDesactives: [...action.payload],
+      };
+
+    case SEARCH_PRODUCTS_BY_NAME:
+      const { payload: searchResults } = action;
+      const resetFiltersState = {
+        ...state,
+        brandFilter: "",
+        categoryFilter: "",
+        searchResults,
+      };
+      const filteredResultsAfterSearch = applyFilters(
+        state.allProducts,
+        resetFiltersState
+      );
+      return {
+        ...resetFiltersState,
+        filteredProducts: searchResults,
+      };
+
     case GET_DETAIL:
       return {
         ...state,
         productDetail: action.payload,
       };
-      case SET_ALL_PRODUCTS:
+
+    case SET_BRANDS:
+      return { ...state, brands: action.payload };
+
+    case SET_CATEGORIES:
+      return { ...state, categories: action.payload };
+
+    case SET_ALL_PRODUCTS:
       return {
         ...state,
         allProducts: action.payload,
       };
-      case SET_CATEGORY_FILTER:
+
+    case SET_CATEGORY_FILTER:
       return {
         ...state,
         categoryFilter: action.payload,
       };
-    case SET_BRAND_FILTER:
-      return {
+
+    case FILTER_BY_BRAND:
+      const { payload: brandPayload } = action;
+      const normalizedBrandPayload = String(brandPayload).toLowerCase();
+      const newStateAfterBrandFilter = {
         ...state,
-        brandFilter: action.payload,
+        brandFilter: normalizedBrandPayload,
       };
+      const filteredResultsByBrand = applyFilters(
+        state.searchResults.length > 0
+          ? state.searchResults
+          : state.allProducts,
+        newStateAfterBrandFilter
+      );
+      if (filteredResultsByBrand.length === 0) {
+        alert("No se encontraron productos con esa marca");
+      }
+      return {
+        ...newStateAfterBrandFilter,
+        filteredProducts: filteredResultsByBrand,
+      };
+
+    case FILTER_BY_CATEGORY:
+      const { payload: categoryPayload } = action;
+      const normalizedCategoryPayload = String(categoryPayload).toLowerCase();
+      const newStateAfterCategoryFilter = {
+        ...state,
+        categoryFilter: normalizedCategoryPayload,
+      };
+      const filteredProductsByCategory = applyFilters(
+        state.searchResults.length > 0
+          ? state.searchResults
+          : state.allProducts,
+        newStateAfterCategoryFilter
+      );
+      if (filteredProductsByCategory.length === 0) {
+        alert("No se encontraron productos en esa categoría");
+      }
+      return {
+        ...newStateAfterCategoryFilter,
+        filteredProducts: filteredProductsByCategory,
+      };
+
     case SET_FILTER_PRODUCTS:
       return {
         ...state,
@@ -89,6 +239,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         items: updatedItems,
       };
+
     case REMOVE_FROM_CART:
       const updatedItemsAfterRemoval = state.items.filter(
         (item) => item.cartItemId !== action.payload
@@ -98,6 +249,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         items: updatedItemsAfterRemoval,
       };
+
     case UPDATE_CART_ITEM_QUANTITY:
       const updatedItemsAfterQuantityChange = state.items.map((item) =>
         item.cartItemId === action.payload.itemId
@@ -109,6 +261,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         items: updatedItemsAfterQuantityChange,
       };
+
+    case SET_CART_ITEMS:
+      return {
+        ...state,
+        items: action.payload,
+      };
+
     case SET_FILTER:
       return {
         ...state,
@@ -120,44 +279,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         productDetail: {},
       };
+
     case GET_BY_NAME:
       return {
         ...state,
         copyProducts: action.payload,
       };
-    case GET_TYPES:
-      return {
-        ...state,
-        types: action.payload,
-      };
-    case FILTERDBAPI:
-      if (action.payload === "db") {
-        const result = state.allProducts.filter((e) => e.created);
-        return {
-          ...state,
-          copyProducts: result,
-        };
-      } else if (action.payload === "api") {
-        const result = state.allProducts.filter((e) => !e.created);
-        return {
-          ...state,
-          copyProducts: result,
-        };
-      } else {
-        return {
-          ...state,
-          copyProducts: state.allProducts,
-        };
-      }
-    case FILTER_TYPE:
-      const filterTypes =
-        action.payload === "all"
-          ? state.copyProducts
-          : state.copyProducts.filter((p) => p.Types.includes(action.payload));
-      return {
-        ...state,
-        copyProducts: filterTypes,
-      };
+
     case ORDER_NAME:
       if (action.payload === "a-z") {
         const orderByName = [...state.copyProducts].sort((a, b) =>
@@ -176,6 +304,15 @@ function rootReducer(state = initialState, action) {
           copyProducts: orderByName,
         };
       }
+
+    case RESET_FILTERS:
+      return {
+        ...state,
+        brandFilter: "",
+        categoryFilter: "",
+        filteredProducts: state.allProducts,
+      };
+
     case DELETE_PRODUCT:
       return {
         ...state,
@@ -186,6 +323,98 @@ function rootReducer(state = initialState, action) {
           (product) => product.id !== action.payload
         ),
       };
+
+    case SET_NAME_ORDER: {
+      const nameOrder = action.payload;
+      const productsToSort = state.filteredProducts.length
+        ? state.filteredProducts
+        : state.allProducts;
+      const sortedProducts = [...productsToSort].sort((a, b) =>
+        compareByName(a, b, nameOrder)
+      );
+      return {
+        ...state,
+        nameOrder,
+        filteredProducts: state.filteredProducts.length ? sortedProducts : [],
+        allProducts: state.filteredProducts.length
+          ? state.allProducts
+          : sortedProducts,
+      };
+    }
+
+    case SET_PRICE_ORDER: {
+      const priceOrder = action.payload;
+      const productsToSort = state.filteredProducts.length
+        ? state.filteredProducts
+        : state.allProducts;
+      const sortedProducts = [...productsToSort].sort((a, b) =>
+        compareByPrice(a, b, priceOrder)
+      );
+      return {
+        ...state,
+        priceOrder,
+        filteredProducts: state.filteredProducts.length ? sortedProducts : [],
+        allProducts: state.filteredProducts.length
+          ? state.allProducts
+          : sortedProducts,
+      };
+    }
+    case "DELETE_USER_SUCCESS":
+      return {
+        ...state,
+        users: state.allUsers.map((user) =>
+          user.id === action.payload.id
+            ? { ...user, active: action.payload.active }
+            : user
+        ),
+      };
+    case "DELETE_USER_FAILURE":
+      return {
+        ...state,
+        error: action.error,
+      };
+    case GET_ALL_REVIEWS:
+      return {
+        ...state,
+        allReviews: action.payload,
+      };
+    case UPDATE_DATA_USER:
+      return {
+        ...state,
+        currentUserData: action.payload,
+      };
+	  
+	  case CALCULATE_AVERAGE_RATINGS:
+		const productRatings = {};
+		state.allReviews.forEach((review) => {
+		  const { ProductIdProduct, ranking, Product } = review;
+		  if (!productRatings[ProductIdProduct]) {
+			productRatings[ProductIdProduct] = {
+			  name: Product.name,
+			  id: ProductIdProduct,
+			  totalRanking: 0,
+			  count: 0,
+			};
+		  }
+		  productRatings[ProductIdProduct].totalRanking += ranking;
+		  productRatings[ProductIdProduct].count += 1;
+		});
+  
+		const averageRatings = Object.keys(productRatings).reduce((acc, productId) => {
+		  const { name, totalRanking, count } = productRatings[productId];
+		  acc[productId] = {
+			name,
+			id: productId,
+			averageRanking: totalRanking / count,
+		  };
+		  return acc;
+		}, {});
+  
+		return {
+		  ...state,
+		  averageRatings,
+		};
+      
     default:
       return { ...state };
   }

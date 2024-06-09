@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2'
+
+
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
-import Swal from 'sweetalert2';
+
 
 export default function ProductForm() {
   const [product, setProduct] = useState({
@@ -88,18 +91,18 @@ export default function ProductForm() {
         ...product,
         price: parseFloat(product.price),
         stock: parseInt(product.stock, 10),
-        image: product.image.split(',').map(img => img.trim())
+        image: product.image.split(',').map(img => img.trim()) // Cambiar esto
       };
-
+  
       try {
-        const response = await fetch('https://computechback.onrender.com/products', {
+        const response = await fetch('http://localhost:3001/products', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(parsedProduct),
         });
-
+  
         if (response.ok) {
           Swal.fire({
             position: "top-end",
@@ -112,7 +115,7 @@ export default function ProductForm() {
             name: "",
             description: "",
             price: "",
-            image: "",
+            image: "", // Cambiar esto si no deseas mantener la lista de imágenes después de guardar
             stock: "",
             brand: "",
             category: ""
@@ -139,7 +142,6 @@ export default function ProductForm() {
       }
     }
   };
-
   return (
     <div className="bg-gradient-to-r from-blue-400 to-purple-500 min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">

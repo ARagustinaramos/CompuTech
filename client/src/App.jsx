@@ -1,83 +1,68 @@
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
-
-import "./App.css";
-import SearchBar from "./components/searchBar/SearchBar";
-import Home from "./views/home/Home";
-import Detail from "./views/detail/Detail";
-import Footer from "./components/footer/Footer";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
-import Form from "./components/form/Form";
-import About from "./views/about/About";
+import Footer from "./components/footer/Footer";
+import Home from "./views/home/Home";
 import Cart from "./views/cart/Cart";
-import { saveCartToLocalStorage } from "../src/redux/reducer/localStorageHelpers";
-import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
-import Perfil from './views/dashboard/user/components/Perfil'
-import DashboardUser from './views/dashboard/user/DashboardUser'
-import DashboardAdmin from './views/dashboard/admin/DashboardAdmin'
-import DashboardAdminManageUsers from './views/dashboard/admin/DashboardAdminManageUsers';
+import Form from "./components/form/Form";
+import Detail from "./views/detail/Detail";
+import About from "./views/about/About";
+import ProductDisplay from "./views/reviews/reviews";
+import DashboardUser2 from "./views/dashboard/user/DashboardUser2";
+import DashboardAdmin from "./views/dashboard/admin/DashboardAdmin";
+import DashboardAdminManageUsers from "./views/dashboard/admin/DashboardAdminManageUsers";
+import { FirebaseProvider } from "./firebase/firebase"; // Asegúrate de importar correctamente FirebaseProvider
+import OrderDetail from "./views/orderdetail/OrderDetail";
+import AdminReviews from "../src/components/adminReviews/AdminReviews";
+import AccountLocked from "../src/components/accountLocked/AccountLocked";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "./redux/actions/actions";
 
 function App() {
-  
-  const cartItems = useSelector((state) => state.items);
+  const [user] = useAuthState(auth);
+  const dispatch = useDispatch();
+  const allUsers = useSelector((state) => state.allUsers);
+  const navigate = useNavigate();
 
-	useEffect(() => {
-		saveCartToLocalStorage(cartItems);
-	}, [cartItems]);
-	const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
 
-	useEffect(() => {
-		const registerUser = async () => {
-			if (isAuthenticated) {
-				try {
-					const token = await getAccessTokenSilently();
-					const response = await axios.post(
-						`https://computechback.onrender.com/users`,
-						{
-							name: user.name,
-							email: user.email,
-							picture: user.picture
-						},
-						{
-							headers: {
-								Authorization: `Bearer ${token}`,
-								"Content-Type": "application/json"
-							}
-						}
-					);
-					console.log("Usuario registrado: ", response.data);
-				} catch (error) {
-					console.log(error.message);
-				}
-			}
-		};
-		registerUser();
-	}, [isAuthenticated, getAccessTokenSilently, user]);
-	return (
-		<>
-			<Navbar />
+  let currentUser = null;
+  allUsers.forEach((u) => {
+    if (user?.email === u.mail) {
+      currentUser = u;
+    }
+  });
 
-			<Routes>
-				{/*
-        <Route path="/" element={<Landing></Landing>}></Route>
-        
-        <Route path="/create" element={<Create></Create>}></Route>
-        <Route path={`/detail/:id`} element={<Detail />}></Route>        
-      */}
-        <Route path="/" element={<Home/>}></Route>
-        <Route path="/cart" element={<Cart/>}></Route>
-        <Route path="/form" element={<Form/>}></Route>
-        <Route path={`/detail/:id`} element={<Detail />}></Route>
-        <Route path="/about" element={<About/>}></Route>
-        <Route path="/dashboardadmin/manage/products" element={<DashboardAdmin />}></Route>
-        <Route path="/dashboardadmin/manage/users" element={<DashboardAdminManageUsers />}></Route>
-		<Route path="/dashboarduser" element={<DashboardUser />}></Route>
-      </Routes>
-      <Footer />
-    </>
-  )
+  useEffect(() => {
+    if (currentUser && currentUser.active === false) {
+      navigate("/blocked");
+    }
+  }, [currentUser, navigate]);
+
+  return (
+    <FirebaseProvider>
+      <>
+        <Routes>
+          <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
+          <Route path="/cart" element={<><Navbar /><Cart /><Footer /></>} />
+          <Route path="/form" element={<><Navbar /><Form /><Footer /></>} />
+          <Route path="/detail/:id" element={<><Navbar /><Detail /><Footer /></>} />
+          <Route path="/about" element={<><Navbar /><About /><Footer /></>} />
+          <Route path="/ProductDisplay" element={<><Navbar /><ProductDisplay /><Footer /></>} />
+          <Route path="/dashboardadmin/manage/reviews" element={<><Navbar /><AdminReviews /><Footer /></>} />
+          <Route path="/dashboardadmin/manage/products" element={<><Navbar /><DashboardAdmin /><Footer /></>} />
+          <Route path="/dashboardadmin/manage/users" element={<><Navbar /><DashboardAdminManageUsers /><Footer /></>} />
+          <Route path="/dashboarduser" element={<><Navbar /><DashboardUser2 /><Footer /></>} />
+          <Route path="/dashboardadmin/manage/products/orderdetail" element={<><Navbar /><OrderDetail /><Footer /></>} />
+          <Route path="/blocked" element={<AccountLocked />} />
+        </Routes>
+      </>
+    </FirebaseProvider>
+  );
 }
 
 export default App;
