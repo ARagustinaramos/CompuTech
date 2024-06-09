@@ -26,4 +26,4 @@ const HistorialDeCompras = () => {
   );
 };
 
-// export default HistorialDeCompras;
+ export default HistorialDeCompras;

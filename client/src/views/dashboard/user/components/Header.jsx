@@ -1,21 +1,21 @@
-// import { useEffect, useState } from "react";
-// import { useFirebase } from "../../../../firebase/firebase"; // Importa el hook useFirebase
+import { useEffect, useState } from "react";
+import { useFirebase } from "../../../../firebase/firebase"; // Importa el hook useFirebase
 
-// const Header = () => {
-//   const { auth } = useFirebase();
-//   const [user, setUser] = useState(null);
-//   const [isLoading, setIsLoading] = useState(true);
+const Header = () => {
+  const { auth } = useFirebase();
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-//   useEffect(() => {
-//     const unsubscribe = auth.onAuthStateChanged((user) => {
-//       if (user) {
-//         setUser(user);
-//         setIsLoading(false);
-//       }
-//     });
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        setIsLoading(false);
+      }
+    });
 
-//     return () => unsubscribe();
-//   }, [auth]);
+    return () => unsubscribe();
+  }, [auth]);
 
   if (isLoading) {
     return <div className="text-gray-900 dark:text-white">Cargando...</div>;
@@ -32,4 +32,4 @@
   );
 };
 
-// export default Header;
+export default Header;
