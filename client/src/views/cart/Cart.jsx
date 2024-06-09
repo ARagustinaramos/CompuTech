@@ -436,7 +436,7 @@ const Cart = () => {
                               </button>
                             </div>
                             <div className="text-end md:order-4 md:w-32">
-                              <p className="text-base font-bold text-gray-900 dark:text-white">{(item?.price * item?.quantity).toFixed(2)}$</p>
+                              <p className="text-base font-bold text-gray-900 dark:text-white">${(item?.price * item?.quantity).toFixed(2)}</p>
                             </div>
                           </div>
 
@@ -445,10 +445,6 @@ const Cart = () => {
 
                             <div className="flex items-center gap-4">
                               <button type="button" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 hover:underline dark:text-gray-400 dark:hover:text-white">
-                                <svg className="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 21l6.218-7.999C23 8 17.5 1 12.01 6.001Z" />
-                                </svg>
-                                Guardar para después
                               </button>
                               <div className="flex h-4 items-center border-l border-gray-300 dark:border-gray-600">
                                 <button
@@ -467,26 +463,26 @@ const Cart = () => {
                   </ul>
                 </div>
 
-                <div className="mt-8 md:mt-10 lg:sticky lg:top-36 lg:mt-0">
+                <div className="mt-8 md:mt-10 lg:sticky lg:top-36 lg:mt-0 w-full md:w-[280px] h-[200px]">
                   <div className="space-y-4 border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-gray-900 dark:text-white">Subtotal</span>
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">{total.toFixed(2)}$</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">${total.toFixed(2)}</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-gray-900 dark:text-white">Envío</span>
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">0$</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">$0</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-base font-medium text-gray-900 dark:text-white">Total</span>
-                      <span className="text-base font-medium text-gray-900 dark:text-white">{total.toFixed(2)}$</span>
+                      <span className="text-base font-medium text-gray-900 dark:text-white">${total.toFixed(2)}</span>
                     </div>
 
                     <button
                       onClick={handleProceedToCheckout}
-                      className="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 sm:text-base"
+                      className="min-w-[150px] w-full rounded-lg bg-blue-600 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800 sm:text-base"
                     >
-                      Proceder con la compra
+                      Pagar
                     </button>
 
                     {showPayPalButton && (

@@ -1,36 +1,54 @@
-"use client";
-
 import { Avatar, Blockquote, Rating } from "flowbite-react";
+import { auth } from '../../firebase/firebase';
+import { useEffect, useState } from 'react'; 
 
-export function ReviewsDetailProduct( {producto} ) {
-  if (!producto || producto.length === 0) {
-    return <p>No reviews yet.</p>;
+export function ReviewsDetailProduct({ reviews}) {
+  const [user, setUser] = useState(null); // Estado para almacenar la información del usuario
+  console.log(reviews)
+
+  useEffect(() => {
+    // Suscribirse al cambio de estado de autenticación de Firebase
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser); // Actualizar el estado del usuario
+    });
+
+    // Devuelve una función de limpieza para cancelar la suscripción al desmontar el componente
+    return () => unsubscribe();
+  }, []);
+
+  if (!reviews || reviews.length === 0) {
+    return <p>No hay comentarios aún.</p>;
   }
 
+  
   return (
     <div>
   
-      {producto.reviews?.map((review, index) => (
+      {reviews.map((review, index) => (
         <figure className="max-w-screen-md" key={index}>
           <div className="mb-4 flex items-center">
+          <Avatar
+              rounded
+              size="xs"
+              img={user ? user.photoURL : ''} 
+              alt="profile picture"
+            />
             <Rating size="md">
               {[...Array(review.ranking)].map((_, idx) => (
                 <Rating.Star key={idx} />
               ))}
             </Rating>
-          </div>
+          </div >
+          <p className="text-sm font-semibold text-gray-900 dark:text-white">
+  {review.User.name}
+</p>
+          
           <Blockquote>
-            <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-              {review.comment}
-            </p>
+          <div class="text-3xl">{review.comment}</div>
+            
           </Blockquote>
           <figcaption className="mt-6 flex items-center space-x-3">
-            <Avatar
-              rounded
-              size="xs"
-              img={review.img}
-              alt="profile picture"
-            />
+            
             <div className="flex items-center divide-x-2 divide-gray-300 dark:divide-gray-700">
               <cite className="pr-3 font-medium text-gray-900 dark:text-white">{review.name}</cite>
             </div>

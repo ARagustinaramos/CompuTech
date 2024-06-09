@@ -1,9 +1,9 @@
 const express = require("express");
-const {getReviewsHandler} = require("../handlers/reviewsHandler/getReviewsHandler");
-const {createReviewHandler} = require("../handlers/reviewsHandler/createReviewHandler");
-const {updateReviewHandler} = require("../handlers/reviewsHandler/updateReviewHandler");
-const {deleteReviewHandler} = require("../handlers/reviewsHandler/deleteReviewHandler");
-const {getUserReviewsHandler} = require("../handlers/reviewsHandler/getUserReviews");
+const { getReviewsHandler } = require("../handlers/reviewsHandler/getReviewsHandler");
+const { createReviewHandler } = require("../handlers/reviewsHandler/createReviewHandler");
+const { updateReviewHandler } = require("../handlers/reviewsHandler/updateReviewHandler");
+const { deleteReviewHandler } = require("../handlers/reviewsHandler/deleteReviewHandler");
+const { getUserReviewsHandler } = require("../handlers/reviewsHandler/getUserReviews");
 
 const reviewsRouter = express.Router();
 
